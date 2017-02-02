@@ -5,16 +5,16 @@ import java.util.List;
 
 
 public interface StringCommands<T>{
-
+	
+	
+	
 	T get(T t);
 	
 	T get(String t);
 	
-	T get(Number t);
+	T get(long t);
 	
 	T getSet(T t);
-
-	List<T> mGet(T... keys);
 	
 	List<T> mGet(List<T> keys);
 	

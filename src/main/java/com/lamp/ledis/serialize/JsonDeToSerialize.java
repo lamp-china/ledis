@@ -5,13 +5,12 @@ import com.alibaba.fastjson.JSON;
 public class JsonDeToSerialize implements Deserialize , Serialize{
 
 	@Override
-	public byte[] execute(Object o) {
-		return JSON.toJSONBytes(o);
+	public String execute(Object o) {
+		return JSON.toJSONString(o);
 	}
 
-	@SuppressWarnings("rawtypes")
-	@Override
-	public Object execute(byte[] by, Class clazz) {
+
+	public <T>T execute(byte[] by, Class<T> clazz) {
 		return JSON.parseObject(by, clazz);
 	}
 

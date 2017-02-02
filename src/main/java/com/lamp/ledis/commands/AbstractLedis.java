@@ -1,9 +1,15 @@
 package com.lamp.ledis.commands;
-import com.lamp.ledis.create.KeyCreate;
-import com.lamp.ledis.serialize.Deserialize;
-import com.lamp.ledis.serialize.Serialize;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.ByteBuffer;
 
-import redis.clients.jedis.Client;
+import com.lamp.ledis.create.KeyCreate;
+import com.lamp.ledis.net.Connection;
+import com.lamp.ledis.net.ConnectionFactory;
+import com.lamp.ledis.protocol.AgreementPretreatment;
+import com.lamp.ledis.serialize.Deserialize;
+import com.lamp.ledis.serialize.JsonDeToSerialize;
+import com.lamp.ledis.serialize.Serialize;
 
 public abstract class AbstractLedis<T> {
 
@@ -13,21 +19,64 @@ public abstract class AbstractLedis<T> {
 	
 	protected KeyCreate<T> keyCreate;
 	
-	protected Client client;
-	
+	@SuppressWarnings("rawtypes")
 	protected Class clazz;
 	
-	public AbstractLedis(Client client ,Serialize serialize , Deserialize deserialize , KeyCreate<T> keyCreate){
-		this.serialize   = serialize;
+	public AbstractLedis(Serialize serialize , Deserialize deserialize , KeyCreate<T> keyCreate){
+		this.serialize   = serialize == null ? new JsonDeToSerialize():serialize;
 		this.deserialize = deserialize;
 		this.keyCreate   = keyCreate;
-		this.client      = client;
 	}
 	
-
+	protected void execute(){
+		
+	}
+	
 	@SuppressWarnings("unchecked")
-	protected T getOjbect(){
-		byte[] by = client.getBinaryBulkReply();
-		return (T)deserialize.execute( by , clazz);		
+	public  final T combination(CombinationElement ce,String key){
+		Connection conn   = null;
+		ByteBuffer buffer = null;
+		try {
+			conn = ConnectionFactory.getInstance().getConnection();
+			OutputStream out = conn.getOutputStream();
+			ce.getAgreementPretreatment().perteatmentOut(out , 0 );
+			AgreementPretreatment.OneReferenceAgreementPretreatment(out, key);
+			out.flush();
+			buffer = conn.getBuffer();
+			Object t= ce.getResolveNetProtocol().analysis(conn.getInputStream(), buffer);		
+			return (T) ( t == null?ce.getResultHandle().handle( buffer  , keyCreate):t );
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}finally {
+			if( buffer != null)
+				buffer.clear();
+			ConnectionFactory.getInstance().setConnection( conn );
+				
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public  final T combination(CombinationElement ce,String key,String value){
+		Connection conn   = null;
+		ByteBuffer buffer = null;
+		try {
+			conn = ConnectionFactory.getInstance().getConnection();
+			OutputStream out = conn.getOutputStream();
+			ce.getAgreementPretreatment().perteatmentOut(out , 0 );
+			AgreementPretreatment.TwoReferenceAgreementPretreatment(out, key,value);
+			out.flush();
+			buffer = conn.getBuffer();
+			Object t= ce.getResolveNetProtocol().analysis(conn.getInputStream(), buffer);		
+			return (T) ( t == null?ce.getResultHandle().handle( buffer  , keyCreate):t );
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}finally {
+			if( buffer != null)
+				buffer.clear();
+			ConnectionFactory.getInstance().setConnection( conn );
+				
+		}
 	}
 }

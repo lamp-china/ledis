@@ -6,41 +6,31 @@ import com.lamp.ledis.create.KeyCreate;
 import com.lamp.ledis.serialize.Deserialize;
 import com.lamp.ledis.serialize.Serialize;
 
-import redis.clients.jedis.Client;
-
 public class StringCommandsImlp<T> extends AbstractLedis<T> implements StringCommands<T>{
 
-	public StringCommandsImlp(Client client, Serialize serialize, Deserialize deserialize, KeyCreate<T> ledis) {
-		super(client, serialize, deserialize, ledis);
+	
+	
+	public StringCommandsImlp( Serialize serialize, Deserialize deserialize, KeyCreate<T> ledis) {
+		super(serialize, deserialize, ledis);
 	}
 
 	@Override
 	public T get(T t) {
-		client.get( keyCreate.getKey(t) );
-		return getOjbect();
+		return combination( StringCommandsElement.getElement, keyCreate.getKey(t));
 	}
 
 	@Override
 	public T get(String t) {
-		client.get( keyCreate.getKey(t) );
-		return getOjbect();
+		return combination( StringCommandsElement.getElement, keyCreate.getKey(t));
 	}
 
 	@Override
-	public T get(Number t) {
-		client.get( keyCreate.getKey(t) );
-		return getOjbect();
+	public T get(long t) {
+		return combination( StringCommandsElement.getElement, keyCreate.getKey(t));
 	}
 
 	@Override
 	public T getSet(T t) {
-		// TODO 自动生成的方法存根
-		return null;
-	}
-
-	@Override
-	public List<T> mGet(T... keys) {
-		// TODO 自动生成的方法存根
 		return null;
 	}
 
@@ -64,8 +54,7 @@ public class StringCommandsImlp<T> extends AbstractLedis<T> implements StringCom
 
 	@Override
 	public void set(T t) {
-		client.set(keyCreate.getKey( t ), serialize.execute( t ));	
-		getOjbect();
+		combination( StringCommandsElement.setElement, keyCreate.getKey(t),serialize.execute( t ));
 	}
 
 	@Override

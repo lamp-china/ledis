@@ -4,10 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.lamp.ledis.commands.StringCommands;
-import com.lamp.ledis.commands.StringCommandsImlp;
 import com.lamp.ledis.entity.TestEntity;
-import com.lamp.ledis.entity.TestEntityKeyCreate;
-import com.lamp.ledis.serialize.JsonDeToSerialize;
 
 import redis.clients.jedis.Client;
 import redis.clients.jedis.Jedis;
@@ -20,10 +17,10 @@ public class LedisTest {
 	Client client;
 	@Before
 	public void stringCommands(){
-		client = new Client("127.0.0.1");
+		/*client = new Client("127.0.0.1");
 		JsonDeToSerialize ds = new JsonDeToSerialize();
-		TestEntityKeyCreate tekc = new TestEntityKeyCreate("te");
-		sc = new StringCommandsImlp<>(client, ds, ds, tekc);
+		TestEntityKeyCreate tekc = new TestEntityKeyCreate("te");*/
+		//sc = new StringCommandsImlp<>(client, ds, ds, tekc);
 	}
 	
 	@Test
@@ -64,18 +61,12 @@ public class LedisTest {
 		config.setTestWhileIdle(false);	 
 		//逐出扫描的时间间隔(毫秒) 如果为负数,则不运行逐出线程, 默认-1
 		config.setTimeBetweenEvictionRunsMillis(-1);	 
-		JedisPool pool = new JedisPool(config, "127.0.0.1",6379);
-		Jedis jedis = pool.getResource();
-		jedis.close();
+		//JedisPool pool = new JedisPool(config, "127.0.0.1",6379);
+		//Jedis jedis = pool.getResource();
+		//jedis.close();
 		//int timeout=3000;
 		 //new JedisSentinelPool(master, sentinels, poolConfig,timeout);//timeout 读取超时
 	}
 	
-	@Test
-	public void client(){		
-		TestEntity te = new TestEntity();
-		te.setId( 1 );
-		te.setName( "ledis" );
-		sc.set( te );
-	}
+
 }
