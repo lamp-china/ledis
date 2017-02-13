@@ -5,10 +5,9 @@ import org.junit.Test;
 
 import com.lamp.ledis.commands.StringCommands;
 import com.lamp.ledis.entity.TestEntity;
+import com.lamp.ledis.utils.KeyCreateUtils ;
 
 import redis.clients.jedis.Client;
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
 public class LedisTest {
@@ -24,9 +23,17 @@ public class LedisTest {
 	}
 	
 	@Test
-	public void ccc(){
-		client.ping();
+	public void testObjet(){
+		try {
+			KeyCreateUtils
+				.getInstance( )
+				.createKeyCreate( "com.lamp.ledis.entity.TestEntity" , "id" , null );
+		} catch ( Exception e ) {
+			// TODO 自动生成的 catch 块
+			e.printStackTrace();
+		}
 	}
+	
 	
 	@Test
 	public void testOne(){

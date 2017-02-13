@@ -7,15 +7,14 @@ import com.lamp.ledis.protocol.ResultHandle;
 public class CombinationElement {
 	private AgreementPretreatment agreementPretreatment;
 	
-	private ResolveNetProtocol<Object> resolveNetProtocol;
+	private ResolveNetProtocol<?> resolveNetProtocol;
 	private ResultHandle resultHandle;
 	
 	
 	
 	
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public CombinationElement(AgreementPretreatment agreementPretreatment,
-			ResolveNetProtocol resolveNetProtocol, ResultHandle resultHandle) {
+			ResolveNetProtocol<?> resolveNetProtocol, ResultHandle resultHandle) {
 		super();
 		this.agreementPretreatment = agreementPretreatment;
 		this.resolveNetProtocol = resolveNetProtocol;
@@ -26,7 +25,7 @@ public class CombinationElement {
 		return agreementPretreatment;
 	}
 
-	public ResolveNetProtocol<Object> getResolveNetProtocol() {
+	public ResolveNetProtocol<?> getResolveNetProtocol() {
 		return resolveNetProtocol;
 	}
 

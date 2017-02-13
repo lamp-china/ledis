@@ -8,6 +8,8 @@ import java.util.Objects ;
 public final class ClassUtils {
 
 	private static final Map< String , String[] > CLASS_ASM_NAME = new HashMap< String , String[] >( ) ;
+	
+	private static final Map< String , String >  BASIC_PACKING = new HashMap< String , String >( ) ;
 	static {
 		CLASS_ASM_NAME.put( "java.lang.Long"       , new String[]{ "()Ljava.lang.Long"    , ""} );
 		CLASS_ASM_NAME.put( "java.lang.Integer"    , new String[]{ "()Ljava.lang.Integer" , ""} );
@@ -15,12 +17,19 @@ public final class ClassUtils {
 		CLASS_ASM_NAME.put( "int"  , new String[]{ "()I"  , "(I)Ljava/lang/String;" });
 		CLASS_ASM_NAME.put( "long" , new String[]{ "()L"  , "(J)Ljava/lang/String;" });
 		
+		
+		BASIC_PACKING.put( "int" , "java/lang/Integer" );
+		BASIC_PACKING.put( "java.lang.Integer" , "java/lang/Integer" );
+		BASIC_PACKING.put( "long" , "java/lang/Long" );
+		BASIC_PACKING.put( "java.lang.Long" , "java/lang/Long" );
+		BASIC_PACKING.put( "java.lang.String" , "java/lang/String" );
+		
 	}
 	
 	
 	private static final char[] GET_CHAR_ARRAY = "get".toCharArray( );
 	
-	private static final Class<Object>[] CLASS_NULL_ARRYAL = new Class[]{};
+	private static final Class<?>[] CLASS_NULL_ARRYAL = new Class[]{};
 
 	
 	
@@ -28,8 +37,16 @@ public final class ClassUtils {
 		Class< ? > clazz = Class.forName( className );
 		Method method = clazz.getMethod( methodName , CLASS_NULL_ARRYAL );
 		Objects.requireNonNull(  method );			
-		String keyClassName = method.getReturnType( ).getClass( ).getName( ) ;
+		String keyClassName = method.getReturnType( ).getName( ) ;
 		return CLASS_ASM_NAME.get( keyClassName ) ;
+	}
+	
+	
+	public static final String typeStrToAmsTypeStr(String typeStr){
+		if( BASIC_PACKING.containsKey( typeStr ) ){
+			return BASIC_PACKING.get( typeStr );
+		}
+		return typeStr.replace( '.' , '/' );
 	}
 
 	public static final String getMethodName( String key){

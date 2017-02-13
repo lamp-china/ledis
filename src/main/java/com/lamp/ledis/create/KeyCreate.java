@@ -1,9 +1,5 @@
 package com.lamp.ledis.create;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import com.alibaba.fastjson.TypeReference;
 
 public interface KeyCreate<T> {
@@ -19,13 +15,13 @@ public interface KeyCreate<T> {
 	
 	public String getKey(long num);
 	
-	public Class<T> getEntityClass();
+	public Class< ? > getEntityClass();
 	
-	public TypeReference<List<T>> getTypeReferenceList();
+	public TypeReference< ? > getTypeReferenceList();
 	
-	public TypeReference<Set<T>>  getTypeReferenceSet();
+	public TypeReference< ? >  getTypeReferenceSet();
 	
-	public TypeReference<Map<Object ,T>>  getTypeReferenceMap();
+	public TypeReference< ? >  getTypeReferenceMap();
 	
 
 }

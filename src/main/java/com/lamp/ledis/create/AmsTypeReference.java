@@ -10,18 +10,16 @@ public class AmsTypeReference {
 	
 	private String clazzName;
 	
-	@SuppressWarnings( "rawtypes" )
-	private Class clazz;
+	private Class<?> clazz;
 	
 	private String trListObejctName;
 	
-	@SuppressWarnings( "rawtypes" )
-	private TypeReference trList;
+	private TypeReference<?> trList;
 
 	private String trMapObejctName;
 	
-	@SuppressWarnings( "rawtypes" )
-	private TypeReference trMap;
+
+	private TypeReference<?> trMap;
 
 	
 	
@@ -49,9 +47,8 @@ public class AmsTypeReference {
 	public void setClazzName ( String clazzName ) {
 		this.clazzName = clazzName ;
 	}
-
-	@SuppressWarnings( "rawtypes" )
-	public Class getClazz ( ) {
+	
+	public Class<?> getClazz ( ) {
 		return clazz ;
 	}
 
