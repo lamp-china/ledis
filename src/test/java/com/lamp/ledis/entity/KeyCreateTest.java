@@ -14,7 +14,7 @@ public class KeyCreateTest {
 	
 	@Test
 	public void tsestUtils(){
-		KeyCreateUtils kcu = new KeyCreateUtils();
+		KeyCreateUtils kcu =  KeyCreateUtils.getInstance( );
 		try {
 			kcu.keyCreate("com/lamp/ledis/entity/TestEntity", "getId", "1");
 		} catch (Exception e) {

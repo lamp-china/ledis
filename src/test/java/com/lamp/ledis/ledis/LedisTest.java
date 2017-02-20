@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.lamp.ledis.commands.StringCommands;
+import com.lamp.ledis.create.KeyCreate ;
 import com.lamp.ledis.entity.TestEntity;
 import com.lamp.ledis.utils.KeyCreateUtils ;
 
@@ -25,7 +26,7 @@ public class LedisTest {
 	@Test
 	public void testObjet(){
 		try {
-			KeyCreateUtils
+			KeyCreate< ? > k = KeyCreateUtils
 				.getInstance( )
 				.createKeyCreate( "com.lamp.ledis.entity.TestEntity" , "id" , null );
 		} catch ( Exception e ) {

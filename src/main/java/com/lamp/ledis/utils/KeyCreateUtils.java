@@ -13,7 +13,6 @@ import com.lamp.ledis.create.AmsTypeReference ;
 import com.lamp.ledis.create.KeyConfigure ;
 import com.lamp.ledis.create.KeyCreate ;
 import com.lamp.ledis.create.KeyCreateAndAmsTypeReferenceFactory ;
-import com.lamp.ledis.entity.TestEntity ;
 
 public class KeyCreateUtils extends ClassLoader implements Opcodes {
 
@@ -78,7 +77,7 @@ public class KeyCreateUtils extends ClassLoader implements Opcodes {
 		mw.visitVarInsn( ALOAD , 0 ) ;
 		mw.visitVarInsn( ALOAD , 1 ) ;
 		mw.visitTypeInsn( CHECKCAST , className ) ;
-		mw.visitMethodInsn( INVOKEVIRTUAL , "KyeCreate" , "getKeySuffix" , "(L" + className + ";)Ljava/lang/String;" ,
+		mw.visitMethodInsn( INVOKEVIRTUAL , "com/lamp/ledis/create/KeyCreate" , "getKeySuffix" , "(L" + className + ";)Ljava/lang/String;" ,
 				false ) ;
 		mw.visitInsn( ARETURN ) ;
 		mw.visitMaxs( 2 , 2 ) ;
@@ -105,11 +104,11 @@ public class KeyCreateUtils extends ClassLoader implements Opcodes {
 		ClassWriter cw = new ClassWriter( 0 ) ;
 		cw.visit( V1_8 , ACC_PUBLIC , amsClassName , "L" + className.replace( '.' , '/' ) , "com/lamp/ledis/create/AbstractKeyCreate" ,
 				null ) ;
-		MethodVisitor mw = cw.visitMethod( ACC_PUBLIC , "<init>" , "(Ljava/lang/String;)V" , null , null ) ;
+		MethodVisitor mw = cw.visitMethod( ACC_PUBLIC , "<init>" , "(Lcom/lamp/ledis/create/KeyConfigure;)V" , null , null ) ;
 		mw.visitVarInsn( ALOAD , 0 ) ;
 		mw.visitVarInsn( ALOAD , 1 ) ;
 		mw.visitMethodInsn( INVOKESPECIAL , "com/lamp/ledis/create/AbstractKeyCreate" , "<init>" ,
-				"(Ljava/lang/String;)V" , false ) ;
+				"(Lcom/lamp/ledis/create/KeyConfigure;)V" , false ) ;
 
 		mw.visitInsn( RETURN ) ;
 		mw.visitMaxs( 2 , 2 ) ;
@@ -118,7 +117,7 @@ public class KeyCreateUtils extends ClassLoader implements Opcodes {
 		mw = cw.visitMethod( ACC_PUBLIC , "getKeySuffix" , "(L" + className.replace( '.' , '/' ) + ";)Ljava/lang/String;" , null , null ) ;
 		mw.visitVarInsn( ALOAD , 0 ) ;
 		mw.visitVarInsn( ALOAD , 1 ) ;
-		mw.visitMethodInsn( INVOKEVIRTUAL , "com/lamp/ledis/entity/TestEntity" , methodName , amsName[0] , false ) ;
+		mw.visitMethodInsn( INVOKEVIRTUAL , className.replace( '.' , '/' ) , methodName , amsName[0] , false ) ;
 		// mw.visitMethodInsn(INVOKEVIRTUAL,
 		// "com/lamp/ledis/create/AbstractKeyCreate", "getKey",
 		// "(J)Ljava/lang/String;", false);
@@ -131,20 +130,16 @@ public class KeyCreateUtils extends ClassLoader implements Opcodes {
 		mw = cw.visitMethod( ACC_PUBLIC , "getKeySuffix" , "(Ljava/lang/Object;)Ljava/lang/String;" , null , null ) ;
 		mw.visitVarInsn( ALOAD , 0 ) ;
 		mw.visitVarInsn( ALOAD , 1 ) ;
-		mw.visitTypeInsn( CHECKCAST , className ) ;
-		mw.visitMethodInsn( INVOKEVIRTUAL , "KyeCreate" , "getKeySuffix" , "(L" + className + ";)Ljava/lang/String;" ,
+		mw.visitTypeInsn( CHECKCAST , className.replace( '.' , '/' ) ) ;
+		mw.visitMethodInsn( INVOKEVIRTUAL , "com/lamp/ledis/create/KeyCreate" , "getKeySuffix" , "(L" + className.replace( '.' , '/' ) + ";)Ljava/lang/String;" ,
 				false ) ;
 		mw.visitInsn( ARETURN ) ;
 		mw.visitMaxs( 2 , 2 ) ;
 		mw.visitEnd( ) ;
 		byte[] code = cw.toByteArray( ) ;
 
-		FileOutputStream fos = new FileOutputStream( "FieldExample.class" ) ;
-		fos.write( code ) ;
-		fos.close( ) ;
-
 		Class< ? > exampleClass = this.defineClass( amsClassName , code , 0 , code.length ) ;
-		Object o = exampleClass.getConstructor( String.class ).newInstance( keyConfigure ) ;
+		Object o = exampleClass.getConstructor( KeyConfigure.class ).newInstance( keyConfigure ) ;
 		kaaf.putKeyConfigure( className , ( KeyCreate< ? > ) o ) ;
 		// exampleClass.newInstance();
 
@@ -249,7 +244,7 @@ public class KeyCreateUtils extends ClassLoader implements Opcodes {
 			}
 			KeyConfigure keyConfigure = new KeyConfigure( prefix , keyName , keyType , keyMethodName ,
 					kaaf.getAmsTypeReference( clazzName ) ) ;
-			keyCreate( clazzName , keyName , keyMethodName , amsName , keyConfigure ) ;
+			keyCreate( clazzName , keyName , keyMethodName , amsName , keyConfigure  ) ;
 
 		}
 		return kaaf.getKeyCreate( clazzName ) ;

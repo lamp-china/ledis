@@ -1,6 +1,6 @@
 package com.lamp.ledis.create;
 
-public class KeyConfigure {
+public class KeyConfigure<T> {
 
 	private String prefix;	
 	
@@ -10,12 +10,12 @@ public class KeyConfigure {
 	
 	private String keyMethodName;
 	
-	private AmsTypeReference atr;
+	private AmsTypeReference<T> atr;
 
 	
 	
 	
-	public KeyConfigure(String prefix, String keyName, String keyType, String keyMethodName, AmsTypeReference atr) {
+	public KeyConfigure(String prefix, String keyName, String keyType, String keyMethodName, AmsTypeReference<T> atr) {
 		super( ) ;
 		this.prefix = prefix ;
 		this.keyName = keyName ;
@@ -56,11 +56,11 @@ public class KeyConfigure {
 		this.keyMethodName = keyMethodName ;
 	}
 
-	public AmsTypeReference getAtr ( ) {
+	public AmsTypeReference<T> getAtr ( ) {
 		return atr ;
 	}
 
-	public void setAtr ( AmsTypeReference atr ) {
+	public void setAtr ( AmsTypeReference<T> atr ) {
 		this.atr = atr ;
 	}
 	

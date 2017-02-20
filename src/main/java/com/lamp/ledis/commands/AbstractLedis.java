@@ -19,8 +19,6 @@ public abstract class AbstractLedis<T> {
 	
 	protected KeyCreate<T> keyCreate;
 	
-	@SuppressWarnings("rawtypes")
-	protected Class clazz;
 	
 	public AbstractLedis(Serialize serialize , Deserialize deserialize , KeyCreate<T> keyCreate){
 		this.serialize   = serialize == null ? new JsonDeToSerialize():serialize;

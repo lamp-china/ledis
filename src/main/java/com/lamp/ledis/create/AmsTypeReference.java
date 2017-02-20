@@ -1,8 +1,10 @@
 package com.lamp.ledis.create;
 
+import java.util.List ;
+
 import com.alibaba.fastjson.TypeReference ;
 
-public class AmsTypeReference {
+public class AmsTypeReference<T> {
 	
 	private String classAmsName;
 	
@@ -10,11 +12,11 @@ public class AmsTypeReference {
 	
 	private String clazzName;
 	
-	private Class<?> clazz;
+	private Class<T> clazz;
 	
 	private String trListObejctName;
 	
-	private TypeReference<?> trList;
+	private TypeReference<List<T>> trList;
 
 	private String trMapObejctName;
 	
@@ -48,12 +50,11 @@ public class AmsTypeReference {
 		this.clazzName = clazzName ;
 	}
 	
-	public Class<?> getClazz ( ) {
+	public Class<T> getClazz ( ) {
 		return clazz ;
 	}
 
-	@SuppressWarnings( "rawtypes" )
-	public void setClazz ( Class clazz ) {
+	public void setClazz ( Class<T> clazz ) {
 		this.clazz = clazz ;
 	}
 
@@ -65,13 +66,12 @@ public class AmsTypeReference {
 		this.trListObejctName = trListObejctName ;
 	}
 
-	@SuppressWarnings( "rawtypes" )
-	public TypeReference getTrList ( ) {
+	public TypeReference<List<T>> getTrList ( ) {
 		return trList ;
 	}
 
-	@SuppressWarnings( "rawtypes" )
-	public void setTrList ( TypeReference trList ) {
+
+	public void setTrList ( TypeReference<List<T>> trList ) {
 		this.trList = trList ;
 	}
 

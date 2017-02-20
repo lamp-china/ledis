@@ -10,11 +10,11 @@ public abstract class AbstractKeyCreate< T > implements KeyCreate< T > {
 
 	private byte[] byteKey ;
 
-	private Class< ? > clazz ;
+	private Class< T > clazz ;
 
-	private KeyConfigure keyConfigure ;
+	private KeyConfigure<T> keyConfigure ;
 
-	public AbstractKeyCreate(KeyConfigure keyConfigure) {
+	public AbstractKeyCreate(KeyConfigure<T> keyConfigure) {
 		this.keyConfigure = keyConfigure ;
 		this.clazz = keyConfigure.getAtr( ).getClazz( ) ;
 		this.stringKey   = keyConfigure.getKeyName( );
@@ -58,7 +58,7 @@ public abstract class AbstractKeyCreate< T > implements KeyCreate< T > {
 		return getKey( key.longValue( ) ) ;
 	}
 
-	public Class< ? > getEntityClass ( ) {
+	public Class< T > getEntityClass ( ) {
 		return clazz ;
 	}
 

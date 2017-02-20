@@ -16,17 +16,17 @@ public class StringCommandsImlp<T> extends AbstractLedis<T> implements StringCom
 
 	@Override
 	public T get(T t) {
-		return combination( StringCommandsElement.getElement, keyCreate.getKey(t));
+		return combination( StringCommandsElement.GET_ELEMENT, keyCreate.getKey(t));
 	}
 
 	@Override
 	public T get(String t) {
-		return combination( StringCommandsElement.getElement, keyCreate.getKey(t));
+		return combination( StringCommandsElement.GET_ELEMENT, keyCreate.getKey(t));
 	}
 
 	@Override
 	public T get(long t) {
-		return combination( StringCommandsElement.getElement, keyCreate.getKey(t));
+		return combination( StringCommandsElement.GET_ELEMENT, keyCreate.getKey(t));
 	}
 
 	@Override
