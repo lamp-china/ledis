@@ -54,7 +54,7 @@ public class StringCommandsImlp<T> extends AbstractLedis<T> implements StringCom
 
 	@Override
 	public void set(T t) {
-		combination( StringCommandsElement.setElement, keyCreate.getKey(t),serialize.execute( t ));
+		combination( StringCommandsElement.SET_ELEMENT, keyCreate.getKey(t),serialize.execute( t ));
 	}
 
 	@Override

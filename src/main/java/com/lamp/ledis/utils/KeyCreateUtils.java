@@ -94,9 +94,7 @@ public class KeyCreateUtils extends ClassLoader implements Opcodes {
 
 	}
 
-	public void keyCreate (
-			String className , String key , String methodName , String[] amsName , KeyConfigure keyConfigure
-	) throws Exception {
+	public void keyCreate ( String kcKey ,String className , String key , String methodName , String[] amsName , KeyConfigure<?> keyConfigure) throws Exception {
 
 		longAdder.increment( ) ;
 		String amsClassName = ClassUtils.className( key , className.replace( '.' , '_' ) , longAdder.longValue( ) , CLASS_NAME ) ;
@@ -140,7 +138,7 @@ public class KeyCreateUtils extends ClassLoader implements Opcodes {
 
 		Class< ? > exampleClass = this.defineClass( amsClassName , code , 0 , code.length ) ;
 		Object o = exampleClass.getConstructor( KeyConfigure.class ).newInstance( keyConfigure ) ;
-		kaaf.putKeyConfigure( className , ( KeyCreate< ? > ) o ) ;
+		kaaf.putKeyConfigure( kcKey , ( KeyCreate< ? > ) o ) ;
 		// exampleClass.newInstance();
 
 	}
@@ -200,7 +198,7 @@ public class KeyCreateUtils extends ClassLoader implements Opcodes {
 		return ( TypeReference< ? > ) exampleClass.newInstance( ) ;
 	}
 
-	public KeyCreate< ? > createKeyCreate ( String clazzName , String keyName , String prefix ) throws Exception {
+	public KeyCreate< ? > createKeyCreate ( String clazzName , String keyName , String prefix ,String hashKeyName , String hashKeyPrefix) throws Exception {
 		// clazzName + key 成为唯一值，去缓存里面取
 		// 如果不存在就创建KeyConfigure对象
 		// 去缓存去AmsTypeReference对象，key是 className
@@ -222,8 +220,7 @@ public class KeyCreateUtils extends ClassLoader implements Opcodes {
 				atr.setClazz( clazz ) ;
 				atr.setClazzName( clazzName ) ;
 				longAdder.increment( ) ;
-				String amsClassName = ClassUtils.className( keyName , clazzName , longAdder.longValue( ) ,
-						CLASS_NAME ) ;
+				String amsClassName = ClassUtils.className( keyName , clazzName , longAdder.longValue( ) ,CLASS_NAME ) ;
 				atr.setClassAmsName( amsClassName ) ;
 
 				longAdder.increment( ) ;
@@ -242,12 +239,11 @@ public class KeyCreateUtils extends ClassLoader implements Opcodes {
 
 				kaaf.putAmsTypeReference( clazzName , atr ) ;
 			}
-			KeyConfigure keyConfigure = new KeyConfigure( prefix , keyName , keyType , keyMethodName ,
-					kaaf.getAmsTypeReference( clazzName ) ) ;
-			keyCreate( clazzName , keyName , keyMethodName , amsName , keyConfigure  ) ;
+			KeyConfigure keyConfigure = new KeyConfigure( prefix , keyName , keyType , keyMethodName ,kaaf.getAmsTypeReference( clazzName ) ) ;
+			keyCreate( kcKey ,clazzName , keyName , keyMethodName , amsName , keyConfigure  ) ;
 
 		}
-		return kaaf.getKeyCreate( clazzName ) ;
+		return kaaf.getKeyCreate( kcKey ) ;
 	}
 
 	private TypeReference< ? > createTypeReference ( String amsClassName , String typeRefernece )

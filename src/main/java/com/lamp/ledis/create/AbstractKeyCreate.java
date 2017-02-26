@@ -39,7 +39,7 @@ public abstract class AbstractKeyCreate< T > implements KeyCreate< T > {
 	}
 
 	public String getKey ( int key ) {
-		return getKey( key ) ;
+		return getKey( Integer.toString( key ) ) ;
 	}
 
 	public String getKey ( long key ) {

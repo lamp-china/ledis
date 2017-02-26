@@ -28,7 +28,8 @@ public class LedisTest {
 		try {
 			KeyCreate< ? > k = KeyCreateUtils
 				.getInstance( )
-				.createKeyCreate( "com.lamp.ledis.entity.TestEntity" , "id" , null );
+				.createKeyCreate( "com.lamp.ledis.entity.TestEntity" , "id" , null ,null,null);
+			System.out.println( k );
 		} catch ( Exception e ) {
 			// TODO 自动生成的 catch 块
 			e.printStackTrace();
