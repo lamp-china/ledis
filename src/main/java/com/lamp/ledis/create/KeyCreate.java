@@ -9,6 +9,9 @@ public interface KeyCreate<T> {
 	
 	public String getKeySuffix(T t);
 	
+	
+	public byte[] getKeySuffixByteAarry(T t);
+	
 	public String getKey(T t);
 	
 	public String getKey(String t);

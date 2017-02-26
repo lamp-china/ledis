@@ -2,12 +2,19 @@ package com.lamp.ledis.protocol;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.List ;
+
+import com.lamp.ledis.create.KeyCreate ;
 
 public class AgreementPretreatment {
 
 	private byte[] perteatment;
 	private boolean boo;
 
+	public AgreementPretreatment(int length, String comman){
+		this( length , comman , true );
+	}
+	
 	public AgreementPretreatment(int length, String comman, boolean boo) {
 		if (boo) {
 			this.perteatment = ProtocolUtil.getCommanByte(length, comman);
@@ -17,6 +24,8 @@ public class AgreementPretreatment {
 		this.boo = boo;
 	}
 
+	
+	
 	public void perteatmentOut(OutputStream os, int length) throws IOException {
 		if (!boo) {
 
@@ -48,5 +57,11 @@ public class AgreementPretreatment {
 		ProtocolUtil.write(os, three);
 		ProtocolUtil.write(os, four);
 	}
+	
+	
+	public final static void ListReferenceAgreementPretreatment(OutputStream os ,String key, List<?> list,KeyCreate< ? >  keyCreate ){
+		
+	}
+	
 
 }

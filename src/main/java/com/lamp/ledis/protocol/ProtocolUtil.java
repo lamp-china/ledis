@@ -163,6 +163,19 @@ public class ProtocolUtil {
 		os.write('\n');
 	}
 	
+	public final static void write(OutputStream os ,byte[] b ) throws IOException{
+		
+		os.write( longGegreeSymbolString );
+		//TODO    ,,这里要优化啊
+		os.write( Long.toString(b.length).getBytes());
+		//getChars( b.length ,  os );
+		os.write('\r');
+		os.write('\n');
+		os.write( b );
+		os.write('\r');
+		os.write('\n');
+	}
+	
     private final static int stringSize(long x) {
         long p = 10;
         for (int i=1; i<19; i++) {

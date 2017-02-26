@@ -16,7 +16,7 @@ public class KeyCreateAndAmsTypeReferenceFactory {
 	
 	private final ConcurrentHashMap< String , KeyCreate<?>>  leyCreateMap = new ConcurrentHashMap<>( );
 	
-	private final ConcurrentHashMap< String , AmsTypeReference>  amsTypeReferenceMap = new ConcurrentHashMap<>( );
+	private final ConcurrentHashMap< String , AmsTypeReference<?>>  amsTypeReferenceMap = new ConcurrentHashMap<>( );
 	
 	public boolean isKeyConfigure(String key){
 		return leyCreateMap.containsKey( key );
@@ -34,11 +34,11 @@ public class KeyCreateAndAmsTypeReferenceFactory {
 		return amsTypeReferenceMap.containsKey( key );
 	}
 	
-	public void putAmsTypeReference(String key , AmsTypeReference value){
+	public void putAmsTypeReference(String key , AmsTypeReference<?> value){
 		amsTypeReferenceMap.put( key , value );
 	}
 	
-	public AmsTypeReference getAmsTypeReference(String key){
+	public AmsTypeReference<?> getAmsTypeReference(String key){
 		return amsTypeReferenceMap.get( key );
 	}
 	

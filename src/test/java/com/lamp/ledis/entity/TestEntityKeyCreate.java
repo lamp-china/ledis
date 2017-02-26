@@ -12,4 +12,10 @@ public class TestEntityKeyCreate extends AbstractKeyCreate<TestEntity> {
 	public String getKeySuffix(TestEntity t) {
 		return getKey(t.getId());
 	}
+
+	@Override
+	public byte[] getKeySuffixByteAarry ( TestEntity t ) {
+		// TODO 自动生成的方法存根
+		return null ;
+	}
 }
