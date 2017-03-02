@@ -13,7 +13,7 @@ public class HashCommandsElement {
  	/*
  	 * more
  	 */
- 	public static final CombinationElement HDEL_MORE        =  CombinationElement.newCombinationElement(  3 , "hdel"        , ResolveNetProtocol.resolveIntNetProtocol   );
+ 	public static final CombinationElement HDEL_MORE        =  CombinationElement.newCombinationElement(  3 , "hdel"        , false , ResolveNetProtocol.resolveIntNetProtocol   );
  	
  	/*
  	 * Hexists
@@ -52,12 +52,12 @@ public class HashCommandsElement {
      /*
       * Hmget
       */
-     public static final CombinationElement HMGET           =  CombinationElement.newCombinationElement(  2 , "hmget"        , ResolveNetProtocol.resolveManyToListNetProtocol ,ResultHandle.typeReferenceListResultHandle);
+     public static final CombinationElement HMGET           =  CombinationElement.newCombinationElement(  2 , "hmget"       , false , ResolveNetProtocol.resolveManyToListNetProtocol ,ResultHandle.typeReferenceListResultHandle);
      
      /*
       * Hmset 
       */
-     public static final CombinationElement HMSET           =  CombinationElement.newCombinationElement(  2 , "hmset"        , ResolveNetProtocol.resolveManyToListNetProtocol );
+     public static final CombinationElement HMSET           =  CombinationElement.newCombinationElement(  2 , "hmset"        , false , ResolveNetProtocol.resolveManyToListNetProtocol );
      /*
       * Hset 
       */
