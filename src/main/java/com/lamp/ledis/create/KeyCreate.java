@@ -7,6 +7,12 @@ public interface KeyCreate<T> {
 	
 	public String getKeyPrefix();
 	
+	/**
+	 *  
+	 * @param t
+	 * @return
+	 */
+	//TODO
 	public String getKeySuffix(T t);
 	
 	

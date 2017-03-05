@@ -2,6 +2,7 @@ package com.lamp.ledis.commands;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
+import java.util.List;
 
 import com.lamp.ledis.create.KeyCreate;
 import com.lamp.ledis.net.Connection;
@@ -77,4 +78,31 @@ public abstract class AbstractLedis<T> {
 				
 		}
 	}
+	
+	@SuppressWarnings("unchecked")
+	public  final T combination(CombinationElement ce,List<String> dataList){
+		Connection conn   = null;
+		ByteBuffer buffer = null;
+		try {
+			conn = ConnectionFactory.getInstance().getConnection();
+			OutputStream out = conn.getOutputStream();
+			ce.getAgreementPretreatment().perteatmentOut(out , 0 );
+			
+			out.flush();
+			buffer = conn.getBuffer();
+			Object t= ce.getResolveNetProtocol().analysis(conn.getInputStream(), buffer);		
+			return (T) ( t == null?ce.getResultHandle().handle( buffer  , keyCreate):t );
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}finally {
+			if( buffer != null)
+				buffer.clear();
+			ConnectionFactory.getInstance().setConnection( conn );
+				
+		}
+	}
+	
+	
+	
 }
