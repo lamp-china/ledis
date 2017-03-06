@@ -1,17 +1,25 @@
 package com.lamp.ledis.protocol;
 
+import java.util.List ;
+
 import com.lamp.ledis.create.KeyCreate;
 
 public class DataConversion {
 	
-	private static final ThreadLocal< DataConversion  >
 	
-	public static final  DataConversion getDataConversion(String data){
+	
+	
+	
+	public static final  void setDataConversion(String data){
 		
 	}
 	
-	public static final  DataConversion getDataConversion(Object object ,KeyCreate< Object > keyCreate){
+	public static final  void setDataConversion(Object object , KeyCreate< Object > keyCreateb){
 		
+	}
+	
+	public static final List<DataConversion> getListDataConversion(){
+		return null;
 	}
 	
 	
@@ -35,13 +43,9 @@ public class DataConversion {
 		this.data = data;
 	}
 
-	public void setObject( Object object ) {
+	public void setObjectAndKeyCreate( Object object ,KeyCreate< Object > keyCreate) {
 		this.object = object;
-	}
-
-	public void setKeyCreate( KeyCreate< Object > keyCreate ) {
 		this.keyCreate = keyCreate;
 	}
-	
 	
 }
