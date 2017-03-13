@@ -35,9 +35,14 @@ public abstract class AbstractKeyCreate< T > implements KeyCreate< T > {
 	}
 
 	public String getKey ( String key ) {
+		if(stringKey != null){
+			key = stringKey+key;
+		}
 		return key ;
 	}
 
+	
+	
 	public String getKey ( int key ) {
 		return getKey( Integer.toString( key ) ) ;
 	}

@@ -28,7 +28,7 @@ public class ProtocolUtil {
 	
 	
 	
-	//private final static int[] sizeTable = { 9, 99, 999, 9999, 99999, 999999, 9999999, 99999999, 999999999,Integer.MAX_VALUE };
+	private final static int[] sizeTable = { 9, 99, 999, 9999, 99999, 999999, 9999999, 99999999, 999999999,Integer.MAX_VALUE };
 
 	private final static byte [] DigitTens = {
             '0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
@@ -270,4 +270,7 @@ public class ProtocolUtil {
         }
     }
 
+    public static long getNumLeng(long num){
+    	return num;
+    }
 }

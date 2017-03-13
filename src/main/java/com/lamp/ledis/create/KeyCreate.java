@@ -1,5 +1,7 @@
 package com.lamp.ledis.create;
 
+import java.nio.Buffer;
+
 import com.alibaba.fastjson.TypeReference;
 
 public interface KeyCreate<T> {
@@ -16,7 +18,7 @@ public interface KeyCreate<T> {
 	public String getKeySuffix(T t);
 	
 	
-	public byte[] getKeySuffixByteAarry(T t);
+	public Buffer getKeySuffixByteAarry(T t);
 	
 	public String getKey(T t);
 	
