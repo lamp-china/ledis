@@ -1,5 +1,6 @@
 package com.lamp.ledis.protocol;
 
+import java.nio.ByteBuffer ;
 import java.util.ArrayList;
 import java.util.List ;
 
@@ -31,6 +32,18 @@ public class DataConversion {
 		}
 		return list;
 	}	
+	
+	private static final ThreadLocal< ByteBuffer > BUFFER_LOCAL = new ThreadLocal<>( );
+	
+	
+	public static final ByteBuffer getBuffer(){
+		ByteBuffer buffer = BUFFER_LOCAL.get( );
+		if( buffer == null){
+			buffer = ByteBuffer.allocate( 1024 <<4 );
+			BUFFER_LOCAL.set( buffer );
+		}
+		return buffer;
+	}
 	
 	private String data;
 	
