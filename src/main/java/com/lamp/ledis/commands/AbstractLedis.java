@@ -14,6 +14,7 @@ import com.lamp.ledis.serialize.Serialize;
 
 public abstract class AbstractLedis<T> {
 
+	
 	protected Serialize serialize;
 	
 	protected Deserialize deserialize;

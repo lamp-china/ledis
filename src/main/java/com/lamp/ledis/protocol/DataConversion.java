@@ -4,7 +4,9 @@ import java.nio.ByteBuffer ;
 import java.util.ArrayList;
 import java.util.List ;
 
+import com.lamp.ledis.commands.AbstractLedis ;
 import com.lamp.ledis.create.KeyCreate;
+import com.lamp.ledis.serialize.JsonDeToSerialize ;
 
 public class DataConversion {
 	
@@ -42,7 +44,7 @@ public class DataConversion {
 			buffer = ByteBuffer.allocate( 1024 <<4 );
 			BUFFER_LOCAL.set( buffer );
 		}
-		return buffer;
+		return buffer; 
 	}
 	
 	private String data;
@@ -53,9 +55,8 @@ public class DataConversion {
 
 	public byte[] getWriteData(){
 		byte[] returnData;
-		if(data != null){
-			returnData = data.getBytes( );
-			data = null;
+		if(keyCreate == null){
+			returnData = JsonDeToSerialize.SERIALIZE_DEFAULT.execute( object );
 		}else{
 			returnData = keyCreate.getKeySuffix( object ).getBytes( );
 			object = null;
