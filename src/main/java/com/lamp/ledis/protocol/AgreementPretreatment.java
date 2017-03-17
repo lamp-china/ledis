@@ -69,12 +69,23 @@ public class AgreementPretreatment {
 		ProtocolUtil.write( os , four );
 	}
 
-	public final static void ListReferenceAgreementPretreatment( OutputStream os , String key , List< ? > list ,
-			KeyCreate< ? > keyCreate ) {
-
+	public final static void ListReferenceAgreementPretreatment( OutputStream os ,  List< DataConversion > list , int num ) {
+			
 	}
 
 	
+	interface ListReferenceAgreementPretreatment{
+		
+		void execute(OutputStream os ,  List< DataConversion > list);
+	}
 	
-	
+	static class OneListReferenceAgreementPretreatment implements ListReferenceAgreementPretreatment{
+
+		@Override
+		public void execute( OutputStream os , List< DataConversion > list ) {
+			ProtocolUtil.write( os , list.get( 0 ). );
+			
+		}
+		
+	}
 }

@@ -1,8 +1,10 @@
 package com.lamp.ledis.serialize;
 
 import java.nio.ByteBuffer ;
+import java.nio.LedisHeapByteBuffer;
 
 import com.alibaba.fastjson.JSON;
+import com.lamp.ledis.protocol.DataConversion;
 
 public class JsonDeToSerialize implements Deserialize , Serialize{
 
@@ -16,24 +18,21 @@ public class JsonDeToSerialize implements Deserialize , Serialize{
 	@Override
 	public ByteBuffer execute(Object o) {
 		if(o instanceof String){
-			
+			return new LedisHeapByteBuffer( ( (String) o).getBytes( ));
 		}else {
-			
+			return new LedisHeapByteBuffer( JSON.toJSONBytes( o  ) );
 		}
-		return JSON.toJSONString(o);
 	}
 
 	@Override
 	public byte[] executeByte ( Object o ) {
-		// TODO 自动生成的方法存根
-		return null ;
+		return JSON.toJSONBytes( o  ) ;
 	}
 
 
 	@Override
 	public String executeString ( Object o ) {
-		// TODO 自动生成的方法存根
-		return null ;
+		return JSON.toJSONString(o) ;
 	}
 
 	public <T>T execute(byte[] by, Class<T> clazz) {

@@ -2,15 +2,21 @@ package com.lamp.ledis.protocol;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.ByteBuffer;
 
 public class ProtocolUtil {
 
 	private final static int  numberLimit             =  101;
 	private final static int  longGegreeLimit         =  1001;
 	
+	private final static int  NUM_STRING_BYTE_LIMIT   =  10000;
+	
 	private final static byte[][] number              = new byte[ numberLimit - 1 ][];
 	
 	private final static byte[][] longGegree          = new byte[ longGegreeLimit - 1 ][];
+	
+	private final static byte[][] NUM_STRING_BYTE     = new byte[ NUM_STRING_BYTE_LIMIT - 1 ][];
+	
 	
 	private final static char numberSymbolString      ='*';
 
@@ -74,23 +80,36 @@ public class ProtocolUtil {
 		for(int i = 0 ;i<  longGegreeLimit-1 ; i++){
 			longGegree[ i ] = getNumberAndLongByte( i , longGegreeSymbolByte);
 		}
+		for(int i = 0 ;i<  NUM_STRING_BYTE_LIMIT-1 ; i++){
+			NUM_STRING_BYTE[ i ] = getNumberAndLongByte( i );
+		}
 	}
 	
-	public final static byte[] getNumberByte( int i){
-		
+	public final static byte[] getNumberByte( int i){		
 		if( i < numberLimit){
 			return number[ i ];
-		}
-		
+		}		
 		return getNumberAndLongByte( i , numberSymbolByte);
 	}
 	
 	public final static byte[] getLongGegreeByte( int i){
 		if( i < longGegreeLimit ){
 			return longGegree[ i ];
-		}
-		
+		}		
 		return getNumberAndLongByte( i , longGegreeSymbolByte);
+	}
+	
+	public final static byte[] getNumStringByteArray( int i){
+		if( i < NUM_STRING_BYTE_LIMIT ){
+			return NUM_STRING_BYTE[ i ];
+		}		
+		return getNumberAndLongByte( i );
+	}
+	
+	private final static byte[] getNumberAndLongByte( long i){
+	     byte[] buf = new byte[ stringSizeArray(i) ];
+	     getChars(i, buf.length, buf);    
+	     return buf;
 	}
 	
 	
@@ -176,6 +195,19 @@ public class ProtocolUtil {
 		os.write('\n');
 	}
 	
+	public final static void write(OutputStream os ,ByteBuffer bytebuffer) throws IOException{
+		os.write( longGegreeSymbolString );
+		//TODO    ,,这里要优化啊
+		os.write( Long.toString(bytebuffer.position( )).getBytes());
+		//getChars( b.length ,  os );
+		os.write('\r');
+		os.write('\n');
+		os.write( bytebuffer.array( ) , 0 ,  bytebuffer.position( ));
+		os.write('\r');
+		os.write('\n');
+		bytebuffer.clear( );
+	}
+	
     private final static int stringSize(long x) {
         long p = 10;
         for (int i=1; i<19; i++) {
@@ -186,11 +218,11 @@ public class ProtocolUtil {
         return 19;
     }
 	
-   /* private final static int stringSize(long x) {
+   private final static int stringSizeArray(long x) {
         for (int i=0; ; i++)
             if (x <= sizeTable[i])
                 return i+1;
-    } */ 
+    } 
     static void getChars(long i, int index, byte[] buf) {
         long q;
         int r;
@@ -234,6 +266,12 @@ public class ProtocolUtil {
         }
     }
     
+    public static final void getChars(long i, ByteBuffer byteBuffer) {
+    	
+    	getChars( i , byteBuffer.position( ) + stringSizeArray(i) , byteBuffer.array( ) );
+    }
+    
+    
     static void getChars(long i, OutputStream os) throws IOException {
         long q;
         int r;
@@ -273,4 +311,5 @@ public class ProtocolUtil {
     public static long getNumLeng(long num){
     	return num;
     }
+    
 }

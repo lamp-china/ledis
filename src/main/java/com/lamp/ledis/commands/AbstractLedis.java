@@ -8,6 +8,7 @@ import com.lamp.ledis.create.KeyCreate;
 import com.lamp.ledis.net.Connection;
 import com.lamp.ledis.net.ConnectionFactory;
 import com.lamp.ledis.protocol.AgreementPretreatment;
+import com.lamp.ledis.protocol.DataConversion;
 import com.lamp.ledis.serialize.Deserialize;
 import com.lamp.ledis.serialize.JsonDeToSerialize;
 import com.lamp.ledis.serialize.Serialize;
@@ -81,7 +82,7 @@ public abstract class AbstractLedis<T> {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public  final T combination(CombinationElement ce,List<String> dataList){
+	public  final T combination(CombinationElement ce,List<DataConversion> dataList){
 		Connection conn   = null;
 		ByteBuffer buffer = null;
 		try {

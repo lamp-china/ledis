@@ -44,6 +44,7 @@ public class DataConversion {
 			buffer = ByteBuffer.allocate( 1024 <<4 );
 			BUFFER_LOCAL.set( buffer );
 		}
+		buffer.clear( );
 		return buffer; 
 	}
 	
@@ -56,13 +57,23 @@ public class DataConversion {
 	public byte[] getWriteData(){
 		byte[] returnData;
 		if(keyCreate == null){
-			returnData = JsonDeToSerialize.SERIALIZE_DEFAULT.execute( object );
+			returnData = JsonDeToSerialize.SERIALIZE_DEFAULT.executeByte( object );
 		}else{
 			returnData = keyCreate.getKeySuffix( object ).getBytes( );
 			object = null;
 			keyCreate = null;
 		}
 		return returnData;
+	}
+	
+	public ByteBuffer getWriteByteBuffer(){
+		if(keyCreate == null){
+			return JsonDeToSerialize.SERIALIZE_DEFAULT.execute( object );
+		}else{
+			returnData = keyCreate.getKeySuffix( object ).getBytes( );
+			object = null;
+			keyCreate = null;
+		}
 	}
 	
 	public DataConversion setData( String data ) {
@@ -75,5 +86,5 @@ public class DataConversion {
 		this.keyCreate = keyCreate;
 		return this;
 	}
-	
+
 }

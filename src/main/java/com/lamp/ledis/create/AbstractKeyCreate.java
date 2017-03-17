@@ -1,8 +1,10 @@
 package com.lamp.ledis.create ;
 
+import java.nio.ByteBuffer;
 import java.util.Set ;
 
 import com.alibaba.fastjson.TypeReference ;
+import com.lamp.ledis.protocol.ProtocolUtil;
 
 public abstract class AbstractKeyCreate< T > implements KeyCreate< T > {
 
@@ -26,6 +28,31 @@ public abstract class AbstractKeyCreate< T > implements KeyCreate< T > {
 			this.byteKey = stringKey.getBytes( ) ;
 	}
 
+	void setByteBufferPrefix(ByteBuffer byteBuffer){
+		byteBuffer.put( byteKey );
+	}
+	
+	public void getKey ( int key , ByteBuffer byteBuffer ) {
+		ProtocolUtil.getChars( key , byteBuffer );
+	}
+
+	public void getKey ( long key , ByteBuffer byteBuffer) {
+		ProtocolUtil.getChars( key , byteBuffer );
+	}
+
+
+
+	public void getKey ( Integer key , ByteBuffer byteBuffer) {
+		 getKey( key.intValue( ) ,  byteBuffer) ;
+	}
+
+	public void getKey ( Long key , ByteBuffer byteBuffer) {
+		
+		 getKey( key.longValue( ) ,  byteBuffer) ;
+	}
+
+	
+	
 	public byte[] getByteKey ( ) {
 		return byteKey ;
 	}
@@ -60,6 +87,7 @@ public abstract class AbstractKeyCreate< T > implements KeyCreate< T > {
 	}
 
 	public String getKey ( Long key ) {
+		
 		return getKey( key.longValue( ) ) ;
 	}
 
