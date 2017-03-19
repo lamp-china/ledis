@@ -198,7 +198,7 @@ public class KeyCreateUtils extends ClassLoader implements Opcodes {
 		return ( TypeReference< ? > ) exampleClass.newInstance( ) ;
 	}
 
-	public KeyCreate< ? > createKeyCreate ( String clazzName , String keyName , String prefix ,String hashKeyName , String hashKeyPrefix) throws Exception {
+	public KeyCreate createKeyCreate ( String clazzName , String keyName , String prefix ,String hashKeyName , String hashKeyPrefix) throws Exception {
 		// clazzName + key 成为唯一值，去缓存里面取
 		// 如果不存在就创建KeyConfigure对象
 		// 去缓存去AmsTypeReference对象，key是 className

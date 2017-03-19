@@ -3,6 +3,7 @@ package com.lamp.ledis.commands;
 import java.util.List;
 
 import com.lamp.ledis.create.KeyCreate;
+import com.lamp.ledis.protocol.DataConversion ;
 import com.lamp.ledis.serialize.Deserialize;
 import com.lamp.ledis.serialize.Serialize;
 
@@ -14,17 +15,23 @@ public class StringCommandsImlp< T > extends AbstractLedis< T > implements Strin
 
 	@Override
 	public T get( T t ) {
-		return combination( StringCommandsElement.GET_ELEMENT , keyCreate.getKey( t ) );
+		List<DataConversion> list = DataConversion.getListDataConversion( );
+		list.get( 0 ) .setObjectAndKeyCreate( t , keyCreate );
+		return combination(StringCommandsElement.GET_ELEMENT, list );
 	}
 
 	@Override
 	public T get( String t ) {
-		return combination( StringCommandsElement.GET_ELEMENT , keyCreate.getKey( t ) );
+		List<DataConversion> list = DataConversion.getListDataConversion( );
+		list.get( 0 ) .setObjectAndKeyCreate( t , keyCreate );
+		return combination(StringCommandsElement.GET_ELEMENT, list );
 	}
 
 	@Override
 	public T get( long t ) {
-		return combination( StringCommandsElement.GET_ELEMENT , keyCreate.getKey( t ) );
+		List<DataConversion> list = DataConversion.getListDataConversion( );
+		list.get( 0 ) .setObjectAndKeyCreate( t , keyCreate );
+		return combination(StringCommandsElement.GET_ELEMENT, list );
 	}
 
 	@Override
@@ -52,7 +59,10 @@ public class StringCommandsImlp< T > extends AbstractLedis< T > implements Strin
 
 	@Override
 	public void set( T t ) {
-		combination( StringCommandsElement.SET_ELEMENT , keyCreate.getKey( t ) , serialize.executeString( t ) );
+		List<DataConversion> list = DataConversion.getListDataConversion( );
+		list.get( 0 ) .setObjectAndKeyCreate( t , keyCreate );
+		list.get( 1 ).setObjectAndKeyCreate( t );
+		combination(StringCommandsElement.SET_ELEMENT, list );
 	}
 
 	@Override

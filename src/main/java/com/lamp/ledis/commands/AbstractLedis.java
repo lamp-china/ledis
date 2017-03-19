@@ -82,14 +82,14 @@ public abstract class AbstractLedis<T> {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public  final T combination(CombinationElement ce,List<DataConversion> dataList){
+	public  final T combination(CombinationElement ce,List<DataConversion> dataList ){
 		Connection conn   = null;
 		ByteBuffer buffer = null;
 		try {
 			conn = ConnectionFactory.getInstance().getConnection();
 			OutputStream out = conn.getOutputStream();
 			ce.getAgreementPretreatment().perteatmentOut(out , 0 );
-			
+			AgreementPretreatment.ListReferenceAgreementPretreatment( out , dataList , ce.getAgreementPretreatment( ).getLength( ) );
 			out.flush();
 			buffer = conn.getBuffer();
 			Object t= ce.getResolveNetProtocol().analysis(conn.getInputStream(), buffer);		

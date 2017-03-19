@@ -67,13 +67,15 @@ public class DataConversion {
 	}
 	
 	public ByteBuffer getWriteByteBuffer(){
+		ByteBuffer byteBuffer;
 		if(keyCreate == null){
-			return JsonDeToSerialize.SERIALIZE_DEFAULT.execute( object );
+			byteBuffer = JsonDeToSerialize.SERIALIZE_DEFAULT.execute( object );
 		}else{
-			returnData = keyCreate.getKeySuffix( object ).getBytes( );
-			object = null;
+			byteBuffer = keyCreate.getKeySuffixByteAarry( object );
 			keyCreate = null;
 		}
+		object = null;
+		return byteBuffer;
 	}
 	
 	public DataConversion setData( String data ) {
@@ -81,9 +83,15 @@ public class DataConversion {
 		return this;
 	}
 
-	public DataConversion setObjectAndKeyCreate( Object object ,KeyCreate< Object > keyCreate) {
+	public  DataConversion setObjectAndKeyCreate( Object object ) {
 		this.object = object;
-		this.keyCreate = keyCreate;
+		return this;
+	}
+	
+	@SuppressWarnings( "unchecked" )
+	public <T> DataConversion setObjectAndKeyCreate( Object object ,KeyCreate< T > keyCreate) {
+		this.object = object;
+		this.keyCreate = (KeyCreate< Object >)keyCreate;
 		return this;
 	}
 

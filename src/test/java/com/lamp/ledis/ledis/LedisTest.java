@@ -1,5 +1,9 @@
 package com.lamp.ledis.ledis;
 
+import java.lang.reflect.Constructor ;
+import java.lang.reflect.InvocationTargetException ;
+import java.nio.ByteBuffer ;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -30,12 +34,28 @@ public class LedisTest {
 				.getInstance( )
 				.createKeyCreate( "com.lamp.ledis.entity.TestEntity" , "id" , null ,null,null);
 			System.out.println( k );
+			
 		} catch ( Exception e ) {
 			// TODO 自动生成的 catch 块
 			e.printStackTrace();
 		}
 	}
 	
+	@Test
+	public  void tewtbufff(){
+		try {
+			Class< ? > clazz = Class.forName( "java.nio.HeapByteBuffer" );
+			//Constructor< ? > en = clazz.getConstructor( new Class[]{ Integer.class, Integer.class} );
+			Constructor< ? >[] ens = clazz.getDeclaredConstructors( );
+			Constructor< ? > en = clazz.getDeclaredConstructor( new Class[]{ byte[].class , int.class, int.class}  );
+			en.setAccessible( true );
+			ByteBuffer hbb = (ByteBuffer)en.newInstance( new Object[]{"String".getBytes( ) , 0 , 6} );
+			System.out.println( new String( hbb.array( )) ) ;
+		} catch ( ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e ) {
+			// TODO 自动生成的 catch 块
+			e.printStackTrace();
+		}
+	}
 	
 	@Test
 	public void testOne(){
