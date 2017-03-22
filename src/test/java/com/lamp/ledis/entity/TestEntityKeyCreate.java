@@ -1,6 +1,6 @@
 package com.lamp.ledis.entity;
 
-import java.nio.Buffer;
+import java.nio.ByteBuffer;
 
 import com.lamp.ledis.create.AbstractKeyCreate;
 
@@ -16,7 +16,7 @@ public class TestEntityKeyCreate extends AbstractKeyCreate<TestEntity> {
 	}
 
 	@Override
-	public Buffer getKeySuffixByteAarry ( TestEntity t ) {
+	public ByteBuffer getKeySuffixBuffer ( TestEntity t ) {
 		// TODO 自动生成的方法存根
 		return null ;
 	}

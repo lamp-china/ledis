@@ -13,9 +13,9 @@ public final class ClassUtils {
 	static {
 		CLASS_ASM_NAME.put( "java.lang.Long"       , new String[]{ "()Ljava.lang.Long"    , ""} );
 		CLASS_ASM_NAME.put( "java.lang.Integer"    , new String[]{ "()Ljava.lang.Integer" , ""} );
-		CLASS_ASM_NAME.put( "java.lang.String"     , new String[]{ "()Ljava.lang.Long"    , "(Ljava.lang.String;)Ljava/lang/String;" , "(Ljava.lang.String;)java/nio/ByteBuffer;"} );
-		CLASS_ASM_NAME.put( "int"                  , new String[]{ "()I"                  , "(I)Ljava/lang/String;"                  , "(I)java/nio/ByteBuffer;"});
-		CLASS_ASM_NAME.put( "long"                 , new String[]{ "()L"                  , "(J)Ljava/lang/String;"                  , "(J)java/nio/ByteBuffer;"});
+		CLASS_ASM_NAME.put( "java.lang.String"     , new String[]{ "()Ljava.lang.Long"    , "(Ljava.lang.String;)Ljava/lang/String;" , "(Ljava.lang.String;)Ljava/nio/ByteBuffer;"} );
+		CLASS_ASM_NAME.put( "int"                  , new String[]{ "()I"                  , "(I)Ljava/lang/String;"                  , "(I)Ljava/nio/ByteBuffer;"});
+		CLASS_ASM_NAME.put( "long"                 , new String[]{ "()L"                  , "(J)Ljava/lang/String;"                  , "(J)Ljava/nio/ByteBuffer;"});
 		
 		
 		BASIC_PACKING.put( "int"               , "java/lang/Integer" );

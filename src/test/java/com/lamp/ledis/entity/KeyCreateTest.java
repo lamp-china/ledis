@@ -5,11 +5,14 @@ import org.junit.Test;
 import com.lamp.ledis.utils.KeyCreateUtils;
 
 public class KeyCreateTest {
-
+	
+	TestEntity testEntity = new TestEntity(1 , "hello , laohu");
 	
 	@Test
 	public void testType(){
-		new TestEntityKeyCreate("id");
+		TestEntityKeyCreate tkc = new TestEntityKeyCreate("id");
+		tkc.getKeySuffix( testEntity );
+		tkc.getKeySuffixBuffer( testEntity );
 	}
 	
 	@Test

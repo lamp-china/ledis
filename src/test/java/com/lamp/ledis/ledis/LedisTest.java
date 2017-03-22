@@ -16,7 +16,7 @@ import redis.clients.jedis.Client;
 import redis.clients.jedis.JedisPoolConfig;
 
 public class LedisTest {
-
+	TestEntity testEntity = new TestEntity(1 , "hello , laohu");
 	StringCommands<TestEntity> sc;
 	Client client;
 	@Before
@@ -27,14 +27,16 @@ public class LedisTest {
 		//sc = new StringCommandsImlp<>(client, ds, ds, tekc);
 	}
 	
+	@SuppressWarnings ( "unchecked" )
 	@Test
 	public void testObjet(){
 		try {
-			KeyCreate< ? > k = KeyCreateUtils
+			KeyCreate< TestEntity > k = (KeyCreate< TestEntity >)KeyCreateUtils
 				.getInstance( )
 				.createKeyCreate( "com.lamp.ledis.entity.TestEntity" , "id" , null ,null,null);
 			System.out.println( k );
-			
+			k.getKeySuffix( testEntity );
+			k.getKeySuffixBuffer( testEntity );
 		} catch ( Exception e ) {
 			// TODO 自动生成的 catch 块
 			e.printStackTrace();
@@ -45,8 +47,7 @@ public class LedisTest {
 	public  void tewtbufff(){
 		try {
 			Class< ? > clazz = Class.forName( "java.nio.HeapByteBuffer" );
-			//Constructor< ? > en = clazz.getConstructor( new Class[]{ Integer.class, Integer.class} );
-			Constructor< ? >[] ens = clazz.getDeclaredConstructors( );
+			//Constructor< ? > en = clazz.getConstructor( new Class[]{ Integer.class, Integer.class} );;
 			Constructor< ? > en = clazz.getDeclaredConstructor( new Class[]{ byte[].class , int.class, int.class}  );
 			en.setAccessible( true );
 			ByteBuffer hbb = (ByteBuffer)en.newInstance( new Object[]{"String".getBytes( ) , 0 , 6} );

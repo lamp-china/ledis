@@ -28,6 +28,11 @@ public abstract class AbstractKeyCreate< T > implements KeyCreate< T > {
 			this.byteKey = stringKey.getBytes( ) ;
 	}
 
+	public ByteBuffer getKeySuffixBuffer(T t){
+		return null;
+	}
+	
+	
 	void setByteBufferPrefix(ByteBuffer byteBuffer){
 		byteBuffer.put( byteKey );
 	}
