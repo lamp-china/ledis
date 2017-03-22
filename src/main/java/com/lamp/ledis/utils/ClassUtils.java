@@ -13,16 +13,16 @@ public final class ClassUtils {
 	static {
 		CLASS_ASM_NAME.put( "java.lang.Long"       , new String[]{ "()Ljava.lang.Long"    , ""} );
 		CLASS_ASM_NAME.put( "java.lang.Integer"    , new String[]{ "()Ljava.lang.Integer" , ""} );
-		CLASS_ASM_NAME.put( "java.lang.String"     , new String[]{ "()Ljava.lang.Long"    , "(Ljava.lang.String;)Ljava/lang/String;"} );
-		CLASS_ASM_NAME.put( "int"  , new String[]{ "()I"  , "(I)Ljava/lang/String;" });
-		CLASS_ASM_NAME.put( "long" , new String[]{ "()L"  , "(J)Ljava/lang/String;" });
+		CLASS_ASM_NAME.put( "java.lang.String"     , new String[]{ "()Ljava.lang.Long"    , "(Ljava.lang.String;)Ljava/lang/String;" , "(Ljava.lang.String;)java/nio/ByteBuffer;"} );
+		CLASS_ASM_NAME.put( "int"                  , new String[]{ "()I"                  , "(I)Ljava/lang/String;"                  , "(I)java/nio/ByteBuffer;"});
+		CLASS_ASM_NAME.put( "long"                 , new String[]{ "()L"                  , "(J)Ljava/lang/String;"                  , "(J)java/nio/ByteBuffer;"});
 		
 		
-		BASIC_PACKING.put( "int" , "java/lang/Integer" );
+		BASIC_PACKING.put( "int"               , "java/lang/Integer" );
 		BASIC_PACKING.put( "java.lang.Integer" , "java/lang/Integer" );
-		BASIC_PACKING.put( "long" , "java/lang/Long" );
-		BASIC_PACKING.put( "java.lang.Long" , "java/lang/Long" );
-		BASIC_PACKING.put( "java.lang.String" , "java/lang/String" );
+		BASIC_PACKING.put( "long"              , "java/lang/Long" );
+		BASIC_PACKING.put( "java.lang.Long"    , "java/lang/Long" );
+		BASIC_PACKING.put( "java.lang.String"  , "java/lang/String" );
 		
 	}
 	

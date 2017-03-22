@@ -18,7 +18,7 @@ public interface KeyCreate<T> {
 	public String getKeySuffix(T t);
 	
 	
-	public ByteBuffer getKeySuffixByteAarry(T t);
+	public ByteBuffer getKeySuffixBuffer(T t);
 	
 	public String getKey(T t);
 	

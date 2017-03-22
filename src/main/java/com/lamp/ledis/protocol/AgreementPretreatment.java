@@ -114,7 +114,7 @@ public class AgreementPretreatment {
 		Object o ;
 		for( ; ; ){
 			o = objectList.get( -- i );
-			ProtocolUtil.write( os , keyCreate.getKeySuffixByteAarry( o ) );
+			ProtocolUtil.write( os , keyCreate.getKeySuffixBuffer( o ) );
 			ProtocolUtil.write( os , JsonDeToSerialize.SERIALIZE_DEFAULT.execute( o ) );
 			if( i == 0){
 				break;

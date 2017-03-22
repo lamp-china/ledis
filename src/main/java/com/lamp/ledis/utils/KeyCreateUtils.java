@@ -133,6 +133,30 @@ public class KeyCreateUtils extends ClassLoader implements Opcodes {
 				false ) ;
 		mw.visitInsn( ARETURN ) ;
 		mw.visitMaxs( 2 , 2 ) ;
+		
+		{
+			mw = cw.visitMethod( ACC_PUBLIC , "getKeySuffixBuffer" , "(L" + className.replace( '.' , '/' ) + ";)Ljava/nio/ByteBuffer;" , null , null ) ;
+			mw.visitVarInsn( ALOAD , 0 ) ;
+			mw.visitVarInsn( ALOAD , 1 ) ;
+			mw.visitMethodInsn( INVOKEVIRTUAL , className.replace( '.' , '/' ) , methodName , amsName[0] , false ) ;
+			// mw.visitMethodInsn(INVOKEVIRTUAL,
+			// "com/lamp/ledis/create/AbstractKeyCreate", "getKey",
+			// "(J)Ljava/lang/String;", false);
+			mw.visitMethodInsn( INVOKEVIRTUAL , "com/lamp/ledis/create/AbstractKeyCreate" , "getKey" , amsName[1] ,
+					false ) ;
+			mw.visitInsn( ARETURN ) ;
+			mw.visitMaxs( 3 , 4 ) ;
+			mw.visitEnd( ) ;
+
+			mw = cw.visitMethod( ACC_PUBLIC , "getKeySuffixBuffer" , "(Ljava/lang/Object;)Ljava/nio/ByteBuffer;" , null , null ) ;
+			mw.visitVarInsn( ALOAD , 0 ) ;
+			mw.visitVarInsn( ALOAD , 1 ) ;
+			mw.visitTypeInsn( CHECKCAST , className.replace( '.' , '/' ) ) ;
+			mw.visitMethodInsn( INVOKEVIRTUAL , "com/lamp/ledis/create/KeyCreate" , "getKeySuffixBuffer" , "(L" + className.replace( '.' , '/' ) + ";)Ljava/nio/ByteBuffer;" ,
+					false ) ;
+			mw.visitInsn( ARETURN ) ;
+			mw.visitMaxs( 2 , 2 ) ;
+		}
 		mw.visitEnd( ) ;
 		byte[] code = cw.toByteArray( ) ;
 

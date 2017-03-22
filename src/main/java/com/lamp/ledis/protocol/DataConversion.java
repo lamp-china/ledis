@@ -71,7 +71,7 @@ public class DataConversion {
 		if(keyCreate == null){
 			byteBuffer = JsonDeToSerialize.SERIALIZE_DEFAULT.execute( object );
 		}else{
-			byteBuffer = keyCreate.getKeySuffixByteAarry( object );
+			byteBuffer = keyCreate.getKeySuffixBuffer( object );
 			keyCreate = null;
 		}
 		object = null;
