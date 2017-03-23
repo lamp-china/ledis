@@ -20,6 +20,8 @@ public interface KeyCreate<T> {
 	
 	public ByteBuffer getKeySuffixBuffer(T t);
 	
+	public void getKeySuffixBuffer(T t ,ByteBuffer byteBuffer);
+	
 	public String getKey(T t);
 	
 	public String getKey(String t);

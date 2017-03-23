@@ -20,4 +20,9 @@ public class TestEntityKeyCreate extends AbstractKeyCreate<TestEntity> {
 		// TODO 自动生成的方法存根
 		return null ;
 	}
+
+	@Override
+	public void getKeySuffixBuffer ( TestEntity t , ByteBuffer byteBuffer ) {
+
+	}
 }

@@ -136,7 +136,7 @@ public class KeyCreateUtils extends ClassLoader implements Opcodes {
 		mw.visitMaxs( 2 , 2 ) ;
 		
 		{
-		/*	mw = cw.visitMethod( ACC_PUBLIC , "getKeySuffixBuffer" , "(L" + className.replace( '.' , '/' ) + ";)Ljava/nio/ByteBuffer;" , null , null ) ;
+/*			mw = cw.visitMethod( ACC_PUBLIC , "getKeySuffixBuffer" , "(L" + className.replace( '.' , '/' ) + ";)Ljava/nio/ByteBuffer;" , null , null ) ;
 			mw.visitVarInsn( ALOAD , 0 ) ;
 			mw.visitVarInsn( ALOAD , 1 ) ;
 			mw.visitMethodInsn( INVOKEVIRTUAL , className.replace( '.' , '/' ) , methodName , amsName[0] , false ) ;
@@ -154,13 +154,33 @@ public class KeyCreateUtils extends ClassLoader implements Opcodes {
 			mw.visitInsn( ARETURN ) ;
 			mw.visitMaxs( 2 , 2 ) ;*/
 		}
+		{
+			mw = cw.visitMethod( ACC_PUBLIC , "getKeySuffixBuffer" , "(L" + className.replace( '.' , '/' ) + ";Ljava/nio/ByteBuffer;)V" , null , null ) ;
+			mw.visitVarInsn( ALOAD , 0 ) ;
+			mw.visitVarInsn( ALOAD , 2 ) ;
+			mw.visitVarInsn( ALOAD , 1 ) ;
+			
+			mw.visitMethodInsn( INVOKEVIRTUAL , className.replace( '.' , '/' ) , methodName , amsName[0] , false ) ;
+			mw.visitMethodInsn( INVOKEVIRTUAL , "com/lamp/ledis/create/AbstractKeyCreate" , "getKey" , amsName[2] ,false ) ;
+			mw.visitMaxs( 2 , 3 ) ;
+			mw.visitEnd( ) ;
+
+			mw = cw.visitMethod( ACC_PUBLIC , "getKeySuffixBuffer" , "(Ljava/lang/Object;Ljava/nio/ByteBuffer;)V" , null , null ) ;
+			mw.visitVarInsn( ALOAD , 0 ) ;
+			mw.visitVarInsn( ALOAD , 1 ) ;
+			mw.visitTypeInsn( CHECKCAST , className.replace( '.' , '/' ) ) ;
+			mw.visitVarInsn( ALOAD , 2 ) ;
+			mw.visitMethodInsn( INVOKEVIRTUAL , "com/lamp/ledis/create/KeyCreate" , "getKeySuffixBuffer" , "(L" + className.replace( '.' , '/' ) + ";Ljava/nio/ByteBuffer;)V" ,
+					false ) ;
+			mw.visitMaxs( 3 ,3 ) ;
+		}
 		mw.visitEnd( ) ;
 		byte[] code = cw.toByteArray( ) ;
 		
-		FileOutputStream file  = new FileOutputStream( new File( amsClassName+".class" ) );
-		file.write( code );
-		file.flush( );
-		file.close( );
+//		FileOutputStream file  = new FileOutputStream( new File( amsClassName+".class" ) );
+//		file.write( code );
+//		file.flush( );
+//		file.close( );
 		Class< ? > exampleClass = this.defineClass( amsClassName , code , 0 , code.length ) ;
 		Object o = exampleClass.getConstructor( KeyConfigure.class ).newInstance( keyConfigure ) ;
 		kaaf.putKeyConfigure( kcKey , ( KeyCreate< ? > ) o ) ;

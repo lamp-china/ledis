@@ -19,7 +19,8 @@ public class KeyCreateTest {
 	public void tsestUtils(){
 		KeyCreateUtils kcu =  KeyCreateUtils.getInstance( );
 		try {
-			kcu.keyCreate("com/lamp/ledis/entity/TestEntity", "getId", "1");
+			//             com.lamp.ledis.entity
+			kcu.createKeyCreate("com.lamp.ledis.entity.TestEntity", "name", "1",null,null);
 		} catch (Exception e) {
 			// TODO 自动生成的 catch 块
 			e.printStackTrace();
