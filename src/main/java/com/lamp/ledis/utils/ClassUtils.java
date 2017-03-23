@@ -11,9 +11,9 @@ public final class ClassUtils {
 	
 	private static final Map< String , String >  BASIC_PACKING = new HashMap< String , String >( ) ;
 	static {
-		CLASS_ASM_NAME.put( "java.lang.Long"       , new String[]{ "()Ljava.lang.Long"    , ""} );
-		CLASS_ASM_NAME.put( "java.lang.Integer"    , new String[]{ "()Ljava.lang.Integer" , ""} );
-		CLASS_ASM_NAME.put( "java.lang.String"     , new String[]{ "()Ljava/lang/String;"    , "(Ljava/lang/String;)Ljava/lang/String;" , "(Ljava/lang/String;Ljava/nio/ByteBuffer;)V"} );
+		CLASS_ASM_NAME.put( "java.lang.Long"       , new String[]{ "()Ljava/lang/Long"    , ""} );
+		CLASS_ASM_NAME.put( "java.lang.Integer"    , new String[]{ "()Ljava/lang/Integer" , ""} );
+		CLASS_ASM_NAME.put( "java.lang.String"     , new String[]{ "()Ljava/lang/String;" , "(Ljava/lang/String;)Ljava/lang/String;" , "(Ljava/lang/String;Ljava/nio/ByteBuffer;)V"} );
 		CLASS_ASM_NAME.put( "int"                  , new String[]{ "()I"                  , "(I)Ljava/lang/String;"                  , "(I;Ljava/nio/ByteBuffer;)V"});
 		CLASS_ASM_NAME.put( "long"                 , new String[]{ "()L"                  , "(J)Ljava/lang/String;"                  , "(J;Ljava/nio/ByteBuffer;)v"});
 		

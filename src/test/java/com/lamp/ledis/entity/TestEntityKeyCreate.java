@@ -15,14 +15,9 @@ public class TestEntityKeyCreate extends AbstractKeyCreate<TestEntity> {
 		return getKey(t.getId());
 	}
 
-	@Override
-	public ByteBuffer getKeySuffixBuffer ( TestEntity t ) {
-		// TODO 自动生成的方法存根
-		return null ;
-	}
 
 	@Override
 	public void getKeySuffixBuffer ( TestEntity t , ByteBuffer byteBuffer ) {
-
+		this.getKey( t.getName( ) , byteBuffer );
 	}
 }

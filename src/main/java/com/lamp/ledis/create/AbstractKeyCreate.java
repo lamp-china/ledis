@@ -55,6 +55,11 @@ public abstract class AbstractKeyCreate< T > implements KeyCreate< T > {
 		
 		 getKey( key.longValue( ) ,  byteBuffer) ;
 	}
+	
+	public void getKey ( String key , ByteBuffer byteBuffer) {
+		
+		byteBuffer.put( key.getBytes( ) );
+	}
 
 	
 	
