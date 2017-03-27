@@ -33,7 +33,7 @@ public class StringCommandsTest extends ConnectionFactoryTest{
 	@Test
 	public void get(){
 		te = sc.get(testEntity);
-		System.out.println( te.toString() );
+		System.out.println( sc.get(testEntity) );
 	}
 
 }

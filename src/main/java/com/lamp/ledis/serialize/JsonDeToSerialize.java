@@ -44,7 +44,7 @@ public class JsonDeToSerialize implements Deserialize , Serialize{
 	
 	@Override
 	public ByteBuffer execute(Object o) {
-		byte[] by = ( (String) o).getBytes( );
+		byte[] by ;
 		if(o instanceof String){
 			by = ( (String) o).getBytes( );
 		}else {

@@ -40,7 +40,7 @@ public class AgreementPretreatment {
 	}
 
 	public AgreementPretreatment( int length , String comman , boolean boo ) {
-		this.length = length;
+		this.length = length-2;
 		if ( boo ) {
 			this.perteatment = ProtocolUtil.getCommanByte( length , comman );
 		} else {
@@ -92,7 +92,7 @@ public class AgreementPretreatment {
 	}
 
 	public final static void ListReferenceAgreementPretreatment( OutputStream os ,  List< DataConversion > list , int num ) throws IOException {
-			REFERNCE_LIST.get( --num ).execute( os , list );
+			REFERNCE_LIST.get( num ).execute( os , list );
 	}
 
 	public final static void ListReferenceAgreementPretreatment( OutputStream os , List< DataConversion > list , List<?> objectList ,int num) throws IOException{

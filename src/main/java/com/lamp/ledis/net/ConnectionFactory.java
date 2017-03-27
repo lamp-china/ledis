@@ -1,8 +1,15 @@
 package com.lamp.ledis.net;
 
+import java.util.HashMap ;
+import java.util.List ;
+import java.util.Map ;
+
 public class ConnectionFactory {
 
 	private final  static ConnectionFactory cf = new ConnectionFactory();
+	
+	private final Map<String , ConnectionPattern> connectionPatternMap = new HashMap< String , ConnectionPattern >();
+	
 	
 	private ConnectionPattern connectionPattern;
 	
@@ -25,6 +32,11 @@ public class ConnectionFactory {
 		}
 	}
 	
+	public void init( List<NetConfigure> netCOnfigureList ){
+		
+	}
+	
+	
 	public Connection getConnection(){
 		
 		try {
@@ -33,6 +45,16 @@ public class ConnectionFactory {
 			e.printStackTrace();
 			return null;
 		}
+	}
+	
+	
+	public ConnectionPattern getConnectionPattern(){
+		return this.connectionPattern;
+	}
+	
+	
+	public ConnectionPattern getConnectionPattern( String data){
+		return this.connectionPatternMap.get( data );
 	}
 	
 	public void setConnection( Connection conn){

@@ -18,6 +18,6 @@ public class TestEntityKeyCreate extends AbstractKeyCreate<TestEntity> {
 
 	@Override
 	public void getKeySuffixBuffer ( TestEntity t , ByteBuffer byteBuffer ) {
-		this.getKey( t.getName( ) , byteBuffer );
+		this.getKey( t.getId( ) , byteBuffer );
 	}
 }

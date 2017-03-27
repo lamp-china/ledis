@@ -6,6 +6,7 @@ import java.lang.reflect.Field ;
 import java.util.concurrent.atomic.LongAdder ;
 
 import org.objectweb.asm.ClassWriter ;
+import org.objectweb.asm.Label ;
 import org.objectweb.asm.MethodVisitor ;
 import org.objectweb.asm.Opcodes ;
 
@@ -133,22 +134,30 @@ public class KeyCreateUtils extends ClassLoader implements Opcodes {
 		mw.visitMaxs( 2 , 2 ) ;
 		
 		{
-			mw = cw.visitMethod( ACC_PUBLIC , "getKeySuffixBuffer" , "(L" + className.replace( '.' , '/' ) + ";Ljava/nio/ByteBuffer;)V" , null , null ) ;
-			mw.visitVarInsn( ALOAD , 0 ) ;
-			mw.visitVarInsn( ALOAD , 1 ) ;
-			mw.visitMethodInsn( INVOKEVIRTUAL , className.replace( '.' , '/' ) , methodName , amsName[0] , false ) ;
-			mw.visitVarInsn( ALOAD , 2 ) ;
-			mw.visitMethodInsn( INVOKEVIRTUAL , "com/lamp/ledis/create/AbstractKeyCreate" , "getKey" , amsName[2] ,false ) ;
-			mw.visitMaxs( 3 , 3 ) ;
-			mw.visitEnd( ) ;
+		
+
+			
+			mw = cw.visitMethod( ACC_PUBLIC , "getKeySuffixBuffer" ,"(L" + className.replace( '.' , '/' ) + ";Ljava/nio/ByteBuffer;)V", null , null );
+			mw.visitCode( );
+			mw.visitVarInsn( ALOAD , 0 );
+			mw.visitVarInsn( ALOAD , 1 );
+			mw.visitMethodInsn( INVOKEVIRTUAL , className.replace( '.' , '/' ) , methodName , amsName[0] , false );
+			mw.visitVarInsn( ALOAD , 2 );
+			mw.visitMethodInsn( INVOKEVIRTUAL , amsClassName , "getKey" ,amsName[2] , false );
+			mw.visitInsn( RETURN );
+			mw.visitMaxs( 3 , 3 );
+			mw.visitEnd( );
 
 			mw = cw.visitMethod( ACC_PUBLIC + ACC_BRIDGE + ACC_SYNTHETIC , "getKeySuffixBuffer" ,"(Ljava/lang/Object;Ljava/nio/ByteBuffer;)V" , null , null );
-			mw.visitVarInsn( ALOAD , 0 ) ;
-			mw.visitVarInsn( ALOAD , 1 ) ;
-			mw.visitTypeInsn( CHECKCAST , className.replace( '.' , '/' ) ) ;
-			mw.visitVarInsn( ALOAD , 2 ) ;
-			mw.visitMethodInsn( INVOKEVIRTUAL , "com/lamp/ledis/create/KeyCreate" , "getKeySuffixBuffer" , "(L" + className.replace( '.' , '/' ) + ";Ljava/nio/ByteBuffer;)V" ,false ) ;
-			mw.visitMaxs( 3 ,3 ) ;
+			mw.visitCode( );
+			mw.visitVarInsn( ALOAD , 0 );
+			mw.visitVarInsn( ALOAD , 1 );
+			mw.visitTypeInsn( CHECKCAST , className.replace( '.' , '/' ) );
+			mw.visitVarInsn( ALOAD , 2 );
+			mw.visitMethodInsn( INVOKEVIRTUAL , amsClassName , "getKeySuffixBuffer" ,"(L" + className.replace( '.' , '/' ) + ";Ljava/nio/ByteBuffer;)V" , false );
+			mw.visitInsn( RETURN );
+			mw.visitMaxs( 3 , 3 );
+			mw.visitEnd( );
 		}
 		mw.visitEnd( ) ;
 		byte[] code = cw.toByteArray( ) ;

@@ -16,7 +16,7 @@ public class CombinationElement {
 	}	
 	
 	public static CombinationElement newCombinationElement(int length, String comman,ResolveNetProtocol<?> resolveNetProtocol ,ResultHandle resultHandle){
-		return newCombinationElement( length , comman ,false , resolveNetProtocol ,resultHandle );
+		return newCombinationElement( length , comman ,true , resolveNetProtocol ,resultHandle );
 	}
 	
 	public static CombinationElement newCombinationElement(int length, String comman,boolean boo, ResolveNetProtocol<?> resolveNetProtocol ,ResultHandle resultHandle){

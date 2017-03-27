@@ -130,14 +130,16 @@ public class ProtocolUtil {
 		int commanLeng = stringSize( comman.length() );
 		byte[] buf = new byte[ commanLeng +3 + comman.length()+2];
 		int index = 0;
-		buf[ ++index] = longGegreeSymbolString;
+		buf[ index++] = longGegreeSymbolString;
 		getChars( commanLeng , index = index +  commanLeng, buf);
-		buf[ ++index ] = '\r';
-		buf[ ++index ] = '\n';
+		buf[ index++ ] = '\r';
+		buf[ index++ ] = '\n';
 		byte[] strbyte = comman.getBytes();
 		for( int i = 0 ; i< strbyte.length ; i++){
-			buf[ ++index ] = strbyte[ i ];
-		}		
+			buf[ index++ ] = strbyte[ i ];
+		}
+		buf[ index++ ] = '\r';
+		buf[ index++ ] = '\n';
 		return buf;
 	}
 	
@@ -198,11 +200,11 @@ public class ProtocolUtil {
 	public final static void write(OutputStream os ,ByteBuffer bytebuffer) throws IOException{
 		os.write( longGegreeSymbolString );
 		//TODO    ,,这里要优化啊
-		os.write( Long.toString(bytebuffer.position( )).getBytes());
+		os.write( Long.toString(bytebuffer.position( ) + 1).getBytes());
 		//getChars( b.length ,  os );
 		os.write('\r');
 		os.write('\n');
-		os.write( bytebuffer.array( ) , 0 ,  bytebuffer.position( ));
+		os.write( bytebuffer.array( ) , 0 ,  bytebuffer.position( )+1);
 		os.write('\r');
 		os.write('\n');
 		bytebuffer.clear( );
