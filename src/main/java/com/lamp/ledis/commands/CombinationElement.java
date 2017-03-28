@@ -56,5 +56,7 @@ public class CombinationElement {
 		return resultHandle;
 	}
 
-
+	public boolean isRead(){
+		return true;
+	}
 }

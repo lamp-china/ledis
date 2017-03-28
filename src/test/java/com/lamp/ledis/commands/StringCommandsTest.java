@@ -10,7 +10,7 @@ import com.lamp.ledis.utils.KeyCreateUtils ;
 public class StringCommandsTest extends ConnectionFactoryTest{
 	
 	StringCommands<TestEntity> sc;
-	TestEntity testEntity = new TestEntity(1 , "hello , laohu");
+	TestEntity testEntity = new TestEntity(2 , "hello , laohu");
 	
 	TestEntity te ;
 	
@@ -33,7 +33,7 @@ public class StringCommandsTest extends ConnectionFactoryTest{
 	@Test
 	public void get(){
 		te = sc.get(testEntity);
-		System.out.println( sc.get(testEntity) );
+		System.out.println( te );
 	}
 
 }
