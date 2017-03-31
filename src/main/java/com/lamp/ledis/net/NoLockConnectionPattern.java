@@ -19,6 +19,6 @@ public class NoLockConnectionPattern implements ConnectionPattern{
 	}
 	@Override
 	public void setConnection(Connection conn) {
-		lbq.add( conn );		
+		lbq.add( conn );
 	}
 }
