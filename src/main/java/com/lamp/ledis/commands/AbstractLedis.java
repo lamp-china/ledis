@@ -49,6 +49,30 @@ public abstract class AbstractLedis<T> {
 
 
 	@SuppressWarnings("unchecked")
+	public  final T combination(CombinationElement ce,List<DataConversion> dataList ,List<Object> list){
+		Connection conn   = null;
+		ByteBuffer buffer = null;
+		try {
+			conn = connectionPattern.getConnection();
+			OutputStream out = conn.getOutputStream();
+			ce.getAgreementPretreatment().perteatmentOut(out , dataList.size( )+ list.size( ) );
+			AgreementPretreatment.ListReferenceAgreementPretreatment( out , dataList , ce.getAgreementPretreatment( ).getLength( ) );
+			out.flush();
+			buffer = conn.getBuffer();
+			Object t= ce.getResolveNetProtocol().analysis(conn.getInputStream(), buffer);		
+			return (T) ( t == null?ce.getResultHandle().handle( buffer  , keyCreate):t );
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}finally {
+			if( buffer != null)
+				buffer.clear();
+			connectionPattern.setConnection( conn );
+				
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
 	public  final T combination(CombinationElement ce,List<DataConversion> dataList ){
 		Connection conn   = null;
 		ByteBuffer buffer = null;
@@ -71,7 +95,6 @@ public abstract class AbstractLedis<T> {
 				
 		}
 	}
-	
 	
 	
 }

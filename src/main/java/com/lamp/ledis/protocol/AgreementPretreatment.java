@@ -55,7 +55,7 @@ public class AgreementPretreatment {
 
 	public void perteatmentOut( OutputStream os , int length ) throws IOException {
 		if ( !boo ) {
-
+			
 		}
 		os.write( perteatment );
 	}
@@ -95,11 +95,15 @@ public class AgreementPretreatment {
 			REFERNCE_LIST.get( num ).execute( os , list );
 	}
 
-	public final static void ListReferenceAgreementPretreatment( OutputStream os , List< DataConversion > list , List<?> objectList ,int num) throws IOException{
+	public final static void ListReferenceAgreementPretreatment( OutputStream os , List< DataConversion > list , List<?> objectList ,KeyCreate<  Object > keyCreate,int num) throws IOException{
 		ProtocolUtil.write( os , list.get( 0 ).getWriteByteBuffer( ) );
 		int i = objectList.size( );
 		for( ; ; ){
-			ProtocolUtil.write( os , JsonDeToSerialize.SERIALIZE_DEFAULT.execute( objectList.get( --i) ) );
+			if( keyCreate == null){			
+				ProtocolUtil.write( os , JsonDeToSerialize.SERIALIZE_DEFAULT.execute( objectList.get( --i) ) );
+			}else{
+				ProtocolUtil.write( os , keyCreate.getKeySuffixBuffer( objectList.get( --i) ) );
+			}
 			if( i == 0){
 				break;
 			}
