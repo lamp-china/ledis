@@ -69,7 +69,11 @@ public class AgreementPretreatment {
 
 	public void perteatmentOut( OutputStream os , int length ) throws IOException {
 		if ( !boo ) {
+<<<<<<< HEAD
 			os.write( ProtocolUtil.getNumberByte( length  ) );
+=======
+			
+>>>>>>> 7fe9969bb23323a21eda6f267643823f90a06466
 		}
 		os.write( perteatment );
 	}
@@ -85,6 +89,7 @@ public class AgreementPretreatment {
 			REFERNCE_LIST.get( num ).execute( os , list );
 	}
 
+<<<<<<< HEAD
 	public final static <T> void ListReferenceAgreementPretreatment( OutputStream out , List< DataConversion > list , List<T> objectList ,int num ,KeyCreate< T > keyCreate) throws IOException{
 		ProtocolUtil.write( out , list.get( 0 ).getWriteByteBuffer( ) );
 		int i = objectList.size( );
@@ -93,6 +98,16 @@ public class AgreementPretreatment {
 				ProtocolUtil.write( out , keyCreate.getKeySuffixBuffer( objectList.get( --i) ) );
 			}else{
 				ProtocolUtil.write( out , JsonDeToSerialize.SERIALIZE_DEFAULT.execute( objectList.get( --i) ) );
+=======
+	public final static void ListReferenceAgreementPretreatment( OutputStream os , List< DataConversion > list , List<?> objectList ,KeyCreate<  Object > keyCreate,int num) throws IOException{
+		ProtocolUtil.write( os , list.get( 0 ).getWriteByteBuffer( ) );
+		int i = objectList.size( );
+		for( ; ; ){
+			if( keyCreate == null){			
+				ProtocolUtil.write( os , JsonDeToSerialize.SERIALIZE_DEFAULT.execute( objectList.get( --i) ) );
+			}else{
+				ProtocolUtil.write( os , keyCreate.getKeySuffixBuffer( objectList.get( --i) ) );
+>>>>>>> 7fe9969bb23323a21eda6f267643823f90a06466
 			}
 			if( i == 0){
 				break;
