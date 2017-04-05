@@ -22,6 +22,8 @@ public interface ResolveNetProtocol<T> {
 	
 	public static final ResolveNetProtocol<Long>        resolveSingleNetProtocol        = new ResolveSingleNetProtocol();
 	
+	public static final ResolveNetProtocol<Long>        resolveStringNetProtocol        = resolveSingleNetProtocol;
+	
 	public static final ResolveNetProtocol<Long>		resolveManyToListNetProtocol    = new ResolveManyToListNetProtocol();
 	
 	public static final ResolveNetProtocol<Long>		resolveManyToMapNetProtocol     = new ResolveManyToMapNetProtocol();

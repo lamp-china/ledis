@@ -1,5 +1,6 @@
 package com.lamp.ledis.commands;
 
+import com.lamp.ledis.protocol.EecutionMode ;
 import com.lamp.ledis.protocol.ResolveNetProtocol;
 import com.lamp.ledis.protocol.ResultHandle;
 
@@ -34,7 +35,7 @@ public class StringCommandsElement {
 	
 	public static final CombinationElement GETBIT_ELEMENT      =  CombinationElement.newCombinationElement(  3 , "getbit"       ,  ResolveNetProtocol.resolveIntNetProtocol   );
 	
-	public static final CombinationElement GETRANGE_ELEMENT    =  CombinationElement.newCombinationElement(  4 , "getrange"     ,  ResolveNetProtocol.resolveIntNetProtocol , ResultHandle.stringResultHandle);
+	public static final CombinationElement GETRANGE_ELEMENT    =  CombinationElement.newCombinationElement(  4 , "getrange"     ,  ResolveNetProtocol.resolveStringNetProtocol , ResultHandle.stringResultHandle);
 	
 	public static final CombinationElement GETSET_ELEMENT      =  CombinationElement.newCombinationElement(  4 , "getset"       ,  ResolveNetProtocol.resolveIntNetProtocol , ResultHandle.objcetResultHandle);
 	
@@ -44,7 +45,9 @@ public class StringCommandsElement {
 	
 	public static final CombinationElement INCRBYFLOAT_ELEMENT =  CombinationElement.newCombinationElement(  3 , "incrbyfloat"  ,  ResolveNetProtocol.resolveIntNetProtocol   );
 	
-	public static final CombinationElement MGET_ELEMENT        =  CombinationElement.newCombinationElement(  3 , "mget"         , false ,  ResolveNetProtocol.resolveManyToListNetProtocol , ResultHandle.typeReferenceListResultHandle);
+	public static final CombinationElement MGET_ELEMENT        =  CombinationElement.create( ).setComman( "mget" ).setLength( 3 ).setBoo( false ).setExecutioMode( EecutionMode.STRING_MGET )
+																							  .setResolveNetProtocol(ResolveNetProtocol.resolveManyToListNetProtocol  ).build( );
+																	//CombinationElement.newCombinationElement(  3 , "mget"         , false ,  ResolveNetProtocol.resolveManyToListNetProtocol , ResultHandle.typeReferenceListResultHandle);
 	
 	public static final CombinationElement MSET_ELEMENT 	   =  CombinationElement.newCombinationElement(  3 , "mset"         , false ,  ResolveNetProtocol.resolveIntToBooleanNetProtocol  );
 	

@@ -34,12 +34,13 @@ public class AgreementPretreatment {
 	private boolean boo;
 	private int length;
 	
+	private EecutionMode executioMode;
 	
 	public AgreementPretreatment( int length , String comman ) {
-		this( length , comman , true );
+		this( length , comman , true ,EecutionMode.DEFAULT);
 	}
 
-	public AgreementPretreatment( int length , String comman , boolean boo ) {
+	public AgreementPretreatment( int length , String comman , boolean boo , EecutionMode executioMode) {
 		this.length = length-2;
 		if ( boo ) {
 			this.perteatment = ProtocolUtil.getCommanByte( length , comman );
@@ -49,13 +50,26 @@ public class AgreementPretreatment {
 		this.boo = boo;
 	}
 	
+	
+	
 	public int getLength(){
 		return this.length;
 	}
 
+	
+	
+	
+	public EecutionMode getExecutioMode ( ) {
+		return executioMode ;
+	}
+
+	public void setExecutioMode ( EecutionMode executioMode ) {
+		this.executioMode = executioMode ;
+	}
+
 	public void perteatmentOut( OutputStream os , int length ) throws IOException {
 		if ( !boo ) {
-
+			os.write( ProtocolUtil.getNumberByte( length  ) );
 		}
 		os.write( perteatment );
 	}
@@ -65,57 +79,37 @@ public class AgreementPretreatment {
 	public <T> void referenceAgreementPretreatment(OutputStream os , List<T> comman , List<T> data , KeyCreate< T > mapKey){
 		
 	}
-	
-	public final static void OneReferenceAgreementPretreatment( OutputStream os , String one ) throws IOException {
-		ProtocolUtil.write( os , one );
-	}
 
-	public final static void TwoReferenceAgreementPretreatment( OutputStream os , String one , String two )
-			throws IOException {
-		ProtocolUtil.write( os , one );
-		ProtocolUtil.write( os , two );
-	}
-
-	public final static void ThreeReferenceAgreementPretreatment( OutputStream os , String one , String two ,
-			String three ) throws IOException {
-		ProtocolUtil.write( os , one );
-		ProtocolUtil.write( os , two );
-		ProtocolUtil.write( os , three );
-	}
-
-	public final static void FourReferenceAgreementPretreatment( OutputStream os , String one , String two ,
-			String three , String four ) throws IOException {
-		ProtocolUtil.write( os , one );
-		ProtocolUtil.write( os , two );
-		ProtocolUtil.write( os , three );
-		ProtocolUtil.write( os , four );
-	}
 
 	public final static void ListReferenceAgreementPretreatment( OutputStream os ,  List< DataConversion > list , int num ) throws IOException {
 			REFERNCE_LIST.get( num ).execute( os , list );
 	}
 
-	public final static void ListReferenceAgreementPretreatment( OutputStream os , List< DataConversion > list , List<?> objectList ,int num) throws IOException{
-		ProtocolUtil.write( os , list.get( 0 ).getWriteByteBuffer( ) );
+	public final static <T> void ListReferenceAgreementPretreatment( OutputStream out , List< DataConversion > list , List<T> objectList ,int num ,KeyCreate< T > keyCreate) throws IOException{
+		ProtocolUtil.write( out , list.get( 0 ).getWriteByteBuffer( ) );
 		int i = objectList.size( );
 		for( ; ; ){
-			ProtocolUtil.write( os , JsonDeToSerialize.SERIALIZE_DEFAULT.execute( objectList.get( --i) ) );
+			if( keyCreate != null){
+				ProtocolUtil.write( out , keyCreate.getKeySuffixBuffer( objectList.get( --i) ) );
+			}else{
+				ProtocolUtil.write( out , JsonDeToSerialize.SERIALIZE_DEFAULT.execute( objectList.get( --i) ) );
+			}
 			if( i == 0){
 				break;
 			}
 		}
 		if( num != 0)
-			REFERNCE_LIST.get( num ).execute( os , list );
+			REFERNCE_LIST.get( num ).execute( out , list );
 	}
 	
-	public final static void HashReferenceAgreementPretreatment( OutputStream os , List< DataConversion > list , List<?> objectList , KeyCreate<  Object > keyCreate) throws IOException{
-		ProtocolUtil.write( os , list.get( 0 ).getWriteByteBuffer( ) );
+	public final static <T> void HashReferenceAgreementPretreatment( OutputStream out , List< DataConversion > list , List<T> objectList , KeyCreate<  T > keyCreate) throws IOException{
+		ProtocolUtil.write( out , list.get( 0 ).getWriteByteBuffer( ) );
 		int i = objectList.size( );
-		Object o ;
+		T o ;
 		for( ; ; ){
 			o = objectList.get( -- i );
-			ProtocolUtil.write( os , keyCreate.getKeySuffixBuffer( o ) );
-			ProtocolUtil.write( os , JsonDeToSerialize.SERIALIZE_DEFAULT.execute( o ) );
+			ProtocolUtil.write( out , keyCreate.getKeySuffixBuffer( o ) );
+			ProtocolUtil.write( out , JsonDeToSerialize.SERIALIZE_DEFAULT.execute( o ) );
 			if( i == 0){
 				break;
 			}
