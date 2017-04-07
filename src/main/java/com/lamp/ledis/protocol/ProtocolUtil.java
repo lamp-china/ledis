@@ -117,10 +117,9 @@ public class ProtocolUtil {
 		 int size = (i < 0) ? stringSize(-i) + 1 : stringSize(i);
 	     byte[] buf = new byte[size+3];
 	     buf[0] = symbol;
-	     getChars(i, size, buf);
+	     getChars(i, size+1, buf);
 	     buf[ ++size ] = '\r';
 		 buf[ ++size ] = '\n';
-	     
 	     return buf;
 
 	}
@@ -131,7 +130,7 @@ public class ProtocolUtil {
 		byte[] buf = new byte[ commanLeng +3 + comman.length()+2];
 		int index = 0;
 		buf[ index++] = longGegreeSymbolString;
-		getChars( commanLeng , index = index +  commanLeng, buf);
+		getChars( comman.length() , index = index +  commanLeng, buf);
 		buf[ index++ ] = '\r';
 		buf[ index++ ] = '\n';
 		byte[] strbyte = comman.getBytes();
@@ -167,44 +166,20 @@ public class ProtocolUtil {
 	}
 	
 	
-	public final static void write(OutputStream os ,String str ) throws IOException{
-		if( str == null){
-			return;
-		}
-		byte[] b = str.getBytes();
-		
-		os.write( longGegreeSymbolString );
-		//TODO    ,,这里要优化啊
-		os.write( Long.toString(str.getBytes().length).getBytes());
-		//getChars( b.length ,  os );
-		os.write('\r');
-		os.write('\n');
-		os.write( b );
-		os.write('\r');
-		os.write('\n');
-	}
-	
 	public final static void write(OutputStream os ,byte[] b ) throws IOException{
 		
-		os.write( longGegreeSymbolString );
-		//TODO    ,,这里要优化啊
-		os.write( Long.toString(b.length).getBytes());
-		//getChars( b.length ,  os );
-		os.write('\r');
-		os.write('\n');
+		os.write( getLongGegreeByte( b.length ) );
 		os.write( b );
 		os.write('\r');
 		os.write('\n');
 	}
 	
 	public final static void write(OutputStream os ,ByteBuffer bytebuffer) throws IOException{
-		os.write( longGegreeSymbolString );
-		//TODO    ,,这里要优化啊
-		os.write( Long.toString(bytebuffer.position( ) + 1).getBytes());
-		//getChars( b.length ,  os );
-		os.write('\r');
-		os.write('\n');
-		os.write( bytebuffer.array( ) , 0 ,  bytebuffer.position( )+1);
+		if( bytebuffer == null){
+			return;
+		}
+		os.write( getLongGegreeByte( bytebuffer.position( ) ) );
+		os.write( bytebuffer.array( ) , 0 ,  bytebuffer.position( ) );
 		os.write('\r');
 		os.write('\n');
 		bytebuffer.clear( );
@@ -269,8 +244,9 @@ public class ProtocolUtil {
     }
     
     public static final void getChars(long i, ByteBuffer byteBuffer) {
-    	
-    	getChars( i , byteBuffer.position( ) + stringSizeArray(i) , byteBuffer.array( ) );
+    	int stringSize = byteBuffer.position( ) + stringSizeArray(i);
+    	getChars( i , stringSize , byteBuffer.array( ) );
+    	byteBuffer.position( stringSize  );
     }
     
     

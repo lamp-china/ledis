@@ -1,8 +1,12 @@
 package com.lamp.ledis.commands;
 
+import java.util.ArrayList ;
+import java.util.List ;
+
 import org.junit.Before ;
 import org.junit.Test;
 
+import com.alibaba.fastjson.JSON ;
 import com.lamp.ledis.entity.TestEntity;
 import com.lamp.ledis.net.ConnectionFactoryTest;
 import com.lamp.ledis.utils.KeyCreateUtils ;
@@ -12,6 +16,13 @@ public class StringCommandsTest extends ConnectionFactoryTest{
 	StringCommands<TestEntity> sc;
 	TestEntity testEntity = new TestEntity(2 , "hello , laohu");
 	
+	List<TestEntity> list;
+	{
+		list = new ArrayList<>( );
+		for(int i = 4 ; i<14 ;i++ ){
+			list.add( new TestEntity(i , "hello , laohu" + i) );
+		}
+	}
 	TestEntity te ;
 	
 	@Before
@@ -35,5 +46,17 @@ public class StringCommandsTest extends ConnectionFactoryTest{
 		te = sc.get(testEntity);
 		System.out.println( te );
 	}
+	
+	@Test
+	public void mset(){
+		sc.mSet( list );
+	}
+	
+	@Test
+	public void mget(){
+		List<TestEntity> cd = sc.mGet( list );
+		System.out.println( JSON.toJSONString( cd ) ) ;
+	}
+	
 
 }

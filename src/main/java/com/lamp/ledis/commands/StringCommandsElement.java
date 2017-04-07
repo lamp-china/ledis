@@ -49,7 +49,9 @@ public class StringCommandsElement {
 																							  .setResolveNetProtocol(ResolveNetProtocol.resolveManyToListNetProtocol  ).build( );
 																	//CombinationElement.newCombinationElement(  3 , "mget"         , false ,  ResolveNetProtocol.resolveManyToListNetProtocol , ResultHandle.typeReferenceListResultHandle);
 	
-	public static final CombinationElement MSET_ELEMENT 	   =  CombinationElement.newCombinationElement(  3 , "mset"         , false ,  ResolveNetProtocol.resolveIntToBooleanNetProtocol  );
+	public static final CombinationElement MSET_ELEMENT 	   =  CombinationElement.create( ).setComman( "mset" ).setLength( 3 ).setBoo( false ).setExecutioMode( EecutionMode.STRING_MSET )
+																							  .setResolveNetProtocol(ResolveNetProtocol.resolveIntToBooleanNetProtocol  ).build( );
+																//CombinationElement.newCombinationElement(  3 , "mset"         , false ,  ResolveNetProtocol.resolveIntToBooleanNetProtocol  );
 	
 	public static final CombinationElement MSETNX_ELEMENT 	   =  CombinationElement.newCombinationElement(  3 , "msetnx"       , false ,  ResolveNetProtocol.resolveIntToBooleanNetProtocol  );
 	

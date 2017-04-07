@@ -109,9 +109,9 @@ public interface ResolveNetProtocol<T> {
 			if(in.readHead() == ':'){
 				buffer.putLong( in.readLongCrLf() );
 			}else{	
-				buffer.put( stringDistinguish());
+				//buffer.put( stringDistinguish());
 				in.readLind(buffer);	
-				buffer.put( stringDistinguish());
+				//buffer.put( stringDistinguish());
 			}
 		}
 		

@@ -53,6 +53,8 @@ public class DataConversion {
 	private Object object;
 	
 	private KeyCreate< Object > keyCreate;
+	
+	private boolean isWrite ;
 
 	public byte[] getWriteData(){
 		byte[] returnData;
@@ -63,10 +65,13 @@ public class DataConversion {
 			object = null;
 			keyCreate = null;
 		}
+		this.isWrite = false;
 		return returnData;
 	}
 	
 	public ByteBuffer getWriteByteBuffer(){
+		if( !this.isWrite )
+			return null;
 		ByteBuffer byteBuffer;
 		if(keyCreate == null){
 			byteBuffer = JsonDeToSerialize.SERIALIZE_DEFAULT.execute( object );
@@ -76,16 +81,19 @@ public class DataConversion {
 			keyCreate = null;
 		}
 		object = null;
+		this.isWrite = false;
 		return byteBuffer;
 	}
 	
 	public DataConversion setData( String data ) {
 		this.data = data;
+		this.isWrite = true;
 		return this;
 	}
 
 	public  DataConversion setObjectAndKeyCreate( Object object ) {
 		this.object = object;
+		this.isWrite = true;
 		return this;
 	}
 	
@@ -93,6 +101,7 @@ public class DataConversion {
 	public <T> DataConversion setObjectAndKeyCreate( Object object ,KeyCreate< T > keyCreate) {
 		this.object = object;
 		this.keyCreate = (KeyCreate< Object >)keyCreate;
+		this.isWrite = true;
 		return this;
 	}
 

@@ -51,7 +51,7 @@ public class JsonDeToSerialize implements Deserialize , Serialize{
 			by = JSON.toJSONBytes( o  ) ;
 		}
 		try {
-			return (ByteBuffer)en.newInstance( new Object[]{ by , by.length -1 , 0} );
+			return (ByteBuffer)en.newInstance( new Object[]{ by , by.length  , 0} );
 		} catch ( InstantiationException | IllegalAccessException | IllegalArgumentException
 				| InvocationTargetException e ) {
 			e.printStackTrace();

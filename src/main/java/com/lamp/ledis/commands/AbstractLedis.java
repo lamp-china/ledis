@@ -20,19 +20,19 @@ public abstract class AbstractLedis<T> {
 	
 	protected Deserialize deserialize;
 	
-	protected KeyCreate<T> keyCreate;
+	protected KeyCreate<?> keyCreate;
 	
 	
 	private ConnectionPattern connectionPattern;
 	
-	public AbstractLedis(Serialize serialize , Deserialize deserialize , KeyCreate<T> keyCreate){
+	public AbstractLedis(Serialize serialize , Deserialize deserialize , KeyCreate<?> keyCreate){
 		this( serialize , deserialize , keyCreate , null );
 	}
 		
 	
 	
 	public AbstractLedis(
-			Serialize serialize, Deserialize deserialize, KeyCreate< T > keyCreate, String dataSource
+			Serialize serialize, Deserialize deserialize, KeyCreate< ? > keyCreate, String dataSource
 	) {
 		super( ) ;
 		this.serialize = serialize ;
@@ -42,32 +42,6 @@ public abstract class AbstractLedis<T> {
 			this.connectionPattern = ConnectionFactory.getInstance( ).getConnectionPattern( ) ;
 		}else{
 			this.connectionPattern = ConnectionFactory.getInstance( ).getConnectionPattern( dataSource );
-		}
-	}
-
-
-
-	@SuppressWarnings("unchecked")
-	public  final T combination(CombinationElement ce,List<DataConversion> dataList ,List<Object> list){
-		Connection conn   = null;
-		ByteBuffer buffer = null;
-		try {
-			conn = connectionPattern.getConnection();
-			OutputStream out = conn.getOutputStream();
-			ce.getAgreementPretreatment().perteatmentOut(out , dataList.size( )+ list.size( ) );
-			AgreementPretreatment.ListReferenceAgreementPretreatment( out , dataList , ce.getAgreementPretreatment( ).getLength( ) );
-			out.flush();
-			buffer = conn.getBuffer();
-			Object t= ce.getResolveNetProtocol().analysis(conn.getInputStream(), buffer);		
-			return (T) ( t == null?ce.getResultHandle().handle( buffer  , keyCreate):t );
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}finally {
-			if( buffer != null)
-				buffer.clear();
-			connectionPattern.setConnection( conn );
-				
 		}
 	}
 	
@@ -95,16 +69,16 @@ public abstract class AbstractLedis<T> {
 		}
 	}
 	
-	@SuppressWarnings("unchecked")
-	public  final T combination(CombinationElement ce,List<DataConversion> dataList ,List<T> objectList){
+	
+	public  final Object combination(CombinationElement ce,List<DataConversion> dataList ,List<?> objectList){
 		Connection conn   = null;
 		ByteBuffer buffer = null;
 		try {
 			conn = connectionPattern.getConnection();
 			OutputStream out = conn.getOutputStream();
 			EecutionMode ecutionMode = ce.getAgreementPretreatment( ).getExecutioMode( );
-			ce.getAgreementPretreatment().perteatmentOut(out , ecutionMode.getMultiple( ) * objectList.size( ));
-			AgreementPretreatment.ListReferenceAgreementPretreatment( out , dataList , ce.getAgreementPretreatment( ).getLength( ) );
+			ce.getAgreementPretreatment().perteatmentOut(out , ecutionMode.getMultiple( ) * objectList.size( ) + 1);
+			//AgreementPretreatment.ListReferenceAgreementPretreatment( out , dataList , ce.getAgreementPretreatment( ).getLength( ) );
 			if( ecutionMode  == EecutionMode.STRING_MGET){
 				AgreementPretreatment.ListReferenceAgreementPretreatment( out , dataList , objectList , 1 ,  keyCreate );
 			}else if ( ecutionMode  == EecutionMode.STRING_MSET){
@@ -120,7 +94,7 @@ public abstract class AbstractLedis<T> {
 			out.flush();
 			buffer = conn.getBuffer();
 			Object t= ce.getResolveNetProtocol().analysis(conn.getInputStream(), buffer);		
-			return (T) ( t == null?ce.getResultHandle().handle( buffer  , keyCreate):t );
+			return ( t == null?ce.getResultHandle().handle( buffer  , keyCreate):t );
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;

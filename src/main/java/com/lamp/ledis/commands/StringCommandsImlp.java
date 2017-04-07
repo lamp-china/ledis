@@ -36,19 +36,21 @@ public class StringCommandsImlp< T > extends AbstractLedis< T > implements Strin
 
 	@Override
 	public T getSet( T t ) {
-		return null;
+		List<DataConversion> list = DataConversion.getListDataConversion( );
+		list.get( 0 ) .setObjectAndKeyCreate( t , keyCreate );
+		return combination(StringCommandsElement.GETSET_ELEMENT, list );
 	}
 
+	@SuppressWarnings( "unchecked" )
 	@Override
 	public List< T > mGet( List< T > keys ) {
-		// TODO 自动生成的方法存根
-		return null;
+		return ( List< T > ) combination( StringCommandsElement.MGET_ELEMENT ,  DataConversion.getListDataConversion( ) , keys );
 	}
 
+	@SuppressWarnings( "unchecked" )
 	@Override
 	public List< T > mGetString( List< String > keys ) {
-		// TODO 自动生成的方法存根
-		return null;
+		return ( List< T > ) combination( StringCommandsElement.MGET_ELEMENT ,  DataConversion.getListDataConversion( ) , keys );
 	}
 
 	@Override
@@ -97,7 +99,7 @@ public class StringCommandsImlp< T > extends AbstractLedis< T > implements Strin
 
 	@Override
 	public void mSet( List< T > tuple ) {
-		// TODO 自动生成的方法存根
+		combination( StringCommandsElement.MSET_ELEMENT ,  DataConversion.getListDataConversion( ) , tuple );
 
 	}
 
