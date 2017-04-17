@@ -30,11 +30,15 @@ public interface KeyCreate<T> {
 	
 	public Class< ? > getEntityClass();
 	
+	public T  getOject();
+	
 	public TypeReference< ? > getTypeReferenceList();
 	
 	public TypeReference< ? >  getTypeReferenceSet();
 	
 	public TypeReference< ? >  getTypeReferenceMap();
+	
+	public KeyCreate<T> getKeyCreate();
 	
 
 }

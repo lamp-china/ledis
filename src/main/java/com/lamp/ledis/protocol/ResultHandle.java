@@ -1,6 +1,7 @@
 package com.lamp.ledis.protocol;
 
 import java.nio.ByteBuffer;
+import java.util.Collections ;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.util.IOUtils;
@@ -23,44 +24,83 @@ public interface ResultHandle {
 	
 	public <T>T handle(ByteBuffer buffer  , KeyCreate<T> kc);
 	
+	public <T>T getNullOjbect(KeyCreate< T > keyCreate);
+	
 
 	static class ByteResultHandle implements ResultHandle{
+		private static final byte[] object = new byte[0];
+		
+		
 		@Override
 		@SuppressWarnings("unchecked")
 		public <T>T handle(ByteBuffer buffer,  KeyCreate<T> kc) {
 			byte[] by = new byte[buffer.position()];
 			buffer.get( by );
 			return (T)by;
+		}
+
+		@SuppressWarnings( "unchecked" )
+		@Override
+		public < T > T getNullOjbect (KeyCreate< T > keyCreate ) {
+			return (T)object ;
 		}		
 	}
 	
 	static class StringResultHandle implements ResultHandle{
+		private static final String object = "";
+		
 		@Override
 		@SuppressWarnings("unchecked")
 		public  <T>T handle(ByteBuffer buffer,  KeyCreate<T> kc) {	
 			return (T)new String( buffer.array() , 0 , buffer.position());
+		}
+
+		@SuppressWarnings( "unchecked" )
+		@Override
+		public < T > T getNullOjbect ( KeyCreate< T > keyCreate ) {
+			return (T)object ;
 		}		
 	}	
 	static class ObjcetResultHandle implements ResultHandle{
+		
 		@Override
 		@SuppressWarnings("unchecked")
 		public <T>T handle(ByteBuffer buffer,  KeyCreate<T> kc) {
 			return (T)JSON.parseObject(buffer.array(), 0, buffer.position(), IOUtils.UTF8, kc.getEntityClass());
-		}		
+		}
+
+		@Override
+		public < T > T getNullOjbect ( KeyCreate< T > keyCreate ) {
+			return keyCreate.getOject( ) ;
+		}	
 	}
 	
 	static class TypeReferenceListResultHandle implements ResultHandle{
+		
 		@Override
 		@SuppressWarnings("unchecked")
 		public <T>T handle(ByteBuffer buffer, KeyCreate<T> kc) {
 			return (T) JSON.parseObject( new String(buffer.array(), 0, buffer.position()), kc.getTypeReferenceList());
 		}
+		
+		@SuppressWarnings( "unchecked" )
+		@Override
+		public < T > T getNullOjbect ( KeyCreate< T > keyCreate ) {
+			return (T)Collections.EMPTY_LIST ;
+		}
 	}
-	static class TypeReferenceSetResultHandle implements ResultHandle{
+	static class TypeReferenceSetResultHandle implements ResultHandle{	
+		
 		@Override
 		@SuppressWarnings("unchecked")
 		public <T>T handle(ByteBuffer buffer, KeyCreate<T> kc) {
 			return (T)JSON.parseObject( new String(buffer.array(), 0, buffer.position()), kc.getTypeReferenceSet());
+		}
+		
+		@SuppressWarnings( "unchecked" )
+		@Override
+		public < T > T getNullOjbect ( KeyCreate< T > keyCreate ) {
+			return (T)Collections.EMPTY_SET;
 		}
 	}
 	static class TypeReferenceMapResultHandle implements ResultHandle{
@@ -68,6 +108,12 @@ public interface ResultHandle {
 		@SuppressWarnings("unchecked")
 		public <T>T handle(ByteBuffer buffer, KeyCreate<T> kc) {
 			return (T)JSON.parseObject( new String(buffer.array(), 0, buffer.position()), kc.getTypeReferenceMap());
+		}
+		
+		@SuppressWarnings( "unchecked" )
+		@Override
+		public < T > T getNullOjbect ( KeyCreate< T > keyCreate ) {
+			return (T)Collections.EMPTY_MAP ;
 		}
 	}
 }

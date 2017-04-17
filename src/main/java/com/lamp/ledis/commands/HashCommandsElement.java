@@ -1,5 +1,6 @@
 package com.lamp.ledis.commands;
 
+import com.lamp.ledis.protocol.EecutionMode ;
 import com.lamp.ledis.protocol.ResolveNetProtocol;
 import com.lamp.ledis.protocol.ResultHandle;
 
@@ -13,7 +14,8 @@ public class HashCommandsElement {
  	/*
  	 * more
  	 */
- 	public static final CombinationElement HDEL_MORE        =  CombinationElement.newCombinationElement(  3 , "hdel"        , false , ResolveNetProtocol.resolveIntNetProtocol   );
+ 	public static final CombinationElement HDEL_MORE        =  CombinationElement.create( ).setComman( "hdel" ).setExecutioMode( EecutionMode.STRING_MGET ).buildBoolean();
+ 			                                                   
  	
  	/*
  	 * Hexists
@@ -52,12 +54,13 @@ public class HashCommandsElement {
      /*
       * Hmget
       */
-     public static final CombinationElement HMGET           =  CombinationElement.newCombinationElement(  2 , "hmget"       , false , ResolveNetProtocol.resolveManyToListNetProtocol ,ResultHandle.typeReferenceListResultHandle);
-     
+     public static final CombinationElement HMGET           =   CombinationElement.create( ).setComman( "hmset" ).setExecutioMode( EecutionMode.MAP_MGET ).setResolveNetProtocol( ResolveNetProtocol.resolveManyToListNetProtocol ).build( );
+    
      /*
       * Hmset 
       */
-     public static final CombinationElement HMSET           =  CombinationElement.newCombinationElement(  2 , "hmset"        , false , ResolveNetProtocol.resolveManyToListNetProtocol );
+     public static final CombinationElement HMSET           =  CombinationElement.create( ).setComman( "hmset" ).setExecutioMode( EecutionMode.MAP_MSET ).setResolveNetProtocol( ResolveNetProtocol.resolveStateNetProtocol ).build( );
+    		 												 
      /*
       * Hset 
       */

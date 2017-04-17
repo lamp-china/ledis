@@ -150,6 +150,18 @@ public class CombinationElement {
 		}
 
 
+		public CombinationElement buildBoolean(){
+			ResolveNetProtocol<?> resolveNetProtocol = this.resolveNetProtocol;
+			ResultHandle resultHandle = this.resultHandle;
+			if( resolveNetProtocol == null  ){
+				resolveNetProtocol = ResolveNetProtocol.resolveIntToBooleanNetProtocol;
+			}else{
+				if( resultHandle == null ){
+					resultHandle = RESOLVENET_RESULT_MAP.get( resolveNetProtocol );
+				}
+			}
+			return new CombinationElement( new AgreementPretreatment( this.length , this.comman ,this.executioMode != null ? false : true	, this.executioMode)  , resolveNetProtocol , resultHandle);
+		}
 
 
 		public CombinationElement build(){
@@ -162,7 +174,7 @@ public class CombinationElement {
 					resultHandle = RESOLVENET_RESULT_MAP.get( resolveNetProtocol );
 				}
 			}
-			return new CombinationElement( new AgreementPretreatment( this.length , this.comman ,this.boo	, this.executioMode)  , resolveNetProtocol , resultHandle);
+			return new CombinationElement( new AgreementPretreatment( this.length , this.comman ,this.executioMode != null ? false : true	, this.executioMode)  , resolveNetProtocol , resultHandle);
 		}
 	}
 	

@@ -143,7 +143,7 @@ public class LedisInputStream extends InputStream {
 	}
 	public boolean readLind(ByteBuffer bb) throws IOException {
 		long length = readLongCrLf();
-		if( length  == -1)
+		if( length  == -1)//如果长度是 -1 那么就是 （nil)
 			return false;
 		readLind( bb, length );
 		return true;

@@ -87,7 +87,7 @@ public class AgreementPretreatment {
 			REFERNCE_LIST.get( num ).execute( os , list );
 	}
 
-	public final static <T> void ListReferenceAgreementPretreatment( OutputStream out , List< DataConversion > list , List<?> objectList ,int num ,KeyCreate< Object > keyCreate) throws IOException{
+	public final static <T> void ListReferenceAgreementPretreatment( OutputStream out , List< DataConversion > list , List<T> objectList ,int num ,KeyCreate< T > keyCreate) throws IOException{
 		ProtocolUtil.write( out , list.get( 0 ).getWriteByteBuffer( ) );
 		int i = objectList.size( );
 		ByteBuffer bb;

@@ -41,22 +41,18 @@ public class StringCommandsImlp< T > extends AbstractLedis< T > implements Strin
 		return combination(StringCommandsElement.GETSET_ELEMENT, list );
 	}
 
-	@SuppressWarnings( "unchecked" )
 	@Override
 	public List< T > mGet( List< T > keys ) {
-		return ( List< T > ) combination( StringCommandsElement.MGET_ELEMENT ,  DataConversion.getListDataConversion( ) , keys );
+		return combinationReturnList( StringCommandsElement.MGET_ELEMENT ,  DataConversion.getListDataConversion( ) , keys );
 	}
 
-	@SuppressWarnings( "unchecked" )
 	@Override
 	public List< T > mGetString( List< String > keys ) {
-		return ( List< T > ) combination( StringCommandsElement.MGET_ELEMENT ,  DataConversion.getListDataConversion( ) , keys );
+		return combinationReturnListString( StringCommandsElement.MGET_ELEMENT ,  DataConversion.getListDataConversion( ) , keys );
 	}
-
 	@Override
 	public List< T > mGetNumber( List< Number > keys ) {
-		// TODO 自动生成的方法存根
-		return null;
+		return combinationReturnListLong( StringCommandsElement.MGET_ELEMENT ,  DataConversion.getListDataConversion( ) , keys );
 	}
 
 	@Override
@@ -69,26 +65,34 @@ public class StringCommandsImlp< T > extends AbstractLedis< T > implements Strin
 
 	@Override
 	public Boolean setNX( T t ) {
-		// TODO 自动生成的方法存根
-		return null;
+		List<DataConversion> list = DataConversion.getListDataConversion( );
+		list.get( 0 ) .setObjectAndKeyCreate( t , keyCreate );
+		list.get( 1 ).setObjectAndKeyCreate( t );
+		return combinationReturnBoolean(StringCommandsElement.SETNX_ELEMENT, list );
 	}
 
 	@Override
 	public Boolean setNX( T t , Object o ) {
-		// TODO 自动生成的方法存根
-		return null;
+		List<DataConversion> list = DataConversion.getListDataConversion( );
+		list.get( 0 ) .setObjectAndKeyCreate( t , keyCreate );
+		list.get( 1 ).setObjectAndKeyCreate( o );
+		return combinationReturnBoolean(StringCommandsElement.SETNX_ELEMENT, list );
 	}
 
 	@Override
 	public Boolean setEx( T t ) {
-		// TODO 自动生成的方法存根
-		return null;
+		List<DataConversion> list = DataConversion.getListDataConversion( );
+		list.get( 0 ) .setObjectAndKeyCreate( t , keyCreate );
+		list.get( 1 ).setObjectAndKeyCreate( t );
+		return combinationReturnBoolean(StringCommandsElement.SETEX_ELEMENT, list );
 	}
 
 	@Override
 	public Boolean setEx( T t , Object o ) {
-		// TODO 自动生成的方法存根
-		return null;
+		List<DataConversion> list = DataConversion.getListDataConversion( );
+		list.get( 0 ) .setObjectAndKeyCreate( t , keyCreate );
+		list.get( 1 ).setObjectAndKeyCreate( o );
+		return combinationReturnBoolean(StringCommandsElement.SETEX_ELEMENT, list );
 	}
 
 	@Override
@@ -105,44 +109,50 @@ public class StringCommandsImlp< T > extends AbstractLedis< T > implements Strin
 
 	@Override
 	public Boolean mSetNX( List< T > tuple ) {
+		return null;
+	}
+
+	@Override
+	public Long incr(T t ) {
+		List<DataConversion> list = DataConversion.getListDataConversion( );
+		list.get( 0 ) .setObjectAndKeyCreate( t , keyCreate );
+		return combinationReturnLong(StringCommandsElement.INCR_ELEMENT, list );
+	}
+
+	@Override
+	public Long incrBy(T t, long value ) {
+		List<DataConversion> list = DataConversion.getListDataConversion( );
+		list.get( 0 ) .setObjectAndKeyCreate( t , keyCreate );
+		list.get( 1 ).setObjectAndKeyCreate( value );
+		return combinationReturnLong(StringCommandsElement.INCRBY_ELEMENT, list );
+	}
+
+	@Override
+	public Double incrBy(T t, double value ) {
 		// TODO 自动生成的方法存根
 		return null;
 	}
 
 	@Override
-	public Long incr( ) {
-		// TODO 自动生成的方法存根
-		return null;
+	public Long decr( T t ) {
+		List<DataConversion> list = DataConversion.getListDataConversion( );
+		list.get( 0 ) .setObjectAndKeyCreate( t , keyCreate );
+		return combinationReturnLong(StringCommandsElement.DECR_ELEMENT, list );
 	}
 
 	@Override
-	public Long incrBy( long value ) {
-		// TODO 自动生成的方法存根
-		return null;
-	}
-
-	@Override
-	public Double incrBy( double value ) {
-		// TODO 自动生成的方法存根
-		return null;
-	}
-
-	@Override
-	public Long decr( ) {
-		// TODO 自动生成的方法存根
-		return null;
-	}
-
-	@Override
-	public Long decrBy( long value ) {
-		// TODO 自动生成的方法存根
-		return null;
+	public Long decrBy(T t, long value ) {
+		List<DataConversion> list = DataConversion.getListDataConversion( );
+		list.get( 0 ) .setObjectAndKeyCreate( t , keyCreate );
+		list.get( 1 ).setObjectAndKeyCreate( value );
+		return combinationReturnLong(StringCommandsElement.DECRBY_ELEMENT, list );
 	}
 
 	@Override
 	public Long strLen( T t ) {
-		// TODO 自动生成的方法存根
-		return null;
+		List<DataConversion> list = DataConversion.getListDataConversion( );
+		list.get( 0 ) .setObjectAndKeyCreate( t , keyCreate );
+		return combinationReturnLong(StringCommandsElement.STRLEN_ELEMENT, list );
 	}
 
 }

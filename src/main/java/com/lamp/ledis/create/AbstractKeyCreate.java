@@ -13,13 +13,23 @@ public abstract class AbstractKeyCreate< T > implements KeyCreate< T > {
 	private byte[] byteKey ;
 
 	private Class< T > clazz ;
+	
+	private T object;
 
+	private KeyCreate<T> keyCreate;
+	
 	private KeyConfigure<T> keyConfigure ;
 
 	public AbstractKeyCreate(KeyConfigure<T> keyConfigure) {
 		this.keyConfigure = keyConfigure ;
 		this.clazz = keyConfigure.getAtr( ).getClazz( ) ;
 		this.stringKey   = keyConfigure.getKeyName( );
+		try {
+			this.object = clazz.newInstance( );
+		} catch ( InstantiationException | IllegalAccessException e ) {
+			// TODO 自动生成的 catch 块
+			e.printStackTrace();
+		}
 	}
 
 	public AbstractKeyCreate(String key) {
@@ -28,6 +38,10 @@ public abstract class AbstractKeyCreate< T > implements KeyCreate< T > {
 			this.byteKey = stringKey.getBytes( ) ;
 	}
 
+	public T getOject(){
+		return object;
+	}
+	
 	public ByteBuffer getKeySuffixBuffer(T t){
 		return null;
 	}
@@ -120,4 +134,9 @@ public abstract class AbstractKeyCreate< T > implements KeyCreate< T > {
 		return keyConfigure.getAtr( ).getTrMap( ) ;
 	}
 
+	public KeyCreate< T > getKeyCreate ( ) {
+		return keyCreate ;
+	}
+
+	
 }

@@ -62,7 +62,7 @@ public final class ListCommandsElement {
     /**
      * 获得list的长度
      */
-    public static final CombinationElement LLEN             =  CombinationElement.newCombinationElement( 5  , "llen"           , ResolveNetProtocol.resolveIntNetProtocol    );
+    public static final CombinationElement LLEN             =  CombinationElement.newCombinationElement( 2  , "llen"           , ResolveNetProtocol.resolveIntNetProtocol    );
     
     
 	/**

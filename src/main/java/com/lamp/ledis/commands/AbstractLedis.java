@@ -20,19 +20,20 @@ public abstract class AbstractLedis<T> {
 	
 	protected Deserialize deserialize;
 	
-	protected KeyCreate<?> keyCreate;
+	protected KeyCreate< T  > keyCreate;
 	
 	
 	private ConnectionPattern connectionPattern;
 	
-	public AbstractLedis(Serialize serialize , Deserialize deserialize , KeyCreate<?> keyCreate){
+	public AbstractLedis(Serialize serialize , Deserialize deserialize , KeyCreate<T> keyCreate){
 		this( serialize , deserialize , keyCreate , null );
 	}
 		
 	
 	
+
 	public AbstractLedis(
-			Serialize serialize, Deserialize deserialize, KeyCreate< ? > keyCreate, String dataSource
+			Serialize serialize, Deserialize deserialize, KeyCreate< T > keyCreate, String dataSource
 	) {
 		super( ) ;
 		this.serialize = serialize ;
@@ -45,8 +46,25 @@ public abstract class AbstractLedis<T> {
 		}
 	}
 	
+	
+	
+	public  final Boolean combinationReturnBoolean(CombinationElement ce,List<DataConversion> dataList ){
+		return (Boolean) combination(ce, dataList);
+	}
+	
+	public  final Long combinationReturnLong(CombinationElement ce,List<DataConversion> dataList ){
+		return (Long) combination(ce, dataList);
+	}
+	
+	@SuppressWarnings( "unchecked" )
+	public  final List<T> combinationReturnList(CombinationElement ce,List<DataConversion> dataList ){
+		return (List<T>) combination(ce, dataList);
+	}
+	
+
+	
 	@SuppressWarnings("unchecked")
-	public  final T combination(CombinationElement ce,List<DataConversion> dataList ){
+	public  final <T>T combination(CombinationElement ce,List<DataConversion> dataList ){
 		Connection conn   = null;
 		ByteBuffer buffer = null;
 		try {
@@ -56,7 +74,10 @@ public abstract class AbstractLedis<T> {
 			AgreementPretreatment.ListReferenceAgreementPretreatment( out , dataList , ce.getAgreementPretreatment( ).getLength( ) );
 			out.flush();
 			buffer = conn.getBuffer();
-			Object t= ce.getResolveNetProtocol().analysis(conn.getInputStream(), buffer);		
+			Object t= ce.getResolveNetProtocol().analysis(conn.getInputStream(), buffer);
+			if( t == null && buffer.position( ) == 0){
+				return (T)  ce.getResultHandle().getNullOjbect( keyCreate );
+			}
 			return (T) ( t == null?ce.getResultHandle().handle( buffer  , keyCreate):t );
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -70,7 +91,60 @@ public abstract class AbstractLedis<T> {
 	}
 	
 	
-	public  final Object combination(CombinationElement ce,List<DataConversion> dataList ,List<?> objectList){
+	
+	@SuppressWarnings( "unchecked" )
+	public final List<T> combinationReturnList(CombinationElement ce,List<DataConversion> dataList ,List<T> objectList){
+		return (List<T>)combination( ce , dataList , objectList);
+	}
+	
+	@SuppressWarnings( "unchecked" )
+	public final List<T> combinationReturnListString(CombinationElement ce,List<DataConversion> dataList ,List<String> objectList){
+		return (List<T>)combinationString( ce , dataList , objectList);
+	}
+	
+	@SuppressWarnings( "unchecked" )
+	public final List<T> combinationReturnListLong(CombinationElement ce,List<DataConversion> dataList ,List<Number> objectList){
+		return (List<T>)combinationLong( ce , dataList , objectList);
+	}
+	
+	public final boolean combinationParameterListReturnBooblean(CombinationElement ce,List<DataConversion> dataList ,List<T> objectList,KeyCreate< T > keyCreate){
+		return (boolean)combinations( ce , dataList , objectList , keyCreate);
+	}
+	
+	public final boolean combinationParameterListStringReturnBooblean(CombinationElement ce,List<DataConversion> dataList ,List<String> objectList){
+		return (boolean)combinationString( ce , dataList , objectList);
+	}
+	
+	public final boolean combinationParameterListLongReturnBooblean(CombinationElement ce,List<DataConversion> dataList ,List<Number> objectList){
+		return (boolean)combinationLong( ce , dataList , objectList);
+	}
+	
+	
+	public  final T combination(CombinationElement ce,List<DataConversion> dataList ,List<T> objectList){
+		return combinations( ce , dataList , objectList , this.keyCreate );
+	}
+	
+	final T combinations(CombinationElement ce,List<DataConversion> dataList ,List<T> objectList,KeyCreate<T> keyCreate){
+		return combination( ce , dataList , objectList ,keyCreate );
+	}
+	
+	@SuppressWarnings( "unchecked" )
+	final  List<T> combinationHash(CombinationElement ce,List<DataConversion> dataList ,List<T> objectList,KeyCreate<T> keyCreate){
+		return (List< T >)combination( ce , dataList , objectList ,keyCreate );
+	}
+	
+	@SuppressWarnings( "unchecked" )
+	public  final T combinationString(CombinationElement ce,List<DataConversion> dataList ,List<String> objectList){
+		return combination( ce , dataList ,  (List<T>)objectList , null );
+	}
+	
+	@SuppressWarnings( "unchecked" )
+	public  final T combinationLong(CombinationElement ce,List<DataConversion> dataList ,List<Number> objectList){
+		return combination( ce , dataList ,  (List<T>)objectList , null );
+	}
+	
+	
+	private final <T>T  combination(CombinationElement ce,List<DataConversion> dataList ,List<T> objectList , KeyCreate<T> keyCreate){
 		Connection conn   = null;
 		ByteBuffer buffer = null;
 		try {
@@ -78,7 +152,6 @@ public abstract class AbstractLedis<T> {
 			OutputStream out = conn.getOutputStream();
 			EecutionMode ecutionMode = ce.getAgreementPretreatment( ).getExecutioMode( );
 			ce.getAgreementPretreatment().perteatmentOut(out , ecutionMode.getMultiple( ) * objectList.size( ) + 1);
-			//AgreementPretreatment.ListReferenceAgreementPretreatment( out , dataList , ce.getAgreementPretreatment( ).getLength( ) );
 			if( ecutionMode  == EecutionMode.STRING_MGET){
 				AgreementPretreatment.ListReferenceAgreementPretreatment( out , dataList , objectList , 1 ,  keyCreate );
 			}else if ( ecutionMode  == EecutionMode.STRING_MSET){
@@ -93,7 +166,10 @@ public abstract class AbstractLedis<T> {
 			}
 			out.flush();
 			buffer = conn.getBuffer();
-			Object t= ce.getResolveNetProtocol().analysis(conn.getInputStream(), buffer);		
+			T t= (T)ce.getResolveNetProtocol().analysis(conn.getInputStream(), buffer);
+			if( t == null && buffer.position( ) == 0){
+				return  ce.getResultHandle().getNullOjbect( keyCreate );
+			}
 			return ( t == null?ce.getResultHandle().handle( buffer  , keyCreate):t );
 		} catch (Exception e) {
 			e.printStackTrace();

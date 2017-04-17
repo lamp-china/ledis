@@ -40,15 +40,20 @@ public interface StringCommands<T>{
 
 	Boolean mSetNX(List<T> tuple);
 
-	Long incr();
+	Long incr(T t);
 
-	Long incrBy(long value);
+	Long incrBy(T t ,long value);
+	/**
+	 * 这个方法不做实现，
+	 * @param t
+	 * @param value
+	 * @return
+	 */
+	Double incrBy(T t , double value);
 
-	Double incrBy(double value);
+	Long decr(T t);
 
-	Long decr();
-
-	Long decrBy(long value);
+	Long decrBy(T t,long value);
 /*
 	Long append(byte[] key, byte[] value);
 
