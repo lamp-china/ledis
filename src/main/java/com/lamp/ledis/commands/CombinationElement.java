@@ -168,7 +168,7 @@ public class CombinationElement {
 			ResolveNetProtocol<?> resolveNetProtocol = this.resolveNetProtocol;
 			ResultHandle resultHandle = this.resultHandle;
 			if( resolveNetProtocol == null  ){
-				resolveNetProtocol = ResolveNetProtocol.resolveIntNetProtocol;
+				resolveNetProtocol = ResolveNetProtocol.resolveIntNetProtocol;//resolveIntNetProtocol,是不需要返回 handle的。
 			}else{
 				if( resultHandle == null ){
 					resultHandle = RESOLVENET_RESULT_MAP.get( resolveNetProtocol );

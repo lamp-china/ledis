@@ -93,11 +93,4 @@ public interface HashCommands<K , T> extends BasicsCommands< T >{
 	boolean hsetnx(String key , T t);
 	
 	boolean hsetnx(Number key , T t);
-	
-	
-	
-	
-	
-	
-	
 }

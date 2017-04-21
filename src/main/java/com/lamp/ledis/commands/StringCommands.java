@@ -20,7 +20,7 @@ public interface StringCommands<T>{
 	
 	List<T> mGetString(List<String> keys);
 	
-	List<T> mGetNumber(List<Number> keys);
+	List<T> mGetNumber(List<? extends Number> keys);
 
 	void set(T t);
 

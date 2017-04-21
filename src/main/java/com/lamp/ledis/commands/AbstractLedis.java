@@ -20,7 +20,7 @@ public abstract class AbstractLedis<T> {
 	
 	protected Deserialize deserialize;
 	
-	protected KeyCreate< T  > keyCreate;
+	protected KeyCreate<T> keyCreate;
 	
 	
 	private ConnectionPattern connectionPattern;
@@ -103,7 +103,7 @@ public abstract class AbstractLedis<T> {
 	}
 	
 	@SuppressWarnings( "unchecked" )
-	public final List<T> combinationReturnListLong(CombinationElement ce,List<DataConversion> dataList ,List<Number> objectList){
+	public final List<T> combinationReturnListLong(CombinationElement ce,List<DataConversion> dataList ,List<? extends Number > objectList){
 		return (List<T>)combinationLong( ce , dataList , objectList);
 	}
 	
@@ -139,7 +139,7 @@ public abstract class AbstractLedis<T> {
 	}
 	
 	@SuppressWarnings( "unchecked" )
-	public  final T combinationLong(CombinationElement ce,List<DataConversion> dataList ,List<Number> objectList){
+	public  final T combinationLong(CombinationElement ce,List<DataConversion> dataList ,List<? extends Number > objectList){
 		return combination( ce , dataList ,  (List<T>)objectList , null );
 	}
 	
@@ -167,10 +167,11 @@ public abstract class AbstractLedis<T> {
 			out.flush();
 			buffer = conn.getBuffer();
 			T t= (T)ce.getResolveNetProtocol().analysis(conn.getInputStream(), buffer);
+			keyCreate = ( KeyCreate< T > ) this.keyCreate;
 			if( t == null && buffer.position( ) == 0){
 				return  ce.getResultHandle().getNullOjbect( keyCreate );
 			}
-			return ( t == null?ce.getResultHandle().handle( buffer  , keyCreate):t );
+			return ( t == null? ce.getResultHandle().handle( buffer  , keyCreate):t );
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;

@@ -37,7 +37,7 @@ public class StringCommandsElement {
 	
 	public static final CombinationElement GETRANGE_ELEMENT    =  CombinationElement.newCombinationElement(  4 , "getrange"     ,  ResolveNetProtocol.resolveStringNetProtocol , ResultHandle.stringResultHandle);
 	
-	public static final CombinationElement GETSET_ELEMENT      =  CombinationElement.newCombinationElement(  4 , "getset"       ,  ResolveNetProtocol.resolveIntNetProtocol , ResultHandle.objcetResultHandle);
+	public static final CombinationElement GETSET_ELEMENT      =  CombinationElement.newCombinationElement(  3 , "getset"       ,  ResolveNetProtocol.resolveSingleNetProtocol , ResultHandle.objcetResultHandle);
 	
 	public static final CombinationElement INCR_ELEMENT        =  CombinationElement.newCombinationElement(  2 , "incr"         ,  ResolveNetProtocol.resolveIntNetProtocol   );
 	
@@ -58,7 +58,7 @@ public class StringCommandsElement {
 	
 	public static final CombinationElement SETBIT_ELEMENT      =  CombinationElement.newCombinationElement(  3 , "setbit"       ,  ResolveNetProtocol.resolveStateNetProtocol  );
 	
-	public static final CombinationElement SETNX_ELEMENT       =  CombinationElement.newCombinationElement(  4 , "setnx"        ,  ResolveNetProtocol.resolveStateNetProtocol  );
+	public static final CombinationElement SETNX_ELEMENT       =  CombinationElement.newCombinationElement(  3 , "setnx"        ,  ResolveNetProtocol.resolveStateNetProtocol  );
 	
 	public static final CombinationElement SETEX_ELEMENT       =  CombinationElement.newCombinationElement(  3 , "setex"        ,  ResolveNetProtocol.resolveStateNetProtocol  );
 	

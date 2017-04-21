@@ -23,14 +23,14 @@ public class StringCommandsImlp< T > extends AbstractLedis< T > implements Strin
 	@Override
 	public T get( String t ) {
 		List<DataConversion> list = DataConversion.getListDataConversion( );
-		list.get( 0 ) .setObjectAndKeyCreate( t , keyCreate );
+		list.get( 0 ) .setObjectAndKeyCreate( t  );
 		return combination(StringCommandsElement.GET_ELEMENT, list );
 	}
 
 	@Override
 	public T get( long t ) {
 		List<DataConversion> list = DataConversion.getListDataConversion( );
-		list.get( 0 ) .setObjectAndKeyCreate( t , keyCreate );
+		list.get( 0 ) .setObjectAndKeyCreate( t  );
 		return combination(StringCommandsElement.GET_ELEMENT, list );
 	}
 
@@ -38,6 +38,7 @@ public class StringCommandsImlp< T > extends AbstractLedis< T > implements Strin
 	public T getSet( T t ) {
 		List<DataConversion> list = DataConversion.getListDataConversion( );
 		list.get( 0 ) .setObjectAndKeyCreate( t , keyCreate );
+		list.get( 1 ) .setObjectAndKeyCreate( t  );
 		return combination(StringCommandsElement.GETSET_ELEMENT, list );
 	}
 
@@ -51,7 +52,7 @@ public class StringCommandsImlp< T > extends AbstractLedis< T > implements Strin
 		return combinationReturnListString( StringCommandsElement.MGET_ELEMENT ,  DataConversion.getListDataConversion( ) , keys );
 	}
 	@Override
-	public List< T > mGetNumber( List< Number > keys ) {
+	public List< T > mGetNumber( List< ? extends Number > keys ) {
 		return combinationReturnListLong( StringCommandsElement.MGET_ELEMENT ,  DataConversion.getListDataConversion( ) , keys );
 	}
 
