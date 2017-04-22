@@ -148,6 +148,10 @@ public abstract class AbstractLedis<T> {
 		Connection conn   = null;
 		ByteBuffer buffer = null;
 		try {
+			if(objectList.size( ) == 0){
+				keyCreate = ( KeyCreate< T > ) this.keyCreate;
+				return  ce.getResultHandle().getNullOjbect( keyCreate );
+			}
 			conn = connectionPattern.getConnection();
 			OutputStream out = conn.getOutputStream();
 			EecutionMode ecutionMode = ce.getAgreementPretreatment( ).getExecutioMode( );

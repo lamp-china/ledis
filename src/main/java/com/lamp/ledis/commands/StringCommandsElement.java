@@ -50,7 +50,8 @@ public class StringCommandsElement {
 	public static final CombinationElement MSET_ELEMENT 	   =  CombinationElement.create( ).setComman( "mset" ).setLength( 3 ).setBoo( false ).setExecutioMode( EecutionMode.STRING_MSET )
 																							  .setResolveNetProtocol(ResolveNetProtocol.resolveIntToBooleanNetProtocol  ).build( );
 	
-	public static final CombinationElement MSETNX_ELEMENT 	   =  CombinationElement.newCombinationElement(  3 , "msetnx"       , false ,  ResolveNetProtocol.resolveIntToBooleanNetProtocol  );
+	public static final CombinationElement MSETNX_ELEMENT 	   =  CombinationElement.create( ).setComman( "msetnx" ).setLength( 3 ).setBoo( false ).setExecutioMode( EecutionMode.STRING_MSET )
+																							  .setResolveNetProtocol( ResolveNetProtocol.resolveIntToBooleanNetProtocol ).build( );
 	
 	public static final CombinationElement PSETNX_ELEMENT 	   =  CombinationElement.newCombinationElement(  4 , "psetnx"       ,  ResolveNetProtocol.resolveIntNetProtocol    );
 	
@@ -58,9 +59,9 @@ public class StringCommandsElement {
 	
 	public static final CombinationElement SETBIT_ELEMENT      =  CombinationElement.newCombinationElement(  3 , "setbit"       ,  ResolveNetProtocol.resolveStateNetProtocol  );
 	
-	public static final CombinationElement SETNX_ELEMENT       =  CombinationElement.newCombinationElement(  3 , "setnx"        ,  ResolveNetProtocol.resolveStateNetProtocol  );
+	public static final CombinationElement SETNX_ELEMENT       =  CombinationElement.newCombinationElement(  3 , "setnx"        ,  ResolveNetProtocol.resolveIntToBooleanNetProtocol  );
 	
-	public static final CombinationElement SETEX_ELEMENT       =  CombinationElement.newCombinationElement(  3 , "setex"        ,  ResolveNetProtocol.resolveStateNetProtocol  );
+	public static final CombinationElement SETEX_ELEMENT       =  CombinationElement.newCombinationElement(  4 , "setex"        ,  ResolveNetProtocol.resolveStateNetProtocol  );
 	
 	public static final CombinationElement SETRANGE_ELEMENT    =  CombinationElement.newCombinationElement(  3 , "setrange"     ,  ResolveNetProtocol.resolveIntNetProtocol    );
 	

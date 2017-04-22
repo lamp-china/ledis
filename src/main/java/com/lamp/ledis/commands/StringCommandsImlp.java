@@ -81,23 +81,25 @@ public class StringCommandsImlp< T > extends AbstractLedis< T > implements Strin
 	}
 
 	@Override
-	public Boolean setEx( T t ) {
+	public Boolean setEX( T t, long  seconds ) {
 		List<DataConversion> list = DataConversion.getListDataConversion( );
 		list.get( 0 ) .setObjectAndKeyCreate( t , keyCreate );
-		list.get( 1 ).setObjectAndKeyCreate( t );
+		list.get( 1 ).setObjectAndKeyCreate( seconds );
+		list.get( 2 ).setObjectAndKeyCreate( t );
 		return combinationReturnBoolean(StringCommandsElement.SETEX_ELEMENT, list );
 	}
 
 	@Override
-	public Boolean setEx( T t , Object o ) {
+	public Boolean setEX( T t , Object o , long  seconds) {
 		List<DataConversion> list = DataConversion.getListDataConversion( );
 		list.get( 0 ) .setObjectAndKeyCreate( t , keyCreate );
-		list.get( 1 ).setObjectAndKeyCreate( o );
+		list.get( 1 ).setObjectAndKeyCreate( seconds );
+		list.get( 2 ).setObjectAndKeyCreate( o );
 		return combinationReturnBoolean(StringCommandsElement.SETEX_ELEMENT, list );
 	}
 
 	@Override
-	public void pSetEx( byte[ ] key , long milliseconds , byte[ ] value ) {
+	public void pSetEX( byte[ ] key , long milliseconds , byte[ ] value ) {
 		// TODO 自动生成的方法存根
 
 	}
@@ -110,7 +112,7 @@ public class StringCommandsImlp< T > extends AbstractLedis< T > implements Strin
 
 	@Override
 	public Boolean mSetNX( List< T > tuple ) {
-		return null;
+		return combinationParameterListReturnBooblean( StringCommandsElement.MSETNX_ELEMENT ,  DataConversion.getListDataConversion( ) , tuple , this.keyCreate);
 	}
 
 	@Override

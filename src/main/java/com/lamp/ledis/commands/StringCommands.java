@@ -30,11 +30,11 @@ public interface StringCommands<T>{
 	
 	Boolean setNX(T t, Object o);
 	
-	Boolean setEx(T t);
+	Boolean setEX(T t ,long  seconds);
 	
-	Boolean setEx(T t, Object o);
+	Boolean setEX(T t, Object o , long  seconds);
 
-	void pSetEx(byte[] key, long milliseconds, byte[] value);
+	void pSetEX(byte[] key, long milliseconds, byte[] value);
 
 	void mSet(List<T> tuple);
 

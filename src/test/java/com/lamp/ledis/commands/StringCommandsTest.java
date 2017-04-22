@@ -13,10 +13,11 @@ import com.lamp.ledis.utils.KeyCreateUtils ;
 
 public class StringCommandsTest extends ConnectionFactoryTest {
 
-	StringCommands< TestEntity > sc ;
+
 	TestEntity testEntity = new TestEntity( 2 , "hello , laohu" ) ;
 
 	List< TestEntity > list ;
+	List< TestEntity > listMsetNX = new ArrayList<>( ) ;
 	List< String > listString ;
 	List< Integer > listIntger ;
 	{
@@ -27,22 +28,15 @@ public class StringCommandsTest extends ConnectionFactoryTest {
 			list.add( new TestEntity( i , "hello , laohu" + i ) ) ;
 			listString.add( i + "" ) ;
 			listIntger.add( i ) ;
-
+		}
+		
+		for ( int i = 14 ; i < 20 ; i++ ) {
+			listMsetNX.add( new TestEntity( i , "hello , laohu" + i ) ) ;
 		}
 	}
 	TestEntity te ;
 
-	@Before
-	public void bo ( ) {
-		try {
-			sc = new StringCommandsImlp< TestEntity >( null , null , KeyCreateUtils.getInstance( )
-					.createKeyCreate( "com.lamp.ledis.entity.TestEntity" , "id" , null , null , null ) ) ;
-			System.out.println( " commands init succer" ) ;
-		} catch ( Exception e ) {
-			// TODO 自动生成的 catch 块
-			e.printStackTrace( ) ;
-		}
-	}
+
 
 	@Test
 	public void set ( ) {
@@ -94,5 +88,43 @@ public class StringCommandsTest extends ConnectionFactoryTest {
 		bo = sc.setNX(testEntity);
 		System.out.println(  bo ) ;
 	}
+	
+	@Test
+	public void msetNX(){
+		boolean bo = false;
+		bo = sc.mSetNX( list );
+		System.out.println(  bo ) ;
+		bo = sc.mSetNX( listMsetNX );
+		System.out.println( bo ) ;
+	}
+	
+	@Test
+	public void setEX(){	
+		boolean bo = sc.setEX(testEntity , 60);
+		System.out.println(  bo ) ;
+	}
+	
+	@Test
+	public void incrAndIncrByOrDecrAndDecrBy() {
+		TestEntity testEntity = new TestEntity( 100011 , "hello , incrAndIncrBy" ) ;
+		long incr = -2;
+		incr = sc.incr( testEntity );
+		System.out.println( incr ) ;
+		
+		incr = sc.incrBy( testEntity , 50 );
+		System.out.println( incr ) ;
+		
+		incr = sc.decr( testEntity );
+		System.out.println( incr ) ;
+		
+		incr = sc.decrBy( testEntity , 10 );
+		System.out.println( incr ) ;		
+	}
 
+	@Test
+	public void strLen(){
+		sc.set( testEntity );
+		long i = sc.strLen( testEntity );
+		System.out.println(  i ) ;
+	}
 }
