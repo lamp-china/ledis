@@ -1,5 +1,6 @@
 package com.lamp.ledis.commands;
 
+import com.lamp.ledis.protocol.EecutionMode ;
 import com.lamp.ledis.protocol.ResolveNetProtocol;
 import com.lamp.ledis.protocol.ResultHandle;
 
@@ -81,6 +82,14 @@ public final class ListCommandsElement {
 	 * Lpush
 	 * 从头部加入元素
 	 */
+	public static final CombinationElement LPUSH_MORE       =  CombinationElement.create( ).setComman( "lpush" ).setBoo( false ).setExecutioMode( EecutionMode.STRING_MSET ).
+			                                                   setResolveNetProtocol( ResolveNetProtocol.resolveIntNetProtocol ).build( );
+	
+	
+	/**
+	 * Lpush
+	 * 从头部加入元素
+	 */
 	public static final CombinationElement LPUSHX           =  CombinationElement.newCombinationElement(  3 , "lpushx"         ,  ResolveNetProtocol.resolveSingleNetProtocol, ResultHandle.objcetResultHandle);
 
     
@@ -124,7 +133,7 @@ public final class ListCommandsElement {
 	/**
 	 *  Rpop 命令移出并获取列表的z最后一个元素
 	 */
-	public static final CombinationElement RPOP             =  CombinationElement.newCombinationElement(  3 , "rpop"          ,  ResolveNetProtocol.resolveSingleNetProtocol, ResultHandle.objcetResultHandle);
+	public static final CombinationElement RPOP             =  CombinationElement.newCombinationElement(  2, "rpop"          ,  ResolveNetProtocol.resolveSingleNetProtocol, ResultHandle.objcetResultHandle);
 	
 	
 	public static final CombinationElement RPOPLPUSH        =  CombinationElement.newCombinationElement(  3 , "rpopLpush"     ,  ResolveNetProtocol.resolveSingleNetProtocol, ResultHandle.objcetResultHandle);
@@ -134,13 +143,17 @@ public final class ListCommandsElement {
 	 * Rpush
 	 * 从头部加入元素
 	 */
-	public static final CombinationElement RPUSH            =  CombinationElement.newCombinationElement(  3 , "rpush"         ,  ResolveNetProtocol.resolveSingleNetProtocol, ResultHandle.objcetResultHandle);
+	public static final CombinationElement RPUSH            =  CombinationElement.newCombinationElement(  3 , "rpush"         ,  ResolveNetProtocol.resolveIntNetProtocol);
+	
+	
+	public static final CombinationElement RPUSH_MORE       =  CombinationElement.create( ).setComman( "rpush"  ).setBoo( false ).setExecutioMode( EecutionMode.GET_VALUE ) 
+																				 .setResolveNetProtocol(  ResolveNetProtocol.resolveIntNetProtocol ).build( );
 
 	/**
 	 * Rpush
 	 * 从头部加入元素
 	 */
-	public static final CombinationElement RPUSHX           =  CombinationElement.newCombinationElement(  3 , "rpushx"         ,  ResolveNetProtocol.resolveSingleNetProtocol, ResultHandle.objcetResultHandle);
+	public static final CombinationElement RPUSHX           =  CombinationElement.newCombinationElement(  3 , "rpushx"         ,  ResolveNetProtocol.resolveIntNetProtocol);
 
 
 }

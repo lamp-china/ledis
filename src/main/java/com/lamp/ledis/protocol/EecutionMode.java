@@ -6,7 +6,11 @@ public enum EecutionMode {
 
 	STRING_MSET ( 10010 ,2 ,1) , STRING_MGET ( 10020 ) ,
 
-	MAP_MSET ( 10110 ,2 ,2) , MAP_MGET ( 10120 ,1,2);
+	MAP_MSET ( 10110 ,2 ,2) , MAP_MGET ( 10120 ,1,2),
+	
+	GET_VALUE(10210 , 1,1)
+	
+	;
 
 	private int ecutionMode ;
 
@@ -29,25 +33,17 @@ public enum EecutionMode {
 		return ecutionMode ;
 	}
 
-	public void setEcutionMode ( int ecutionMode ) {
-		this.ecutionMode = ecutionMode ;
-	}
 
 	public int getMultiple ( ) {
 		return multiple ;
 	}
 
-	public void setMultiple ( int multiple ) {
-		this.multiple = multiple ;
-	}
 
 	public int getBase ( ) {
 		return base ;
 	}
 
-	public void setBase ( int base ) {
-		this.base = base ;
-	}
+
 	
 	
 }

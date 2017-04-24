@@ -5,6 +5,8 @@ import org.junit.Test;
 
 import com.lamp.ledis.commands.HashCommands ;
 import com.lamp.ledis.commands.HashCommandsImlp ;
+import com.lamp.ledis.commands.ListCommands ;
+import com.lamp.ledis.commands.ListCommandsImlp ;
 import com.lamp.ledis.commands.StringCommands ;
 import com.lamp.ledis.commands.StringCommandsImlp ;
 import com.lamp.ledis.entity.TestEntity ;
@@ -14,6 +16,8 @@ public class ConnectionFactoryTest {
 
 	
 	protected StringCommands< TestEntity > sc ;
+	
+	protected ListCommands< TestEntity >   lc ;
 	
 	protected HashCommands<Integer ,  TestEntity > hc ;
 	
@@ -26,6 +30,10 @@ public class ConnectionFactoryTest {
 			
 			hc = new HashCommandsImlp<Integer ,  TestEntity >( null , null , KeyCreateUtils.getInstance( )
 					.createKeyCreate( "com.lamp.ledis.entity.TestEntity" , "id" , null , "name" , null ) ) ;
+			
+			lc = new ListCommandsImlp< TestEntity >( null , null , KeyCreateUtils.getInstance( )
+					.createKeyCreate( "com.lamp.ledis.entity.TestEntity" , "id" , null , null , null ) ) ;
+			
 			System.out.println( " commands init succer" ) ;
 		} catch ( Exception e ) {
 			// TODO 自动生成的 catch 块

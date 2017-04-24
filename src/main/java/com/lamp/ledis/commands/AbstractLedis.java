@@ -107,6 +107,11 @@ public abstract class AbstractLedis<T> {
 		return (List<T>)combinationLong( ce , dataList , objectList);
 	}
 	
+	public final long combinationParameterListReturnLong(CombinationElement ce,List<DataConversion> dataList ,List<T> objectList,KeyCreate< T > keyCreate){
+		return (long)combinations( ce , dataList , objectList , keyCreate);
+	}
+	
+	
 	public final boolean combinationParameterListReturnBooblean(CombinationElement ce,List<DataConversion> dataList ,List<T> objectList,KeyCreate< T > keyCreate){
 		return (boolean)combinations( ce , dataList , objectList , keyCreate);
 	}
