@@ -27,6 +27,9 @@ public interface ResolveNetProtocol<T> {
 	public static final ResolveNetProtocol<Long>		resolveManyToListNetProtocol    = new ResolveManyToListNetProtocol();
 	
 	public static final ResolveNetProtocol<Long>		resolveManyToMapNetProtocol     = new ResolveManyToMapNetProtocol();
+	
+	
+	public static final ResolveNetProtocol<Long>        listBlockNetProtocol           = new ListBlockNetProtocol();
 
 	
 	
@@ -126,8 +129,10 @@ public interface ResolveNetProtocol<T> {
 		 */
 		public Long analysis(LedisInputStream in,ByteBuffer buffer) throws IOException {
 			execcdingly(in, head);
-			buffer.put( startSymbol());
 			long i = in.readLongCrLf();
+			if( i == 0)
+				return null;
+			buffer.put( startSymbol());
 			for ( ; ; ){
 				supplement(in, buffer);
 				if(--i >0){
@@ -193,6 +198,22 @@ public interface ResolveNetProtocol<T> {
 				return null;
 			}
 		}
-	}	
+	}
+	
+	public class ListBlockNetProtocol extends ResolveExceedinglyNetProtocol<Long> {
+
+		int type = 1;
+		
+		@Override
+		public Long analysis ( LedisInputStream in , ByteBuffer buffer ) throws IOException {
+			long i = in.readLongCrLf();
+			if( type == 1){
+				
+			}
+			return null ;
+		}
+		
+	
+	}
 }
 

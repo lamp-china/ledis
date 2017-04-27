@@ -8,7 +8,9 @@ public @interface Operation {
 	
 	String separator() default "_";
 	
-	String[] key();
+	String key();
+	
+	String combinationKey() default "";
 	
 	String mapPrefix() default "";
 	
@@ -19,4 +21,8 @@ public @interface Operation {
 	Pattern[] pattern() default Pattern.DEFAULT;
 	
 	String sliceKey() default "";
+	
+	String value() default "";
+	
+	
 }

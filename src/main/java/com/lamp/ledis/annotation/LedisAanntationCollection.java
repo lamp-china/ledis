@@ -9,9 +9,17 @@ public class LedisAanntationCollection {
 	
 	
 	
-	public void addOperationEntity(String name, String prefix, String separator, String key, String mapPrefix, String mapKey, String server,
-			Pattern[] pattern, String sliceKey , Class< ? > clazz){
-		operationList.add( new OperationEntity( name , prefix , separator , key , mapPrefix , mapKey , server , pattern , sliceKey ,clazz) );
+	public void addOperationEntity(Operations[] operationsArray){
+		 Operation defaults,string, hash , list,set,sortedSet,pubSub;
+		 for(Operations operations : operationsArray){
+			 defaults  = operations.operations( );
+			 string    = operations.string( );
+			 hash      = operations.hash( );
+			 list      = operations.list( );
+			 set       = operations.set( );
+			 sortedSet = operations.sortedSet( );
+			 pubSub    = operations.pubSub( );
+		 }
 	}
 	
 	

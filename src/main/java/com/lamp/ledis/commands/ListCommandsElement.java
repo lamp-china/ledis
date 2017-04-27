@@ -69,20 +69,20 @@ public final class ListCommandsElement {
 	/**
 	 *  Lpop 命令移出并获取列表的第一个元素， 如果列表没有元素会阻塞列表直到等待超时或发现可弹出元素为止。
 	 */
-	public static final CombinationElement LPOP             =  CombinationElement.newCombinationElement(  3 , "lpop"          ,  ResolveNetProtocol.resolveSingleNetProtocol, ResultHandle.objcetResultHandle);
+	public static final CombinationElement LPOP             =  CombinationElement.newCombinationElement(  2 , "lpop"          ,  ResolveNetProtocol.resolveSingleNetProtocol, ResultHandle.objcetResultHandle);
 	
     
 	/**
 	 * Lpush
 	 * 从头部加入元素
 	 */
-	public static final CombinationElement LPUSH            =  CombinationElement.newCombinationElement(  3 , "lpush"         ,  ResolveNetProtocol.resolveSingleNetProtocol, ResultHandle.objcetResultHandle);
+	public static final CombinationElement LPUSH            =  CombinationElement.newCombinationElement(  3 , "lpush"         ,  ResolveNetProtocol.resolveIntNetProtocol );
 
 	/**
 	 * Lpush
 	 * 从头部加入元素
 	 */
-	public static final CombinationElement LPUSH_MORE       =  CombinationElement.create( ).setComman( "lpush" ).setBoo( false ).setExecutioMode( EecutionMode.STRING_MSET ).
+	public static final CombinationElement LPUSH_MORE       =  CombinationElement.create( ).setComman( "lpush" ).setBoo( false ).setExecutioMode( EecutionMode.STRING_MGET ).
 			                                                   setResolveNetProtocol( ResolveNetProtocol.resolveIntNetProtocol ).build( );
 	
 	
@@ -99,7 +99,7 @@ public final class ListCommandsElement {
 	 *  返回列表中指定区间内的元素，区间以偏移量 START 和 END 指定。 其中 0 表示列表的第一个元素， 1 表示列表的第二个元素，以此类推。 
 	 *  你也可以使用负数下标，以 -1 表示列表的最后一个元素， -2 表示列表的倒数第二个元素，以此类推。
 	 */
-	public static final CombinationElement LRANGE       =  CombinationElement.newCombinationElement(  4 , "lrange"          ,  ResolveNetProtocol.resolveSingleNetProtocol, ResultHandle.objcetResultHandle);
+	public static final CombinationElement LRANGE       =  CombinationElement.newCombinationElement(  4 , "lrange"          ,  ResolveNetProtocol.resolveManyToListNetProtocol, ResultHandle.typeReferenceListResultHandle);
 	
     
 	/**
@@ -146,7 +146,7 @@ public final class ListCommandsElement {
 	public static final CombinationElement RPUSH            =  CombinationElement.newCombinationElement(  3 , "rpush"         ,  ResolveNetProtocol.resolveIntNetProtocol);
 	
 	
-	public static final CombinationElement RPUSH_MORE       =  CombinationElement.create( ).setComman( "rpush"  ).setBoo( false ).setExecutioMode( EecutionMode.GET_VALUE ) 
+	public static final CombinationElement RPUSH_MORE       =  CombinationElement.create( ).setComman( "rpush"  ).setBoo( false ).setExecutioMode( EecutionMode.STRING_MGET ) 
 																				 .setResolveNetProtocol(  ResolveNetProtocol.resolveIntNetProtocol ).build( );
 
 	/**

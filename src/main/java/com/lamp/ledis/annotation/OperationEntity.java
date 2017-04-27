@@ -10,6 +10,8 @@ public class OperationEntity {
 	
 	private String key;
 	
+	private String combinationKey;
+	
 	private String mapPrefix;
 	
 	private String mapKey; 
@@ -22,70 +24,61 @@ public class OperationEntity {
 
 	private Class<?> clazz;
 	
+	private String value;
 
-	public OperationEntity(
-			String name, String prefix, String separator, String key, String mapPrefix, String mapKey, String dataSource,
-			Pattern[] pattern, String sliceKey, Class< ? > clazz
-	) {
-		super( ) ;
-		this.name = name ;
-		this.prefix = prefix ;
-		this.separator = separator ;
-		this.key = key ;
-		this.mapPrefix = mapPrefix ;
-		this.mapKey = mapKey ;
-		this.dataSource = dataSource ;
-		this.pattern = pattern ;
-		this.sliceKey = sliceKey ;
-		this.clazz = clazz ;
-	}
-
+	
 	public String getName ( ) {
 		return name ;
 	}
 
-	public void setName ( String name ) {
+	public OperationEntity setName ( String name ) {
 		this.name = name ;
+		return this;
 	}
 
 	public String getPrefix ( ) {
 		return prefix ;
 	}
 
-	public void setPrefix ( String prefix ) {
+	public OperationEntity setPrefix ( String prefix ) {
 		this.prefix = prefix ;
+		return this;
 	}
 
 	public String getSeparator ( ) {
 		return separator ;
 	}
 
-	public void setSeparator ( String separator ) {
+	public OperationEntity setSeparator ( String separator ) {
 		this.separator = separator ;
+		return this;
 	}
 
 	public String getKey ( ) {
 		return key ;
 	}
 
-	public void setKey ( String key ) {
+	public OperationEntity setKey ( String key ) {
 		this.key = key ;
+		return this;
 	}
 
 	public String getMapPrefix ( ) {
 		return mapPrefix ;
 	}
 
-	public void setMapPrefix ( String mapPrefix ) {
+	public OperationEntity setMapPrefix ( String mapPrefix ) {
 		this.mapPrefix = mapPrefix ;
+		return this;
 	}
 
 	public String getMapKey ( ) {
 		return mapKey ;
 	}
 
-	public void setMapKey ( String mapKey ) {
+	public OperationEntity setMapKey ( String mapKey ) {
 		this.mapKey = mapKey ;
+		return this;
 	}
 
 
@@ -93,32 +86,50 @@ public class OperationEntity {
 		return dataSource ;
 	}
 
-	public void setDataSource ( String dataSource ) {
+	public OperationEntity setDataSource ( String dataSource ) {
 		this.dataSource = dataSource ;
+		return this;
 	}
 
 	public Pattern[] getPattern ( ) {
 		return pattern ;
 	}
 
-	public void setPattern ( Pattern[] pattern ) {
+	public OperationEntity setPattern ( Pattern[] pattern ) {
 		this.pattern = pattern ;
+		return this;
 	}
 
 	public String getSliceKey ( ) {
 		return sliceKey ;
 	}
 
-	public void setSliceKey ( String sliceKey ) {
+	public OperationEntity setSliceKey ( String sliceKey ) {
 		this.sliceKey = sliceKey ;
+		return this;
 	}
 
 	public Class< ? > getClazz ( ) {
 		return clazz ;
 	}
 
-	public void setClazz ( Class< ? > clazz ) {
+	public OperationEntity setClazz ( Class< ? > clazz ) {
 		this.clazz = clazz ;
+		return this;
+	}
+
+	public String getValue ( ) {
+		return value ;
+	}
+
+	public OperationEntity setValue ( String value ) {
+		this.value = value ;
+		return this;
+	}
+	
+	
+	public static final OperationEntity create(){
+		return new OperationEntity( );
 	}
 	
 	

@@ -25,17 +25,17 @@ public class ListCommandsImlp<T> extends BasicsCommandsImlp< T >implements ListC
 	
 	@Override
 	public T blpop ( T t ) {
-		return combination( ListCommandsElement.BLPOP_SINGLE , DataConversionUtils.getDataConversionListIsKey( t  , this.keyCreate)  ) ;
+		return blpop( t , 0 ) ;
 	}
 
 	@Override
 	public T blpop ( long t ) {
-		return combination( ListCommandsElement.BLPOP_SINGLE , DataConversionUtils.getDataConversionList( t  )  ) ;
+		return blpop( t , 0 ) ;
 	}
 
 	@Override
 	public T blpop ( String t ) {
-		return combination( ListCommandsElement.BLPOP_SINGLE , DataConversionUtils.getDataConversionList( t  )  ) ;
+		return blpop( t , 0 ) ;
 	}
 
 	@Override
@@ -55,17 +55,17 @@ public class ListCommandsImlp<T> extends BasicsCommandsImlp< T >implements ListC
 
 	@Override
 	public T brpop ( T t ) {
-		return combination( ListCommandsElement.BRPOP_SINGLE , DataConversionUtils.getDataConversionListIsKey( t  , this.keyCreate)  ) ;
+		return brpop( t , 0 ) ;
 	}
 
 	@Override
 	public T brpop ( long t ) {
-		return combination( ListCommandsElement.BLPOP_SINGLE , DataConversionUtils.getDataConversionList( t  )  ) ;
+		return brpop( t , 0 ) ;
 	}
 
 	@Override
 	public T brpop ( String t ) {
-		return combination( ListCommandsElement.BLPOP_SINGLE , DataConversionUtils.getDataConversionList( t  )  ) ;
+		return brpop( t , 0 ) ;
 	}
 
 	@Override
@@ -152,47 +152,47 @@ public class ListCommandsImlp<T> extends BasicsCommandsImlp< T >implements ListC
 
 	@Override
 	public T lpop ( T key ) {
-		return combination( ListCommandsElement.BLPOP_SINGLE , DataConversionUtils.getDataConversionListIsKey( key , keyCreate ) ) ;
+		return combination( ListCommandsElement.LPOP , DataConversionUtils.getDataConversionListKey( key , keyCreate ) ) ;
 	}
 
 	@Override
 	public T lpop ( String key ) {
-		return combination( ListCommandsElement.BLPOP_SINGLE , DataConversionUtils.getDataConversionList( key  ) ) ;
+		return combination( ListCommandsElement.LPOP , DataConversionUtils.getDataConversionList( key  ) ) ;
 	}
 
 	@Override
 	public T lpop ( long key ) {
-		return combination( ListCommandsElement.BLPOP_SINGLE , DataConversionUtils.getDataConversionList( key  ) ) ;
+		return combination( ListCommandsElement.LPOP , DataConversionUtils.getDataConversionList( key  ) ) ;
 	}
 
 	@Override
 	public long lpush ( T value ) {
-		return combinationReturnLong( ListCommandsElement.LPUSH , DataConversionUtils.getDataConversionList( value , keyCreate ) ) ;
+		return combination( ListCommandsElement.LPUSH , DataConversionUtils.getDataConversionListIsKey( value , keyCreate ) ) ;
 	}
 
 	@Override
 	public long lpush ( List< T > value ) {
-		return combinationParameterListReturnLong( ListCommandsElement.LPUSH_MORE , DataConversionUtils.getDataConversionList( value.get( 0 ) , keyCreate ) , value , keyCreate ) ;
+		return combinationParameterListReturnLong( ListCommandsElement.LPUSH_MORE , DataConversionUtils.getDataConversionListKey( value.get( 0 ) , keyCreate ) , value , null ) ;
 	}
 
 	@Override
 	public long lpushx ( T value ) {
-		return combinationReturnLong( ListCommandsElement.LPUSHX , DataConversionUtils.getDataConversionList( value , keyCreate ) ) ;
+		return combination( ListCommandsElement.LPUSHX , DataConversionUtils.getDataConversionList( value , keyCreate ) ) ;
 	}
 
 	@Override
 	public List< T > lrange ( T key , int start , int stop ) {
-		return combinationReturnList( ListCommandsElement.LPUSHX , DataConversionUtils.getDataConversionListIsKey( key , start , stop , keyCreate ) ) ;
+		return combinationReturnList( ListCommandsElement.LRANGE , DataConversionUtils.getDataConversionListKey( key , start , stop , keyCreate ) ) ;
 	}
 
 	@Override
 	public List< T > lrange ( String key , int start , int stop ) {
-		return combinationReturnList( ListCommandsElement.LPUSHX , DataConversionUtils.getDataConversionList( key , start , stop  ) ) ;
+		return combinationReturnList( ListCommandsElement.LRANGE , DataConversionUtils.getDataConversionList( key , start , stop  ) ) ;
 	}
 
 	@Override
 	public List< T > lrange ( long key , int start , int stop ) {
-		return combinationReturnList( ListCommandsElement.LPUSHX , DataConversionUtils.getDataConversionList( key , start , stop  ) ) ;
+		return combinationReturnList( ListCommandsElement.LRANGE , DataConversionUtils.getDataConversionList( key , start , stop  ) ) ;
 	}
 
 	@Override
@@ -227,9 +227,7 @@ public class ListCommandsImlp<T> extends BasicsCommandsImlp< T >implements ListC
 
 	@Override
 	public T rpop ( T t ) {
-		List<DataConversion> dataList = DataConversion.getListDataConversion( );
-		dataList.get( 0 ) .setObjectAndKeyCreate( t , keyCreate  );
-		return combination( ListCommandsElement.RPOP, dataList) ;
+		return combination( ListCommandsElement.RPOP, DataConversionUtils.getDataConversionListKey( t , keyCreate )) ;
 	}
 
 	@Override
@@ -265,7 +263,7 @@ public class ListCommandsImlp<T> extends BasicsCommandsImlp< T >implements ListC
 
 	@Override
 	public long rpush ( List< T > value ) {
-		return combinationParameterListReturnLong( ListCommandsElement.RPUSH , DataConversionUtils.getDataConversionListIsKey( value.get( 0 ) , keyCreate ) , value , null);
+		return combinationParameterListReturnLong( ListCommandsElement.RPUSH_MORE , DataConversionUtils.getDataConversionListKey( value.get( 0 ) , keyCreate ) , value , null);
 	}
 
 	@Override

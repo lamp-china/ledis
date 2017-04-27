@@ -7,7 +7,19 @@ import com.lamp.ledis.protocol.DataConversion ;
 
 public final class DataConversionUtils {
 
+	public static final <T>List<DataConversion> getDataConversionListKey(Object object , Object value , Object valueTwo ,KeyCreate< T > keyCreate){
+		List<DataConversion> dataList = DataConversion.getListDataConversion( );
+		dataList.get( 0 ) .setObjectAndKeyCreate( object , keyCreate  );
+		dataList.get( 1 ) .setObjectAndKeyCreate( value  );
+		dataList.get( 2 ) .setObjectAndKeyCreate( valueTwo  );
+		return dataList;	
+	}
 	
+	public static final <T>List<DataConversion> getDataConversionListKey(Object object ,KeyCreate< T > keyCreate){
+		List<DataConversion> dataList = DataConversion.getListDataConversion( );
+		dataList.get( 0 ) .setObjectAndKeyCreate( object , keyCreate  );
+		return dataList;	
+	}
 	
 	
 	public static final <T>List<DataConversion> getDataConversionListIsKey(Object object ,KeyCreate< T > keyCreate){
@@ -56,6 +68,7 @@ public final class DataConversionUtils {
 		List<DataConversion> dataList = DataConversion.getListDataConversion( );
 		dataList.get( 0 ) .setObjectAndKeyCreate( key  );
 		dataList.get( 1 ) .setObjectAndKeyCreate( field  );
+		dataList.get( 2 ) .setObjectAndKeyCreate( fileds  );
 		return dataList;	
 	}
 	

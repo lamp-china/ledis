@@ -76,13 +76,13 @@ public class BIOConnection extends AbstractConnection {
 		}
 		@Override
 		public void write(int b) throws IOException {
-			//bais.write(b);
+			bais.write(b);
 			outputStream.write(b);
 		}
 		
 		
 		public void flush() throws IOException{
-			//System.out.println( bais.toString());
+			System.out.println( bais.toString());
 			outputStream.flush();
 		}
 	}

@@ -81,7 +81,7 @@ public abstract class AbstractLedis<T> {
 			return (T) ( t == null?ce.getResultHandle().handle( buffer  , keyCreate):t );
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return (T)  ce.getResultHandle().getNullOjbect( keyCreate );
 		}finally {
 			if( buffer != null)
 				buffer.clear();
