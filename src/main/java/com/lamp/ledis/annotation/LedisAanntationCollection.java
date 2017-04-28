@@ -9,9 +9,11 @@ public class LedisAanntationCollection {
 	
 	
 	
-	public void addOperationEntity(Operations[] operationsArray){
+	public void addOperationEntity(Class<?> clazz ){
+		 OperationList operationList= clazz.getAnnotation( OperationList.class );
+		 OperationsObject[] operationsArray = operationList.operationsObject( );
 		 Operation defaults,string, hash , list,set,sortedSet,pubSub;
-		 for(Operations operations : operationsArray){
+		 for(OperationsObject operations : operationsArray){
 			 defaults  = operations.operations( );
 			 string    = operations.string( );
 			 hash      = operations.hash( );
@@ -19,10 +21,22 @@ public class LedisAanntationCollection {
 			 set       = operations.set( );
 			 sortedSet = operations.sortedSet( );
 			 pubSub    = operations.pubSub( );
+			 if( defaults == null && string  == null &&  hash  == null &&  list == null && set == null && sortedSet == null && pubSub == null ){
+				 
+			 }
+			 if( defaults == null){
+				 
+			 }else{
+				 
+			 }
 		 }
 	}
 	
-	
+	private void comparison(Operation defaults , Operation conn){
+		if( conn == null){
+			
+		}
+	}
 	public List<OperationEntity> getOperationList(){
 		return this.operationList;
 	}

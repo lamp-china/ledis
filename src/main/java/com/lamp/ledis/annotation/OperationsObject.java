@@ -1,6 +1,6 @@
 package com.lamp.ledis.annotation;
 
-public @interface Operations {
+public @interface OperationsObject {
 
 	Operation operations();
 	

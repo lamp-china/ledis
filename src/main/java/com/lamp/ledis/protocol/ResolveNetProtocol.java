@@ -74,6 +74,7 @@ public interface ResolveNetProtocol<T> {
 			throw new RuntimeException( str );
 		}
 	}
+
 	public static  class ResolveStateNetProtocol extends ResolveExceedinglyNetProtocol<Boolean>{		
 		private final static byte head = '+';		
 		public Boolean analysis(LedisInputStream in,ByteBuffer buffer) throws IOException {
@@ -208,6 +209,9 @@ public interface ResolveNetProtocol<T> {
 		public Long analysis ( LedisInputStream in , ByteBuffer buffer ) throws IOException {
 			long i = in.readLongCrLf();
 			if( type == 1){
+				if( i == 2){
+					
+				}
 				
 			}
 			return null ;
