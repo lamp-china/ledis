@@ -21,6 +21,8 @@ public interface ResultHandle {
 	
 	public static final ResultHandle   typeReferenceMapResultHandle  = new TypeReferenceMapResultHandle();
 	
+	public static final ResultHandle   typeReferenceKeyListResultHandle = new TypeReferenceKeyListResultHandle();
+	
 	
 	public <T>T handle(ByteBuffer buffer  , KeyCreate<T> kc);
 	
@@ -114,6 +116,21 @@ public interface ResultHandle {
 		@Override
 		public < T > T getNullOjbect ( KeyCreate< T > keyCreate ) {
 			return (T)Collections.EMPTY_MAP ;
+		}
+	}
+	
+	static class TypeReferenceKeyListResultHandle implements ResultHandle{
+		
+		@Override
+		@SuppressWarnings("unchecked")
+		public <T>T handle(ByteBuffer buffer, KeyCreate<T> kc) {
+			return (T) JSON.parseObject( new String(buffer.array(), 0, buffer.position()), kc.getTypeReferenceKeyListResultHandle());
+		}
+		
+		@SuppressWarnings( "unchecked" )
+		@Override
+		public < T > T getNullOjbect ( KeyCreate< T > keyCreate ) {
+			return (T)Collections.EMPTY_LIST ;
 		}
 	}
 }

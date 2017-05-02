@@ -100,5 +100,56 @@ public class ListCommandsTest extends ConnectionFactoryTest{
 	}
 	
 	
+	@Test
+	public void lrange(){
+		List<TestEntity> list = lc.lrange( 3 , 0 , -1 );
+		System.out.println( list.toString( ) ) ;
+		
+		list = lc.lrange( 3+"" , 0 , -1 );
+		System.out.println( list.toString( ) ) ;
+		
+		
+		list = lc.lrange( new TestEntity(3 , "" ) , 0 , -1 );
+		System.out.println( list.toString( ) ) ;
+	}
+	
+	@Test
+	public void llenAndLindexAndLset(){
+		TestEntity e = new TestEntity(3 , "lset" );
+		
+		long length = lc.llen( 3  );
+		System.out.println(  length ) ;
+		
+		length = lc.llen( 3+""  );
+		System.out.println(  length ) ;
+		
+		length = lc.llen( e  );
+		System.out.println(  length ) ;
+		
+		
+		TestEntity te = lc.lindex( 3 , 0 );
+		System.out.println(  te ) ;
+		
+		te = lc.lindex( 3+"" , 0 );
+		System.out.println(  te ) ;
+		
+		te = lc.lindex( e , 0 );
+		System.out.println(  te ) ;	
+		
+		boolean boo = lc.lset( e , 0 );
+		System.out.println(  boo ) ;
+
+		List<TestEntity> list = lc.lrange( new TestEntity(3 , "" ) , 0 , -1 );
+		System.out.println( list.toString( ) ) ;
+		
+		boo = lc.lset( te , 0 );
+		System.out.println(  boo ) ;
+		
+	}
+	
+	
+	
+	
+	
 	
 }

@@ -27,21 +27,21 @@ public interface HashCommands<K , T> extends BasicsCommands< T >{
 	
 	boolean hexists(String key , String field);
 	
-	boolean hexists(Long key , Long field);
+	boolean hexists(long key , long field);
 	
 	
 	T hget(T key);
 	
 	T hget(String key , String field);
 	
-	T hget(Long key , Long field);
+	T hget(long key , long field);
 	
 	
-	Map<K,T> hgetall(K key);
+	Map<K,T> hgetall(T key);
 	
 	Map<K,T> hgetall(String key );
 	
-	Map<K,T> hgetall(Long key );
+	Map<K,T> hgetall(long key );
 	
 	long hincrby(K key , long increment);
 	
@@ -53,21 +53,21 @@ public interface HashCommands<K , T> extends BasicsCommands< T >{
 	
 	List<K> hkeys(String key );
 	
-	List<K> hkeys(Long key );
+	List<K> hkeys(long key );
 	
 	
 	List<T> hvals(T key);
 	
 	List<T> hvals(String key );
 	
-	List<T> hvals(Long key );
+	List<T> hvals(long key );
 	
 	
 	long hlen(T key);
 	
 	long hlen(String key );
 	
-	long hlen(Long key );
+	long hlen(long key );
 	
 	
 	List<T> hmget(List<T> t);

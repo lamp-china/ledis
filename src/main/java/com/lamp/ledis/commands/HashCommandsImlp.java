@@ -60,7 +60,7 @@ public class HashCommandsImlp<K,T> extends BasicsCommandsImlp<T> implements Hash
 		List<DataConversion> dataList = DataConversion.getListDataConversion( );
 		dataList.get( 0 ) .setObjectAndKeyCreate( key , keyCreate );
 		dataList.get( 1 ) .setObjectAndKeyCreate( key , keyCreate.getKeyCreate( ) );
-		return combination( HashCommandsElement.HDEL_SINGLE , dataList ) ;
+		return combination( HashCommandsElement.HEXISTS , dataList ) ;
 	}
 
 	@Override
@@ -69,7 +69,7 @@ public class HashCommandsImlp<K,T> extends BasicsCommandsImlp<T> implements Hash
 	}
 
 	@Override
-	public boolean hexists ( Long key , Long field ) {
+	public boolean hexists ( long key , long field ) {
 		return combination( HashCommandsElement.HEXISTS , DataConversionUtils.getDataConversionList( key , field ) ) ;
 	}
 
@@ -87,13 +87,13 @@ public class HashCommandsImlp<K,T> extends BasicsCommandsImlp<T> implements Hash
 	}
 
 	@Override
-	public T hget ( Long key , Long field ) {
+	public T hget ( long key , long field ) {
 		return combination( HashCommandsElement.HGET , DataConversionUtils.getDataConversionList( key , field ) ) ;
 	}
 
 	@Override
-	public Map< K , T > hgetall ( K key ) {
-		return null ;
+	public Map< K , T > hgetall ( T key ) {
+		return combination( HashCommandsElement.HGETALL , DataConversionUtils.getDataConversionListKey( key  , keyCreate) ) ;
 	}
 
 	@Override
@@ -102,7 +102,7 @@ public class HashCommandsImlp<K,T> extends BasicsCommandsImlp<T> implements Hash
 	}
 
 	@Override
-	public Map< K , T > hgetall ( Long key ) {
+	public Map< K , T > hgetall ( long key ) {
 		return combination( HashCommandsElement.HGETALL , DataConversionUtils.getDataConversionList( key  ) ) ;
 	}
 
@@ -123,52 +123,52 @@ public class HashCommandsImlp<K,T> extends BasicsCommandsImlp<T> implements Hash
 
 	@Override
 	public List< K > hkeys ( T key ) {
-		return null ;
+		return combination( HashCommandsElement.HKEYS , DataConversionUtils.getDataConversionListKey( key  , keyCreate) ) ; 
 	}
 
 	@Override
 	public List< K > hkeys ( String key ) {
-		return combination( HashCommandsElement.HGETALL , DataConversionUtils.getDataConversionList( key  ) ) ;
-	}
-
-	@Override
-	public List< K > hkeys ( Long key ) {
-		return combination( HashCommandsElement.HGETALL , DataConversionUtils.getDataConversionList( key  ) ) ;
-	}
-
-	@Override
-	public List< T > hvals ( T key ) {
-		return null ;
-	}
-
-	@Override
-	public List< T > hvals ( String key ) {
 		return combination( HashCommandsElement.HKEYS , DataConversionUtils.getDataConversionList( key  ) ) ;
 	}
 
 	@Override
-	public List< T > hvals ( Long key ) {
-	    return combination( HashCommandsElement.HGETALL , DataConversionUtils.getDataConversionList( key  ) ) ;
+	public List< K > hkeys ( long key ) {
+		return combination( HashCommandsElement.HKEYS , DataConversionUtils.getDataConversionList( key  ) ) ;
+	}
+
+	@Override
+	public List< T > hvals ( T key ) {
+		return combination( HashCommandsElement.HVALS , DataConversionUtils.getDataConversionListKey( key  , keyCreate) ) ;
+	}
+
+	@Override
+	public List< T > hvals ( String key ) {
+		return combination( HashCommandsElement.HVALS , DataConversionUtils.getDataConversionList( key  ) ) ;
+	}
+
+	@Override
+	public List< T > hvals ( long key ) {
+	    return combination( HashCommandsElement.HVALS , DataConversionUtils.getDataConversionList( key  ) ) ;
 	}
 
 	@Override
 	public long hlen ( T key ) {
-		return 0 ;
+		return combination( HashCommandsElement.HLEN , DataConversionUtils.getDataConversionListKey( key , keyCreate ) ) ;
 	}
 
 	@Override
 	public long hlen ( String key ) {
-		return combination( HashCommandsElement.HGETALL , DataConversionUtils.getDataConversionList( key  ) ) ;
+		return combination( HashCommandsElement.HLEN , DataConversionUtils.getDataConversionList( key  ) ) ;
 	}
 
 	@Override
-	public long hlen ( Long key ) {
-		return combination( HashCommandsElement.HGETALL , DataConversionUtils.getDataConversionList( key  ) ) ;
+	public long hlen ( long key ) {
+		return combination( HashCommandsElement.HLEN , DataConversionUtils.getDataConversionList( key  ) ) ;
 	}
 
 	@Override
 	public List< T > hmget ( List< T > t ) {
-		return null ;
+		return combinationHash( HashCommandsElement.HMGET , DataConversionUtils.getDataConversionListKey( (Object)t.get( 0 ) , keyCreate) ,t ,keyCreate.getKeyCreate( ))  ;
 	}
 
 	@Override
@@ -183,7 +183,7 @@ public class HashCommandsImlp<K,T> extends BasicsCommandsImlp<T> implements Hash
 
 	@Override
 	public boolean hmset ( List< T > t ) {
-		return false ;
+		return combinationParameterListReturnBooblean( HashCommandsElement.HMSET , DataConversionUtils.getDataConversionListKey( (Object)t.get( 0 ) , keyCreate) , t , keyCreate.getKeyCreate( )) ;
 	}
 
 	@Override

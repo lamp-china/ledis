@@ -117,7 +117,7 @@ public class ListCommandsImlp<T> extends BasicsCommandsImlp< T >implements ListC
 
 	@Override
 	public T lindex ( T t , int index ) {
-		return combination( ListCommandsElement.LINDEX , DataConversionUtils.getDataConversionListIsKey( t , index , keyCreate )) ;
+		return combination( ListCommandsElement.LINDEX , DataConversionUtils.getDataConversionListKey( t , index , keyCreate )) ;
 	}
 
 	@Override

@@ -2,14 +2,20 @@ package com.lamp.ledis.utils ;
 
 import java.lang.reflect.Method ;
 import java.util.HashMap ;
+import java.util.List ;
 import java.util.Map ;
 import java.util.Objects ;
+
+import com.alibaba.fastjson.TypeReference ;
 
 public final class ClassUtils {
 
 	private static final Map< String , String[] > CLASS_ASM_NAME = new HashMap< String , String[] >( ) ;
 	
 	private static final Map< String , String >  BASIC_PACKING = new HashMap< String , String >( ) ;
+	
+	private static final Map<String , TypeReference> TYPEREFERENCE_LIST = new HashMap<>( );
+	
 	static {
 		CLASS_ASM_NAME.put( "java.lang.Long"       , new String[]{ "()Ljava/lang/Long"    , ""} );
 		CLASS_ASM_NAME.put( "java.lang.Integer"    , new String[]{ "()Ljava/lang/Integer" , ""} );
@@ -24,6 +30,16 @@ public final class ClassUtils {
 		BASIC_PACKING.put( "java.lang.Long"    , "java/lang/Long" );
 		BASIC_PACKING.put( "java.lang.String"  , "java/lang/String" );
 		
+		TypeReference tr = new TypeReference<List<Integer>>(){};
+		TYPEREFERENCE_LIST.put( "int"               , tr );
+		TYPEREFERENCE_LIST.put( "java.lang.Integer" , tr );
+		tr = new TypeReference<List<Long>>(){};
+		TYPEREFERENCE_LIST.put( "long"              , tr );
+		TYPEREFERENCE_LIST.put( "java.lang.Long"    , tr );
+		tr = new TypeReference<List<String>>(){};
+		TYPEREFERENCE_LIST.put( "java.lang.String"  , tr );
+		
+		
 	}
 	
 	
@@ -31,6 +47,10 @@ public final class ClassUtils {
 	
 	private static final Class<?>[] CLASS_NULL_ARRYAL = new Class[]{};
 
+	
+	public static final TypeReference getTypeReferenceList(String fileType){
+		return TYPEREFERENCE_LIST.get( fileType );
+	}
 	
 	
 	public static final String[] amsName ( String className , String methodName ) throws Exception {

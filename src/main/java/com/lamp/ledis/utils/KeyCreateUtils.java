@@ -6,11 +6,12 @@ import java.lang.reflect.Field ;
 import java.util.concurrent.atomic.LongAdder ;
 
 import org.objectweb.asm.ClassWriter ;
-import org.objectweb.asm.Label ;
 import org.objectweb.asm.MethodVisitor ;
 import org.objectweb.asm.Opcodes ;
 
 import com.alibaba.fastjson.TypeReference ;
+import com.lamp.ledis.annotation.OperationEntity ;
+import com.lamp.ledis.create.AbstractKeyCreate ;
 import com.lamp.ledis.create.AmsTypeReference ;
 import com.lamp.ledis.create.KeyConfigure ;
 import com.lamp.ledis.create.KeyCreate ;
@@ -228,6 +229,13 @@ public class KeyCreateUtils extends ClassLoader implements Opcodes {
 		return ( TypeReference< ? > ) exampleClass.newInstance( ) ;
 	}
 
+	public KeyCreate createKeyCreate(OperationEntity  operationEntity) throws Exception{
+		KeyCreate keyCreate = createKeyCreate( operationEntity.getClazz( ).getName( ) , operationEntity.getKey( ) , operationEntity.getPrefix( ) , null	 , null );
+		((AbstractKeyCreate)keyCreate).setKeyCreate( createKeyCreate( operationEntity.getClazz( ).getName( ) , operationEntity.getMapKey( ) , operationEntity.getMapPrefix( ) , null , null ) );
+		
+		return keyCreate;
+	}
+	
 	public KeyCreate createKeyCreate ( String clazzName , String keyName , String prefix ,String hashKeyName , String hashKeyPrefix) throws Exception {
 		// clazzName + key 成为唯一值，去缓存里面取
 		// 如果不存在就创建KeyConfigure对象
@@ -299,13 +307,11 @@ public class KeyCreateUtils extends ClassLoader implements Opcodes {
 
 	private String getTypeReferenceMapCalssName ( String clazzName , String keyType ) {
 		longAdder.increment( ) ;
-		//String amsClassName = ClassUtils.className( clazzName , keyType , longAdder.longValue( ) , TYPEREFERENCE_MAP ) ;
-
 		StringBuffer sb = new StringBuffer( ) ;
 		sb.append( "Lcom/alibaba/fastjson/TypeReference<Ljava/util/Map<L" ) ;
-		sb.append( clazzName ) ;
+		sb.append(  keyType ) ;
 		sb.append( ";L" ) ;
-		sb.append( keyType ) ;
+		sb.append( clazzName ) ;
 		sb.append( ";>;>;" ) ;
 		return sb.toString( ) ;
 	}

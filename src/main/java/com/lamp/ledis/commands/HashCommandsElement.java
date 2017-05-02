@@ -9,7 +9,7 @@ public class HashCommandsElement {
     /*
      * Hdel single
      */
- 	public static final CombinationElement HDEL_SINGLE      =  CombinationElement.newCombinationElement(  3 , "hdel"        , ResolveNetProtocol.resolveIntNetProtocol   );
+ 	public static final CombinationElement HDEL_SINGLE      =  CombinationElement.newCombinationElement(  3 , "hdel"        , ResolveNetProtocol.resolveIntToBooleanNetProtocol   );
  	
  	/*
  	 * more
@@ -20,7 +20,7 @@ public class HashCommandsElement {
  	/*
  	 * Hexists
  	 */
- 	public static final CombinationElement HEXISTS          =  CombinationElement.newCombinationElement(  3 , "hexists"      , ResolveNetProtocol.resolveIntNetProtocol   );
+ 	public static final CombinationElement HEXISTS          =  CombinationElement.newCombinationElement(  3 , "hexists"      , ResolveNetProtocol.resolveIntToBooleanNetProtocol   );
 
      /*
       * Hget
@@ -45,7 +45,7 @@ public class HashCommandsElement {
      /*
       * Hkeys 
       */
-     public static final CombinationElement HKEYS           =  CombinationElement.newCombinationElement(  2 , "hkey"        , ResolveNetProtocol.resolveManyToListNetProtocol ,ResultHandle.typeReferenceListResultHandle);
+     public static final CombinationElement HKEYS           =  CombinationElement.newCombinationElement(  2 , "hkeys"        , ResolveNetProtocol.resolveManyToListNetProtocol ,ResultHandle.typeReferenceKeyListResultHandle);
      
      /*
       * Hlen 
@@ -54,7 +54,7 @@ public class HashCommandsElement {
      /*
       * Hmget
       */
-     public static final CombinationElement HMGET           =   CombinationElement.create( ).setComman( "hmset" ).setExecutioMode( EecutionMode.MAP_MGET ).setResolveNetProtocol( ResolveNetProtocol.resolveManyToListNetProtocol ).build( );
+     public static final CombinationElement HMGET           =   CombinationElement.create( ).setComman( "hmget" ).setExecutioMode( EecutionMode.MAP_MGET ).setResolveNetProtocol( ResolveNetProtocol.resolveManyToListNetProtocol ).build( );
     
      /*
       * Hmset 
@@ -64,7 +64,7 @@ public class HashCommandsElement {
      /*
       * Hset 
       */
-     public static final CombinationElement HSET            =  CombinationElement.newCombinationElement(  4 , "hset"        , ResolveNetProtocol.resolveIntNetProtocol );
+     public static final CombinationElement HSET            =  CombinationElement.newCombinationElement(  4 , "hset"        , ResolveNetProtocol.resolveIntToBooleanNetProtocol );
      /*
       * Hsetnx
       */

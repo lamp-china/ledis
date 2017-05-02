@@ -100,7 +100,10 @@ public interface ResolveNetProtocol<T> {
 	
 	
 	abstract class ResolveManyNetProtocol extends ResolveExceedinglyNetProtocol<Long> {
-		private final static byte head = '*';	
+		private final static byte head = '*';
+		
+		int base = 1;
+		
 		byte divisionSymblo(){
 			return ',';
 		}	
@@ -136,7 +139,8 @@ public interface ResolveNetProtocol<T> {
 			buffer.put( startSymbol());
 			for ( ; ; ){
 				supplement(in, buffer);
-				if(--i >0){
+				i = i - base;
+				if( i >0){
 					buffer.put( divisionSymblo() );
 				}else{
 					buffer.put( endSymbol());
@@ -150,6 +154,8 @@ public interface ResolveNetProtocol<T> {
 
 	public static class ResolveManyToListNetProtocol extends ResolveManyNetProtocol{
 
+		
+			
 		@Override
 		byte startSymbol() {
 			return '[';
@@ -168,6 +174,12 @@ public interface ResolveNetProtocol<T> {
 	public static class ResolveManyToMapNetProtocol extends ResolveManyNetProtocol{
 
 		private static final byte semicolon = ':';
+		
+		
+		ResolveManyToMapNetProtocol() {
+			base = 2;
+		}
+		
 		@Override
 		byte startSymbol() {
 			return '{';

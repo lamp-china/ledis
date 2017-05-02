@@ -38,6 +38,8 @@ public interface KeyCreate<T> {
 	
 	public TypeReference< ? >  getTypeReferenceMap();
 	
+	public TypeReference< ? > getTypeReferenceKeyListResultHandle();
+	
 	public KeyCreate<T> getKeyCreate();
 	
 

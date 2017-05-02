@@ -8,6 +8,9 @@ public class TestEntity {
 
 	private int id;
 	
+	
+	private int appId;
+	
 	private String name;
 
 	
@@ -21,6 +24,16 @@ public class TestEntity {
 		super();
 		this.id = id;
 		this.name = name;
+	}
+
+	
+	
+	
+	public TestEntity(int id, int appId, String name) {
+		super( ) ;
+		this.id = id ;
+		this.appId = appId ;
+		this.name = name ;
 	}
 
 	public int getId() {
@@ -37,6 +50,14 @@ public class TestEntity {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public int getAppId ( ) {
+		return appId ;
+	}
+
+	public void setAppId ( int appId ) {
+		this.appId = appId ;
 	}
 
 	@Override

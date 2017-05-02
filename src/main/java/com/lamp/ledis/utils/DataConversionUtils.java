@@ -15,6 +15,13 @@ public final class DataConversionUtils {
 		return dataList;	
 	}
 	
+	public static final <T>List<DataConversion> getDataConversionListKey(Object object , Object value , KeyCreate< T > keyCreate){
+		List<DataConversion> dataList = DataConversion.getListDataConversion( );
+		dataList.get( 0 ) .setObjectAndKeyCreate( object , keyCreate  );
+		dataList.get( 1 ) .setObjectAndKeyCreate( value  );
+		return dataList;	
+	}
+	
 	public static final <T>List<DataConversion> getDataConversionListKey(Object object ,KeyCreate< T > keyCreate){
 		List<DataConversion> dataList = DataConversion.getListDataConversion( );
 		dataList.get( 0 ) .setObjectAndKeyCreate( object , keyCreate  );
@@ -85,6 +92,7 @@ public final class DataConversionUtils {
 		List<DataConversion> dataList = DataConversion.getListDataConversion( );
 		dataList.get( 0 ) .setObjectAndKeyCreate( t , keyCreate  );
 		dataList.get( 1 ) .setObjectAndKeyCreate( t , keyCreate.getKeyCreate( )  );
+		dataList.get( 2 ) .setObjectAndKeyCreate( t );
 		return dataList;	
 	}
 	

@@ -1,6 +1,8 @@
 package com.lamp.ledis.annotation;
 
 public @interface OperationsName {
+	
+	
 	String operations();
 	
 	String string();

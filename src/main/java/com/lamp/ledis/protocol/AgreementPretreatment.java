@@ -109,16 +109,16 @@ public class AgreementPretreatment {
 	
 	public final static <T> void HashReferenceAgreementPretreatment( OutputStream out , List< DataConversion > list , List<?> objectList , KeyCreate<  T > keyCreate) throws IOException{
 		ProtocolUtil.write( out , list.get( 0 ).getWriteByteBuffer( ) );
-		int i = objectList.size( );
+		int i = objectList.size( )  , len = 0;
 		T o ;
 		ByteBuffer bb;
 		for( ; ; ){
-			o = ( T ) objectList.get( -- i );
+			o = ( T ) objectList.get( len++ );
 			bb= DataConversion.getBuffer( );
 			keyCreate.getKeySuffixBuffer( o , bb);
 			ProtocolUtil.write( out ,  bb) ;
 			ProtocolUtil.write( out , JsonDeToSerialize.SERIALIZE_DEFAULT.execute( o ) );
-			if( i == 0){
+			if( len == i){
 				break;
 			}
 		}

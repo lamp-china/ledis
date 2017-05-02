@@ -1,43 +1,46 @@
 package com.lamp.ledis.annotation;
 
-import java.util.LinkedList ;
-import java.util.List ;
+import java.lang.reflect.Method ;
 
 public class LedisAanntationCollection {
 
-	private List< OperationEntity > operationList = new LinkedList<>( );
 	
 	
 	
 	public void addOperationEntity(Class<?> clazz ){
-		 OperationList operationList= clazz.getAnnotation( OperationList.class );
+		OperationList operationList;
+		 if( clazz.isInterface( )){
+			 Method[] me = clazz.getMethods( );
+			 Class<?>  meClazz;
+			 for(Method m : me){
+				  operationList=  m.getAnnotation( OperationList.class  );
+				  if( operationList != null){
+					  meClazz = m.getReturnType( );
+					  isType(meClazz , false);
+					  setOperationListMap( meClazz , operationList );
+				  }			 
+			 }
+			return; 
+		 }
+		 isType(clazz , true);
+		 operationList= clazz.getAnnotation( OperationList.class );
+		 setOperationListMap( clazz , operationList );
+	}
+	
+	
+	public void setOperationListMap( Class<?>  clazz, OperationList operationList){
 		 OperationsObject[] operationsArray = operationList.operationsObject( );
-		 Operation defaults,string, hash , list,set,sortedSet,pubSub;
+		 OperationsEntity oe;
 		 for(OperationsObject operations : operationsArray){
-			 defaults  = operations.operations( );
-			 string    = operations.string( );
-			 hash      = operations.hash( );
-			 list      = operations.list( );
-			 set       = operations.set( );
-			 sortedSet = operations.sortedSet( );
-			 pubSub    = operations.pubSub( );
-			 if( defaults == null && string  == null &&  hash  == null &&  list == null && set == null && sortedSet == null && pubSub == null ){
-				 
-			 }
-			 if( defaults == null){
-				 
-			 }else{
-				 
-			 }
+			 oe = OperationsEntity.getOperationEntity( clazz );
+			 oe.setOperationListMap( operations );
 		 }
 	}
 	
-	private void comparison(Operation defaults , Operation conn){
-		if( conn == null){
-			
+	public void isType(Class<?> clazz ,boolean bo){
+		if( clazz.equals( Void.class ) || clazz.isInterface( ) || clazz.isAnnotation( ) || clazz.isEnum( ) || clazz.isPrimitive( )){
+			  
 		}
 	}
-	public List<OperationEntity> getOperationList(){
-		return this.operationList;
-	}
+	
 }

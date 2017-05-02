@@ -1,5 +1,7 @@
 package com.lamp.ledis.annotation;
 
+import com.lamp.ledis.commands.Commands ;
+
 public class OperationEntity {
 
 	private String name;
@@ -26,6 +28,8 @@ public class OperationEntity {
 	
 	private String value;
 
+	
+	private Commands commands;
 	
 	public String getName ( ) {
 		return name ;
@@ -128,6 +132,22 @@ public class OperationEntity {
 	}
 	
 	
+	public String getCombinationKey ( ) {
+		return combinationKey ;
+	}
+
+	public void setCombinationKey ( String combinationKey ) {
+		this.combinationKey = combinationKey ;
+	}
+
+	public Commands getCommands ( ) {
+		return commands ;
+	}
+
+	public void setCommands ( Commands commands ) {
+		this.commands = commands ;
+	}
+
 	public static final OperationEntity create(){
 		return new OperationEntity( );
 	}

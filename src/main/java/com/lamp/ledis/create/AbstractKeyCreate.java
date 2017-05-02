@@ -5,6 +5,7 @@ import java.util.Set ;
 
 import com.alibaba.fastjson.TypeReference ;
 import com.lamp.ledis.protocol.ProtocolUtil;
+import com.lamp.ledis.utils.ClassUtils ;
 
 public abstract class AbstractKeyCreate< T > implements KeyCreate< T > {
 
@@ -138,5 +139,11 @@ public abstract class AbstractKeyCreate< T > implements KeyCreate< T > {
 		return keyCreate ;
 	}
 
+	public void setKeyCreate(KeyCreate< T > keyCreate){
+		this.keyCreate = keyCreate;
+	}
 	
+	public TypeReference< ? > getTypeReferenceKeyListResultHandle(){
+		return ClassUtils.getTypeReferenceList( keyConfigure.getKeyType( ) );
+	}
 }

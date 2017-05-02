@@ -81,6 +81,7 @@ public abstract class AbstractLedis<T> {
 			return (T) ( t == null?ce.getResultHandle().handle( buffer  , keyCreate):t );
 		} catch (Exception e) {
 			e.printStackTrace();
+			System.out.println( new String( buffer.array( ) ) ) ;
 			return (T)  ce.getResultHandle().getNullOjbect( keyCreate );
 		}finally {
 			if( buffer != null)
@@ -160,10 +161,10 @@ public abstract class AbstractLedis<T> {
 			conn = connectionPattern.getConnection();
 			OutputStream out = conn.getOutputStream();
 			EecutionMode ecutionMode = ce.getAgreementPretreatment( ).getExecutioMode( );
-			ce.getAgreementPretreatment().perteatmentOut(out , ecutionMode.getMultiple( ) * objectList.size( ) + 1);
-			if( ecutionMode  == EecutionMode.STRING_MGET){
+			ce.getAgreementPretreatment().perteatmentOut(out , ecutionMode.getMultiple( ) * objectList.size( ) + ecutionMode.getBase( ));
+			if( ecutionMode  == EecutionMode.STRING_MGET  || ecutionMode == EecutionMode.MAP_MGET ){
 				AgreementPretreatment.ListReferenceAgreementPretreatment( out , dataList , objectList , 1 ,  keyCreate );
-			}else if ( ecutionMode  == EecutionMode.STRING_MSET){
+			}else if ( ecutionMode  == EecutionMode.STRING_MSET || ecutionMode == EecutionMode.MAP_MSET){
 				AgreementPretreatment.HashReferenceAgreementPretreatment( out , dataList , objectList , keyCreate );
 			}else if ( ecutionMode == EecutionMode.MAP_MSET){
 				int index = 0;

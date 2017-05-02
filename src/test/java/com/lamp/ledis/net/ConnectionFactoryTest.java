@@ -3,6 +3,7 @@ package com.lamp.ledis.net;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.lamp.ledis.annotation.OperationEntity ;
 import com.lamp.ledis.commands.HashCommands ;
 import com.lamp.ledis.commands.HashCommandsImlp ;
 import com.lamp.ledis.commands.ListCommands ;
@@ -28,9 +29,14 @@ public class ConnectionFactoryTest {
 			sc = new StringCommandsImlp< TestEntity >( null , null , KeyCreateUtils.getInstance( )
 					.createKeyCreate( "com.lamp.ledis.entity.TestEntity" , "id" , null , null , null ) ) ;
 			
-			hc = new HashCommandsImlp<Integer ,  TestEntity >( null , null , KeyCreateUtils.getInstance( )
-					.createKeyCreate( "com.lamp.ledis.entity.TestEntity" , "id" , null , "name" , null ) ) ;
 			
+			OperationEntity oe = new OperationEntity(  );
+			oe.setClazz( TestEntity.class );
+			oe.setKey( "id" );
+			oe.setMapKey( "appId" );
+			
+			hc = new HashCommandsImlp<Integer ,  TestEntity >( null , null , KeyCreateUtils.getInstance( )
+					.createKeyCreate(oe ) ) ;
 			lc = new ListCommandsImlp< TestEntity >( null , null , KeyCreateUtils.getInstance( )
 					.createKeyCreate( "com.lamp.ledis.entity.TestEntity" , "id" , null , null , null ) ) ;
 			
