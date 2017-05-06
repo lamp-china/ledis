@@ -1,9 +1,12 @@
 package com.lamp.ledis.entity;
 
+import com.lamp.ledis.annotation.Mapper;
+
 /**
  * @author muqi
  *
  */
+@Mapper
 public class TestEntity {
 
 	private int id;

@@ -170,7 +170,6 @@ public class KeyCreateUtils extends ClassLoader implements Opcodes {
 		Class< ? > exampleClass = this.defineClass( amsClassName , code , 0 , code.length ) ;
 		Object o = exampleClass.getConstructor( KeyConfigure.class ).newInstance( keyConfigure ) ;
 		kaaf.putKeyConfigure( kcKey , ( KeyCreate< ? > ) o ) ;
-		// exampleClass.newInstance();
 
 	}
 

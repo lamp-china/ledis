@@ -7,15 +7,6 @@ import com.lamp.ledis.commands.Commands ;
 
 public class OperationsEntity {
 
-	private static HashMap< Class< ? > , OperationsEntity > operationsEntity_map = new HashMap<>( ) ;
-
-	public static OperationsEntity getOperationEntity ( Class< ? > clazz ) {
-		if ( ! operationsEntity_map.containsKey( clazz ) ) {
-			operationsEntity_map.put( clazz , new OperationsEntity( clazz ) ) ;
-		}
-		return operationsEntity_map.get( clazz ) ;
-	}
-
 	private Class< ? > clazz ;
 
 	private Map< String , OperationList > operationListMap = new HashMap<>( ) ;
@@ -29,9 +20,7 @@ public class OperationsEntity {
 		return clazz ;
 	}
 
-	public void setClazz ( Class< ? > clazz ) {
-		this.clazz = clazz ;
-	}
+	
 
 	public Map< String , OperationList > getOperationListMap ( ) {
 		return operationListMap ;
@@ -42,7 +31,7 @@ public class OperationsEntity {
 	 * @param operationsObject
 	 */
 	public void setOperationListMap (OperationsObject operationsObject ) {
-		 String name = operationsObject.name( );
+		String name = operationsObject.name( );
 		if (name != null && "".equals( name ) && operationListMap.containsKey( name ) ) {
 			throw new RuntimeException( "class name : " + clazz.getName( ) + " is to name :" + name ) ;
 		}
@@ -67,6 +56,7 @@ public class OperationsEntity {
 		operationList.setPubSub(    setOperationEntity( defaults , pubSub    , Commands.PUBSUB    ) );
 		operationList.setSet(       setOperationEntity( defaults , set       , Commands.SET       ) );
 		operationList.setSortedSet( setOperationEntity( defaults , sortedSet , Commands.SORTEDSET ) );
+		
 		operationListMap.put( name  , operationList ) ;
 	}
 
@@ -77,7 +67,7 @@ public class OperationsEntity {
 			return null;
 		}
 		OperationEntity  oe = new OperationEntity();
-		
+		oe.setClazz( clazz );
 		oe.setDataSource(        operation.dataSource( ) != null ? operation.dataSource( ) :  defaults!=null ? defaults.dataSource( ) : null );
 		oe.setKey(               operation.key( )        != null ? operation.key( )        :  defaults!=null ? defaults.key( )        : null );
 		oe.setMapKey(            operation.mapKey( )     != null ? operation.mapKey( )     :  defaults!=null ? defaults.mapKey( )     : null );

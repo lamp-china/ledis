@@ -1,11 +1,20 @@
 package com.lamp.ledis.annotation;
 
 import java.lang.reflect.Method ;
+import java.util.HashMap;
 
 public class LedisAanntationCollection {
 
 	
+	private static HashMap< Class< ? > , OperationsEntity > operationsEntity_map = new HashMap<>( ) ;
 	
+	
+	public static OperationsEntity getOperationEntity ( Class< ? > clazz ) {
+		if ( ! operationsEntity_map.containsKey( clazz ) ) {
+			operationsEntity_map.put( clazz , new OperationsEntity( clazz ) ) ;
+		}
+		return operationsEntity_map.get( clazz ) ;
+	}
 	
 	public void addOperationEntity(Class<?> clazz ){
 		OperationList operationList;
@@ -32,7 +41,7 @@ public class LedisAanntationCollection {
 		 OperationsObject[] operationsArray = operationList.operationsObject( );
 		 OperationsEntity oe;
 		 for(OperationsObject operations : operationsArray){
-			 oe = OperationsEntity.getOperationEntity( clazz );
+			 oe = getOperationEntity( clazz );
 			 oe.setOperationListMap( operations );
 		 }
 	}

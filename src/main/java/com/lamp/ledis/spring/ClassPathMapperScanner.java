@@ -3,14 +3,11 @@ package com.lamp.ledis.spring ;
 import java.io.IOException ;
 import java.lang.annotation.Annotation ;
 import java.util.Arrays ;
-import java.util.LinkedHashSet ;
 import java.util.Set ;
 
 import org.springframework.beans.factory.config.BeanDefinitionHolder ;
-import org.springframework.beans.factory.support.AbstractBeanDefinition ;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry ;
 import org.springframework.beans.factory.support.GenericBeanDefinition ;
-import org.springframework.context.annotation.AnnotationConfigUtils ;
 import org.springframework.context.annotation.ClassPathBeanDefinitionScanner ;
 import org.springframework.core.type.classreading.MetadataReader ;
 import org.springframework.core.type.classreading.MetadataReaderFactory ;
@@ -19,17 +16,36 @@ import org.springframework.core.type.filter.AssignableTypeFilter ;
 import org.springframework.core.type.filter.TypeFilter ;
 
 import com.lamp.ledis.annotation.LedisAanntationCollection ;
-import com.lamp.ledis.utils.AnniationUtils ;
+import com.lamp.ledis.annotation.Mapper;
 
+/**
+ * 1，先扫描
+ * @author vp
+ *
+ */
 public class ClassPathMapperScanner extends ClassPathBeanDefinitionScanner {
+
+	private Class<? extends Annotation> annotationClass = Mapper.class;
+	
+	private Class<?> markerInterface;
+	
+	
 
 	public ClassPathMapperScanner(BeanDefinitionRegistry registry) {
 		super( registry ) ;
 	}
 
+	public void setAnnotationClass( Class< ? extends Annotation > annotationClass ) {
+		this.annotationClass = annotationClass;
+	}
+	
+	public void setMarkerInterface( Class< ? > markerInterface ) {
+		this.markerInterface = markerInterface;
+	}
+
 	public void registerFilters ( ) {
 		boolean acceptAllInterfaces = true ;
-
+		
 		// if specified, use the given annotation and / or marker interface
 		if ( this.annotationClass != null ) {
 			addIncludeFilter( new AnnotationTypeFilter( this.annotationClass ) ) ;
@@ -92,16 +108,17 @@ public class ClassPathMapperScanner extends ClassPathBeanDefinitionScanner {
 	private Set< BeanDefinitionHolder > processBeanDefinitions(Set< BeanDefinitionHolder > beanDefinitions){
 		GenericBeanDefinition definition = null;
 		Class<?> clazz;
-		LedisAanntationCollection lac;
+		LedisAanntationCollection lac = new LedisAanntationCollection( );;
 		
 	    for (BeanDefinitionHolder holder : beanDefinitions) {
 	      definition = (GenericBeanDefinition) holder.getBeanDefinition();
 	      clazz = definition.getBeanClass( );
-	      lac = new LedisAanntationCollection( );
-	      AnniationUtils.readAnniation( clazz , lac );
+	      lac.addOperationEntity( clazz );
 	      
-	      this.getRegistry( ).registerBeanDefinition( null , null );
 	    }
+	    this.getRegistry( ).registerBeanDefinition( null , null );
+	    
+	    
 	    //registry.registerBeanDefinition(beanName, beanDefinition);
 	    return null;
 	}
