@@ -37,7 +37,7 @@ public class HashCommandsElement {
   	 /*
   	  * Hincrby 
   	  */
-     public static final CombinationElement HINCRBY         =  CombinationElement.newCombinationElement(  3 , "hincrby"     , ResolveNetProtocol.resolveIntNetProtocol);
+     public static final CombinationElement HINCRBY         =  CombinationElement.newCombinationElement(  4 , "hincrby"     , ResolveNetProtocol.resolveIntNetProtocol);
      /*
       * Hincrbyfloat 
       */

@@ -107,8 +107,12 @@ public class HashCommandsImlp<K,T> extends BasicsCommandsImlp<T> implements Hash
 	}
 
 	@Override
-	public long hincrby ( K key , long increment ) {
-		return combination( HashCommandsElement.HINCRBY , DataConversionUtils.getDataConversionList( key ,increment  ) ) ; 
+	public long hincrby ( T key , long increment ) {
+		List<DataConversion> dataList = DataConversion.getListDataConversion( );
+		dataList.get( 0 ) .setObjectAndKeyCreate( key , keyCreate );
+		dataList.get( 1 ) .setObjectAndKeyCreate( key , keyCreate.getKeyCreate( ) );
+		dataList.get( 2 ) .setObjectAndKeyCreate( increment );
+		return combination( HashCommandsElement.HINCRBY , dataList ) ;
 	}
 
 	@Override

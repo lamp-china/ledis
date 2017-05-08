@@ -82,7 +82,7 @@ public class BIOConnection extends AbstractConnection {
 		
 		
 		public void flush() throws IOException{
-			System.out.println( bais.toString());
+			//System.out.println( bais.toString());
 			outputStream.flush();
 		}
 	}

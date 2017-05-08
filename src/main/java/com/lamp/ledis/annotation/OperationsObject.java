@@ -1,5 +1,12 @@
 package com.lamp.ledis.annotation;
 
+import java.lang.annotation.ElementType ;
+import java.lang.annotation.Retention ;
+import java.lang.annotation.RetentionPolicy ;
+import java.lang.annotation.Target ;
+
+@Target({ ElementType.TYPE ,ElementType.METHOD } )
+@Retention(RetentionPolicy.RUNTIME)
 public @interface OperationsObject {
 
 	
@@ -7,16 +14,16 @@ public @interface OperationsObject {
 	
 	Operation operations();
 	
-	Operation string();
+	Operation string() default @Operation(key = "", mapKey = "");
 	
-	Operation hash();
+	Operation hash()   default @Operation(key = "", mapKey = "");
 	
-	Operation list();
+	Operation list()   default @Operation(key = "", mapKey = "");
 	
-	Operation set();
+	Operation set()    default @Operation(key = "", mapKey = "");
 	
-	Operation sortedSet();
+	Operation sortedSet() default @Operation(key = "", mapKey = "");
 	
-	Operation pubSub();
+	Operation pubSub()  default @Operation(key = "", mapKey = "");
 	
 }

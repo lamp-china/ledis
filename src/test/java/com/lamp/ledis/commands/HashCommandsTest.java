@@ -78,10 +78,19 @@ public class HashCommandsTest extends ConnectionFactoryTest{
 		System.out.println( len ) ;
 		len = hc.hlen( t.getId( )+"" );
 		System.out.println( len ) ;
-		
-		
-		
-		
+				
 	}
+	
+	
+	@Test
+	public void test(){
+		TestEntity te = new TestEntity(2001 ,1,"set" );
+		for( int i = 0 ; i< 10 ; i++ ){
+			hc.hincrby( te , 1 );
+			Map< Integer , TestEntity > getAll = hc.hgetall( te );
+			System.out.println( getAll ) ;
+		}
+	}
+	
 	
 }

@@ -3,8 +3,12 @@ package com.lamp.ledis.spring ;
 import java.io.IOException ;
 import java.lang.annotation.Annotation ;
 import java.util.Arrays ;
+import java.util.HashMap ;
+import java.util.Iterator ;
+import java.util.Map.Entry ;
 import java.util.Set ;
 
+import org.springframework.beans.MutablePropertyValues ;
 import org.springframework.beans.factory.config.BeanDefinitionHolder ;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry ;
 import org.springframework.beans.factory.support.GenericBeanDefinition ;
@@ -16,36 +20,38 @@ import org.springframework.core.type.filter.AssignableTypeFilter ;
 import org.springframework.core.type.filter.TypeFilter ;
 
 import com.lamp.ledis.annotation.LedisAanntationCollection ;
-import com.lamp.ledis.annotation.Mapper;
+import com.lamp.ledis.annotation.Mapper ;
+import com.lamp.ledis.annotation.OperationsEntity ;
 
 /**
  * 1，先扫描
+ * 
  * @author vp
  *
  */
 public class ClassPathMapperScanner extends ClassPathBeanDefinitionScanner {
 
-	private Class<? extends Annotation> annotationClass = Mapper.class;
-	
-	private Class<?> markerInterface;
-	
-	
+	private Class< ? extends Annotation > annotationClass = Mapper.class ;
+
+	private Class< ? > markerInterface ;
+
+	private MapperFactoryBean mapperFactoryBean = new MapperFactoryBean( ) ;
 
 	public ClassPathMapperScanner(BeanDefinitionRegistry registry) {
 		super( registry ) ;
 	}
 
-	public void setAnnotationClass( Class< ? extends Annotation > annotationClass ) {
-		this.annotationClass = annotationClass;
+	public void setAnnotationClass ( Class< ? extends Annotation > annotationClass ) {
+		this.annotationClass = annotationClass ;
 	}
-	
-	public void setMarkerInterface( Class< ? > markerInterface ) {
-		this.markerInterface = markerInterface;
+
+	public void setMarkerInterface ( Class< ? > markerInterface ) {
+		this.markerInterface = markerInterface ;
 	}
 
 	public void registerFilters ( ) {
 		boolean acceptAllInterfaces = true ;
-		
+
 		// if specified, use the given annotation and / or marker interface
 		if ( this.annotationClass != null ) {
 			addIncludeFilter( new AnnotationTypeFilter( this.annotationClass ) ) ;
@@ -67,6 +73,7 @@ public class ClassPathMapperScanner extends ClassPathBeanDefinitionScanner {
 		if ( acceptAllInterfaces ) {
 			// default include filter that accepts all classes
 			addIncludeFilter( new TypeFilter( ) {
+
 				@Override
 				public boolean match ( MetadataReader metadataReader , MetadataReaderFactory metadataReaderFactory )
 						throws IOException {
@@ -99,27 +106,45 @@ public class ClassPathMapperScanner extends ClassPathBeanDefinitionScanner {
 			logger.warn( "No MyBatis mapper was found in '" + Arrays.toString( basePackages )
 					+ "' package. Please check your configuration." ) ;
 		} else {
-			beanDefinitions =  processBeanDefinitions( beanDefinitions ) ;
+			beanDefinitions = processBeanDefinitions( beanDefinitions ) ;
 		}
 
 		return beanDefinitions ;
 	}
 
-	private Set< BeanDefinitionHolder > processBeanDefinitions(Set< BeanDefinitionHolder > beanDefinitions){
-		GenericBeanDefinition definition = null;
-		Class<?> clazz;
-		LedisAanntationCollection lac = new LedisAanntationCollection( );;
-		
-	    for (BeanDefinitionHolder holder : beanDefinitions) {
-	      definition = (GenericBeanDefinition) holder.getBeanDefinition();
-	      clazz = definition.getBeanClass( );
-	      lac.addOperationEntity( clazz );
-	      
-	    }
-	    this.getRegistry( ).registerBeanDefinition( null , null );
-	    
-	    
-	    //registry.registerBeanDefinition(beanName, beanDefinition);
-	    return null;
+	private Set< BeanDefinitionHolder > processBeanDefinitions ( Set< BeanDefinitionHolder > beanDefinitions ) {
+		try {
+			GenericBeanDefinition definition = null ;
+			LedisAanntationCollection lac = new LedisAanntationCollection( ) ;
+			;
+			Class< ? > clazz ;
+			for ( BeanDefinitionHolder holder : beanDefinitions ) {
+				definition = ( GenericBeanDefinition ) holder.getBeanDefinition( ) ;
+				clazz = Class.forName( definition.getBeanClassName( ) ) ;
+
+				lac.addOperationEntity( clazz ) ;
+			}
+			HashMap< String , OperationsEntity > map = lac.getOperationsEntityMap( ) ;
+			Iterator< Entry< String , OperationsEntity > > it = map.entrySet( ).iterator( ) ;
+			Entry< String , OperationsEntity > e ;
+			MutablePropertyValues mp ;
+			while ( it.hasNext( ) ) {
+				e = it.next( ) ;
+				definition = new GenericBeanDefinition( ) ;
+				definition.setBeanClass( mapperFactoryBean.getClass( ) ) ;
+				definition.setInitMethodName( "init" ) ;
+				mp = new MutablePropertyValues( ) ;
+				definition.setPropertyValues( mp ) ;
+				mp.add( "operationsEntity" , e.getValue( ) ) ;
+				this.getRegistry( ).registerBeanDefinition( e.getKey( ) , definition ) ;
+
+			}
+		} catch ( ClassNotFoundException e1 ) {
+			// TODO 自动生成的 catch 块
+			e1.printStackTrace( ) ;
+		}
+
+		// registry.registerBeanDefinition(beanName, beanDefinition);
+		return null ;
 	}
 }

@@ -6,15 +6,20 @@ import java.util.HashMap;
 public class LedisAanntationCollection {
 
 	
-	private static HashMap< Class< ? > , OperationsEntity > operationsEntity_map = new HashMap<>( ) ;
+	private  HashMap< String , OperationsEntity > operationsEntity_map = new HashMap<>( ) ;
 	
-	
-	public static OperationsEntity getOperationEntity ( Class< ? > clazz ) {
-		if ( ! operationsEntity_map.containsKey( clazz ) ) {
-			operationsEntity_map.put( clazz , new OperationsEntity( clazz ) ) ;
+	private void isExistence(String name){
+		if( name  == null ){
+			
 		}
-		return operationsEntity_map.get( clazz ) ;
+		if( "".equals( name )){
+			
+		}
+		if( !operationsEntity_map.containsKey( name )){
+			
+		}
 	}
+
 	
 	public void addOperationEntity(Class<?> clazz ){
 		OperationList operationList;
@@ -39,11 +44,18 @@ public class LedisAanntationCollection {
 	
 	public void setOperationListMap( Class<?>  clazz, OperationList operationList){
 		 OperationsObject[] operationsArray = operationList.operationsObject( );
-		 OperationsEntity oe;
+		 OperationsEntity oe ;
 		 for(OperationsObject operations : operationsArray){
-			 oe = getOperationEntity( clazz );
-			 oe.setOperationListMap( operations );
+			 isExistence( operations.name( ) );
+			 oe = new OperationsEntity( );
+			 oe.setName(  operations.name( ) );
+			 oe.setOperationListMap( operations ,  clazz);
+			 operationsEntity_map.put( operations.name( ) , oe );
 		 }
+	}
+	
+	public HashMap< String , OperationsEntity >  getOperationsEntityMap(){
+		return this.operationsEntity_map;
 	}
 	
 	public void isType(Class<?> clazz ,boolean bo){

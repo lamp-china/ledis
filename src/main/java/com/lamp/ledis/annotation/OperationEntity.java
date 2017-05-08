@@ -2,6 +2,10 @@ package com.lamp.ledis.annotation;
 
 import com.lamp.ledis.commands.Commands ;
 
+/**
+ * @author muqi
+ *
+ */
 public class OperationEntity {
 
 	private String name;
@@ -151,6 +155,8 @@ public class OperationEntity {
 	public static final OperationEntity create(){
 		return new OperationEntity( );
 	}
+	
+	
 	
 	
 }

@@ -1,40 +1,15 @@
 package com.lamp.ledis.annotation ;
 
-import java.util.HashMap ;
-import java.util.Map ;
-
 import com.lamp.ledis.commands.Commands ;
 
 public class OperationsEntity {
-
-	private Class< ? > clazz ;
-
-	private Map< String , OperationList > operationListMap = new HashMap<>( ) ;
-
-	public OperationsEntity(Class< ? > clazz) {
-		super( ) ;
-		this.clazz = clazz ;
-	}
-
-	public Class< ? > getClazz ( ) {
-		return clazz ;
-	}
-
-	
-
-	public Map< String , OperationList > getOperationListMap ( ) {
-		return operationListMap ;
-	}
 
 	/**
 	 * 数据检测与校验不放在这里处理
 	 * @param operationsObject
 	 */
-	public void setOperationListMap (OperationsObject operationsObject ) {
+	public void setOperationListMap (OperationsObject operationsObject , Class< ? > clazz) {
 		String name = operationsObject.name( );
-		if (name != null && "".equals( name ) && operationListMap.containsKey( name ) ) {
-			throw new RuntimeException( "class name : " + clazz.getName( ) + " is to name :" + name ) ;
-		}
 		Operation defaults,string, hash , list,set,sortedSet,pubSub;
 		defaults  = operationsObject.operations( ) ;
 		string    = operationsObject.string( ) ;
@@ -49,41 +24,52 @@ public class OperationsEntity {
 		}
 		
 		
-		OperationList operationList = new OperationList( ) ;
-		operationList.setString(    setOperationEntity( defaults , string    , Commands.STRING    ) );
-		operationList.setHash(      setOperationEntity( defaults , hash      , Commands.HASH      ) );
-		operationList.setList(      setOperationEntity( defaults , list      , Commands.LIST      ) );
-		operationList.setPubSub(    setOperationEntity( defaults , pubSub    , Commands.PUBSUB    ) );
-		operationList.setSet(       setOperationEntity( defaults , set       , Commands.SET       ) );
-		operationList.setSortedSet( setOperationEntity( defaults , sortedSet , Commands.SORTEDSET ) );
 		
-		operationListMap.put( name  , operationList ) ;
+		setClazz( clazz );
+		OperationEntity oe = setOperationEntity(defaults, defaults, null,null ,clazz);
+		setString(    setOperationEntity( defaults , string    , Commands.STRING    , oe  , clazz ) );
+		setHash(      setOperationEntity( defaults , hash      , Commands.HASH      , oe  , clazz ) );
+		setList(      setOperationEntity( defaults , list      , Commands.LIST      , oe  , clazz ) );
+		setPubSub(    setOperationEntity( defaults , pubSub    , Commands.PUBSUB    , oe  , clazz ) );
+		setSet(       setOperationEntity( defaults , set       , Commands.SET       , oe  , clazz ) );
+		setSortedSet( setOperationEntity( defaults , sortedSet , Commands.SORTEDSET , oe  , clazz ) );
 	}
 
 	
 	
-	public OperationEntity setOperationEntity(Operation defaults,Operation operation  , Commands commands){
+	public OperationEntity setOperationEntity(Operation defaults,Operation operation  , Commands commands , OperationEntity operationEntity ,  Class< ? > clazz){
 		if(operation == null){
-			return null;
+			return operationEntity;
 		}
 		OperationEntity  oe = new OperationEntity();
 		oe.setClazz( clazz );
-		oe.setDataSource(        operation.dataSource( ) != null ? operation.dataSource( ) :  defaults!=null ? defaults.dataSource( ) : null );
-		oe.setKey(               operation.key( )        != null ? operation.key( )        :  defaults!=null ? defaults.key( )        : null );
-		oe.setMapKey(            operation.mapKey( )     != null ? operation.mapKey( )     :  defaults!=null ? defaults.mapKey( )     : null );
-		oe.setMapPrefix(         operation.mapPrefix( )  != null ? operation.mapPrefix( )  :  defaults!=null ? defaults.mapPrefix( )  : null );
-		oe.setName(              operation.name( )       != null ? operation.name( )       :  defaults!=null ? defaults.name( )       : null );
-		oe.setPattern(           operation.pattern( )    != null ? operation.pattern( )    :  defaults!=null ? defaults.pattern( )    : null );
-		oe.setPrefix(            operation.prefix( )     != null ? operation.prefix( )     :  defaults!=null ? defaults.prefix( )     : null );
-		oe.setSeparator(         operation.separator( )  != null ? operation.separator( )  :  defaults!=null ? defaults.separator( )  : null );
-		oe.setSliceKey(          operation.sliceKey( )   != null ? operation.sliceKey( )   :  defaults!=null ? defaults.sliceKey( )   : null );
-		oe.setValue(             operation.value( )      != null ? operation.value( )      :  defaults!=null ? defaults.value( )      : null );
-		oe.setSeparator(         operation.separator( )  != null ? operation.separator( )  :  defaults!=null ? defaults.separator( )  : null );
+		oe.setDataSource( assignment( operation.dataSource( ) , operation.dataSource( ) ));
+		oe.setKey(        assignment( operation.key( )        , defaults.key( )         ));
+		oe.setMapKey(     assignment( operation.mapKey( )     , defaults.mapKey( )      ));
+		oe.setMapPrefix(  assignment( operation.mapPrefix( )  , defaults.mapPrefix( )   ));
+		oe.setName(       assignment( operation.name( )       , defaults.name( )        ));
+		oe.setPattern(    assignment( operation.pattern( )    , defaults.pattern( )     ));
+		oe.setPrefix(     assignment( operation.prefix( )     , defaults.prefix( )      ));
+		oe.setSeparator(  assignment( operation.separator( )  , defaults.separator( )   ));
+		oe.setSliceKey(   assignment( operation.sliceKey( )   , defaults.sliceKey( )    ));
+		oe.setValue(      assignment( operation.value( )      , defaults.value( )       ));
+		oe.setSeparator(  assignment( operation.separator( )  , defaults.separator( )   ));
 		return oe;
 	}
 	
-	static class OperationList {
-
+	public Pattern[] assignment(Pattern[] original , Pattern[] defaults ){
+		if(original.length == 0){
+			return defaults;
+		}
+		return original;
+	}
+	
+	public String assignment(String original , String defaults ){
+		if( original != null && "".equals( original )  ){
+			return original;
+		}
+		return defaults;
+	}
 		String name ;
 
 		OperationEntity operations ;
@@ -99,6 +85,8 @@ public class OperationsEntity {
 		OperationEntity sortedSet ;
 
 		OperationEntity pubSub ;
+		
+		Class< ? >  Clazz;
 
 		public String getName ( ) {
 			return name ;
@@ -164,6 +152,14 @@ public class OperationsEntity {
 			this.pubSub = pubSub ;
 		}
 
-	}
+		public Class< ? > getClazz ( ) {
+			return Clazz ;
+		}
+
+		public void setClazz ( Class< ? > clazz ) {
+			Clazz = clazz ;
+		}
+
+		
 
 }

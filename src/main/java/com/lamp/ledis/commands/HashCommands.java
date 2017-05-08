@@ -43,7 +43,7 @@ public interface HashCommands<K , T> extends BasicsCommands< T >{
 	
 	Map<K,T> hgetall(long key );
 	
-	long hincrby(K key , long increment);
+	long hincrby(T key , long increment);
 	
 	long hincrby(String key , String field , long increment);
 	
