@@ -73,7 +73,7 @@ public abstract class AbstractLedis<T> {
 			ce.getAgreementPretreatment().perteatmentOut(out , 0 );
 			AgreementPretreatment.ListReferenceAgreementPretreatment( out , dataList , ce.getAgreementPretreatment( ).getLength( ) );
 			out.flush();
-			buffer = conn.getBuffer();
+			buffer = DataConversion.getBuffer();
 			Object t= ce.getResolveNetProtocol().analysis(conn.getInputStream(), buffer);
 			if( t == null && buffer.position( ) == 0){
 				return (T)  ce.getResultHandle().getNullOjbect( keyCreate );
@@ -175,7 +175,7 @@ public abstract class AbstractLedis<T> {
 				}
 			}
 			out.flush();
-			buffer = conn.getBuffer();
+			buffer = DataConversion.getBuffer();
 			T t= (T)ce.getResolveNetProtocol().analysis(conn.getInputStream(), buffer);
 			keyCreate = ( KeyCreate< T > ) this.keyCreate;
 			if( t == null && buffer.position( ) == 0){

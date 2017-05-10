@@ -4,6 +4,8 @@ import com.lamp.ledis.utils.BasicAttributes;
 
 public class SingleConfiguration {
 	
+	private String name;
+	
 	private String host;
 	
 	private int    post = BasicAttributes.DEFAULT_POST;
@@ -63,5 +65,15 @@ public class SingleConfiguration {
 	public void setConnectionNum ( int connectionNum ) {
 		this.connectionNum = connectionNum ;
 	}
+
+	public String getName ( ) {
+		return name ;
+	}
+
+	public void setName ( String name ) {
+		this.name = name ;
+	}
+	
+	
 	
 }

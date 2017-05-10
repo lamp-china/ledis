@@ -4,6 +4,7 @@ import java.io.IOException ;
 import java.lang.annotation.Annotation ;
 import java.util.Arrays ;
 import java.util.HashMap ;
+import java.util.HashSet ;
 import java.util.Iterator ;
 import java.util.Map.Entry ;
 import java.util.Set ;
@@ -137,14 +138,11 @@ public class ClassPathMapperScanner extends ClassPathBeanDefinitionScanner {
 				definition.setPropertyValues( mp ) ;
 				mp.add( "operationsEntity" , e.getValue( ) ) ;
 				this.getRegistry( ).registerBeanDefinition( e.getKey( ) , definition ) ;
-
 			}
+			 
 		} catch ( ClassNotFoundException e1 ) {
-			// TODO 自动生成的 catch 块
 			e1.printStackTrace( ) ;
 		}
-
-		// registry.registerBeanDefinition(beanName, beanDefinition);
 		return null ;
 	}
 }
