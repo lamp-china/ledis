@@ -2,6 +2,11 @@ package com.lamp.ledis.net;
 
 public class PoolConfig {
 
+	private int connectionMode;
+	
+	private int netMode;
+	
+	private int select;
 	
 	private int maxIdle;
 	
@@ -51,6 +56,30 @@ public class PoolConfig {
 
 	public void setTestWhileIdle(boolean testWhileIdle) {
 		this.testWhileIdle = testWhileIdle;
+	}
+
+	public int getConnectionMode( ) {
+		return connectionMode;
+	}
+
+	public void setConnectionMode( int connectionMode ) {
+		this.connectionMode = connectionMode;
+	}
+
+	public int getNetMode( ) {
+		return netMode;
+	}
+
+	public void setNetMode( int netMode ) {
+		this.netMode = netMode;
+	}
+
+	public int getSelect( ) {
+		return select;
+	}
+
+	public void setSelect( int select ) {
+		this.select = select;
 	}
 	
 	

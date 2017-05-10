@@ -7,7 +7,10 @@ public class NoLockConnectionPattern implements ConnectionPattern{
 
 	private final LinkedBlockingQueue<Connection> lbq = new LinkedBlockingQueue<Connection>();
 	
+	private int maxWaitMillis;
+	
 	public NoLockConnectionPattern(NetConfigure configure , PoolConfig poolConfig ){
+		this.maxWaitMillis = poolConfig.getMaxWaitMillis( );
 		for(int i = 0 ; i < poolConfig.getMaxTotal() ; i++){
 			lbq.add( new BIOConnection(configure));
 		}
@@ -15,7 +18,7 @@ public class NoLockConnectionPattern implements ConnectionPattern{
 	
 	@Override
 	public Connection getConnection() throws Exception {
-		return lbq.poll(2000, TimeUnit.MINUTES);
+		return lbq.poll(this.maxWaitMillis, TimeUnit.MINUTES);
 	}
 	@Override
 	public void setConnection(Connection conn) {

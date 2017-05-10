@@ -21,13 +21,16 @@ public final class CommandsObjectFactory {
 	private final Map<String,RedisCommands> redisCommandsMap = new ConcurrentHashMap<>( );
 	
 	
-	@SuppressWarnings( "unchecked" )
-	public <T>T getRedisCommands(OperationsEntity operationsEntity){
+	@SuppressWarnings( "rawtypes" )
+	public RedisCommands getRedisCommands(OperationsEntity operationsEntity){
 		if( redisCommandsMap.containsKey( operationsEntity.getName( ))){
 			redisCommandsMap.put( operationsEntity.getName( ) , new RedisCommandsImlp<>( operationsEntity ) );
 		}
-		return ( T ) redisCommandsMap.get( operationsEntity.getName( ) );
+		return redisCommandsMap.get( operationsEntity.getName( ) );
 	}
 	
-	
+	@SuppressWarnings ( { "rawtypes" } )
+	public RedisCommands getRedisCommands(String name){
+		return  redisCommandsMap.get( name );
+	}
 }

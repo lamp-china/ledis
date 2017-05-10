@@ -32,7 +32,21 @@ public class ConnectionFactory {
 		}
 	}
 	
-	public void init( List<NetConfigure> netCOnfigureList ){
+	public void init(NetAndPoolConfig  config , List<NetAndPoolConfig> netCOnfigureList ){
+		if(connectionPattern == null){
+			connectionPattern = createConnectionPattern( config.getNetConfigure( ) , config.getPoolConfig( ) );
+			for(NetAndPoolConfig netAndPoolConfig : netCOnfigureList){
+				connectionPatternMap.put( netAndPoolConfig.getName( ) , createConnectionPattern( netAndPoolConfig.getNetConfigure( ) , netAndPoolConfig.getPoolConfig( ) ) );
+			}
+		}
+	}
+	
+	private ConnectionPattern createConnectionPattern( NetConfigure configure ,PoolConfig poolConfig ){
+		if( poolConfig.getConnectionMode( ) == 0){
+			return	new NoLockConnectionPattern(configure, poolConfig);
+		}else{
+			return  new LocalConnectionPattern( configure , poolConfig );
+		}
 		
 	}
 	
