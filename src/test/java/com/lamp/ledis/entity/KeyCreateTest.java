@@ -2,6 +2,7 @@ package com.lamp.ledis.entity;
 
 import org.junit.Test;
 
+import com.lamp.ledis.create.KeyConfigure;
 import com.lamp.ledis.utils.KeyCreateUtils;
 
 public class KeyCreateTest {
@@ -10,7 +11,7 @@ public class KeyCreateTest {
 	
 	@Test
 	public void testType(){
-		TestEntityKeyCreate tkc = new TestEntityKeyCreate("id");
+		TestEntityKeyCreate tkc = new TestEntityKeyCreate(new KeyConfigure<>( null , null , null , null , null ));
 		tkc.getKeySuffix( testEntity );
 		tkc.getKeySuffixBuffer( testEntity );
 	}

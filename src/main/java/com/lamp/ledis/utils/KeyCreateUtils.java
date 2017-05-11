@@ -40,6 +40,7 @@ public class KeyCreateUtils extends ClassLoader implements Opcodes {
 
 	private final static KeyCreateAndAmsTypeReferenceFactory kaaf = KeyCreateAndAmsTypeReferenceFactory.getInstance( ) ;
 
+	@Deprecated
 	public void keyCreate ( String className , String key , String stringKey ) throws Exception {
 		String methodName = ClassUtils.getMethodName( key ) ;
 		String[] amsName = ClassUtils.amsName( className , methodName ) ;
@@ -173,6 +174,7 @@ public class KeyCreateUtils extends ClassLoader implements Opcodes {
 
 	}
 
+	@Deprecated
 	public TypeReference< ? > map ( String keyType , String valueType )
 			throws InstantiationException , IllegalAccessException {
 		longAdder.increment( ) ;
@@ -201,6 +203,7 @@ public class KeyCreateUtils extends ClassLoader implements Opcodes {
 		return ( TypeReference< ? > ) exampleClass.newInstance( ) ;
 	}
 
+	@Deprecated
 	public TypeReference< ? > list ( String valueType ) throws InstantiationException , IllegalAccessException {
 		longAdder.increment( ) ;
 		String amsClassName = ClassUtils.className( "" , valueType , longAdder.longValue( ) , TYPEREFERENCE_MAP ) ;
@@ -230,6 +233,7 @@ public class KeyCreateUtils extends ClassLoader implements Opcodes {
 
 	public KeyCreate createKeyCreate(OperationEntity  operationEntity) throws Exception{
 		KeyCreate keyCreate = createKeyCreate( operationEntity.getClazz( ).getName( ) , operationEntity.getKey( ) , operationEntity.getPrefix( ) , null	 , null );
+		
 		((AbstractKeyCreate)keyCreate).setKeyCreate( createKeyCreate( operationEntity.getClazz( ).getName( ) , operationEntity.getMapKey( ) , operationEntity.getMapPrefix( ) , null , null ) );
 		
 		return keyCreate;

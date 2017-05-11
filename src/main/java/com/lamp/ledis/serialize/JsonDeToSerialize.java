@@ -41,7 +41,10 @@ public class JsonDeToSerialize implements Deserialize , Serialize{
 	}
 	
 	
-	
+	/**
+	 * 这里会做优化的。
+	 * @DOTO
+	 */
 	@Override
 	public ByteBuffer execute(Object o) {
 		byte[] by ;

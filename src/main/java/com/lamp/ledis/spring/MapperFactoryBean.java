@@ -22,9 +22,10 @@ public class MapperFactoryBean<T> implements FactoryBean<T>{
 		operationsEntity.getName( );
 	}
 	
+	@SuppressWarnings ( "unchecked" )
 	@Override
 	public T getObject ( ) throws Exception {
-		return CommandsObjectFactory.getInstance( ).getRedisCommands( operationsEntity ) ;
+		return ( T ) CommandsObjectFactory.getInstance( ).getRedisCommands( operationsEntity ) ;
 	}
 
 	@Override

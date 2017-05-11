@@ -15,6 +15,10 @@ public abstract class AbstractKeyCreate< T > implements KeyCreate< T > {
 
 	private Class< T > clazz ;
 	
+	private byte[] prefix;
+	
+	private byte separator;
+	
 	private T object;
 
 	private KeyCreate<T> keyCreate;
@@ -24,7 +28,10 @@ public abstract class AbstractKeyCreate< T > implements KeyCreate< T > {
 	public AbstractKeyCreate(KeyConfigure<T> keyConfigure) {
 		this.keyConfigure = keyConfigure ;
 		this.clazz = keyConfigure.getAtr( ).getClazz( ) ;
-		this.stringKey   = keyConfigure.getKeyName( );
+		this.stringKey   = keyConfigure.getPrefix( );
+		if( keyConfigure.getPrefix( ) != null && "".equals(  keyConfigure.getPrefix( ) )){
+			this.prefix      = keyConfigure.getPrefix( ).getBytes( );
+		}
 		try {
 			this.object = clazz.newInstance( );
 		} catch ( InstantiationException | IllegalAccessException e ) {
@@ -33,11 +40,7 @@ public abstract class AbstractKeyCreate< T > implements KeyCreate< T > {
 		}
 	}
 
-	public AbstractKeyCreate(String key) {
-		this.stringKey = key ;
-		if ( key != null )
-			this.byteKey = stringKey.getBytes( ) ;
-	}
+
 
 	public T getOject(){
 		return object;
@@ -49,14 +52,18 @@ public abstract class AbstractKeyCreate< T > implements KeyCreate< T > {
 	
 	
 	void setByteBufferPrefix(ByteBuffer byteBuffer){
-		byteBuffer.put( byteKey );
+		if(this.prefix != null){		
+			byteBuffer.put( prefix );
+		}
 	}
 	
 	public void getKey ( int key , ByteBuffer byteBuffer ) {
+		setByteBufferPrefix( byteBuffer );
 		ProtocolUtil.getChars( key , byteBuffer );
 	}
 
 	public void getKey ( long key , ByteBuffer byteBuffer) {
+		setByteBufferPrefix( byteBuffer );
 		ProtocolUtil.getChars( key , byteBuffer );
 	}
 
@@ -72,11 +79,10 @@ public abstract class AbstractKeyCreate< T > implements KeyCreate< T > {
 	}
 	
 	public void getKey ( String key , ByteBuffer byteBuffer) {
-		
+		setByteBufferPrefix( byteBuffer );
 		byteBuffer.put( key.getBytes( ) );
 	}
 
-	
 	
 	public byte[] getByteKey ( ) {
 		return byteKey ;

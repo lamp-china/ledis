@@ -64,7 +64,7 @@ public abstract class AbstractLedis<T> {
 
 	
 	@SuppressWarnings("unchecked")
-	public  final <T>T combination(CombinationElement ce,List<DataConversion> dataList ){
+	public  final T combination(CombinationElement ce,List<DataConversion> dataList ){
 		Connection conn   = null;
 		ByteBuffer buffer = null;
 		try {
@@ -81,7 +81,6 @@ public abstract class AbstractLedis<T> {
 			return (T) ( t == null?ce.getResultHandle().handle( buffer  , keyCreate):t );
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println( new String( buffer.array( ) ) ) ;
 			return (T)  ce.getResultHandle().getNullOjbect( keyCreate );
 		}finally {
 			if( buffer != null)
