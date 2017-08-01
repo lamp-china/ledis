@@ -164,9 +164,9 @@ set          | 完成   | 完成     |     | 老胡   |
 sortset      | 完成   | 完成     |     | 老胡   |
 bitmaps      | 未开始 | 未开始   |     |     |
 geo          | 未开始 | 未开始   |     |     |
-pubsub       | 完成   | 待完成   |     |     |
-scripting    | 完成   | 待完成   |     |     |
-server       | 只会实现部分命令  | 待完成   |     |     |
+pubsub       | 完成   | 基本完成   |     |  慧慧   |
+scripting    | 完成   | 基本完成   |     | 慧慧    |
+server       | 完成   | 基本完成   |     | 慧慧    |
 transactions | 未开始 | 未开始   |     |     |
 Connection   | 完成   | 未开始   |     | 老胡   |
 cluster      | 重要   | 未开始   |     | 老胡   |
